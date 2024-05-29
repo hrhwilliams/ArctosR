@@ -1,4 +1,11 @@
 library(curl)
 
-req <- curl_fetch_memory("https://arctos.database.museum/")
-str(req)
+arctosr_req <- function() {
+  res <- new_handle() |>
+    handle_setheaders("User-Agent"="ArctosR") |>
+    curl_fetch_memory(url = "https://arctos.database.museum/")
+  res
+}
+
+res <- arctosr_req()
+str(res)
