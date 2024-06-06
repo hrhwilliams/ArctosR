@@ -12,23 +12,23 @@ catalog_about_raw <- function() {
 }
 
 catalog_search <- function(...) {
-  r <- catalog_search_raw(list(...))
+  response <- catalog_search_raw(list(...))
+  json <- jsonlite::fromJSON(rawToChar(response$content))
 
   if (r$status_code == 200) {
-    jsonlite::parse_json(rawToChar(r$content))
+    json
   } else {
-    r
-    # report error
+    stop(sprintf("%s: %s", json$error, json$Message))
   }
 }
 
 catalog_about <- function() {
-  r <- catalog_about_raw()
+  response <- catalog_about_raw()
+  json <- jsonlite::fromJSON(rawToChar(response$content))
 
-  if (r$status_code == 200) {
-    jsonlite::parse_json(rawToChar(r$content))
+  if (response$status_code == 200) {
+    json
   } else {
-    r
-    # report error
+    stop(sprintf("%s: %s", json$error, json$Message))
   }
 }
