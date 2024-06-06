@@ -1,21 +1,31 @@
 ARCTOS_URL <- "https://arctos.database.museum"
 ARCTOS_API_URL <- "component/api/v2"
 ARCTOSR_AGENT_STRING <- "ArctosR/0.1.0"
-ARCTOSR_API_KEY <- NULL
+
+ARCTOSR_STATE <- list()
 
 WARN_MISSING_API_KEY = "Your API key for Arctos is not currently registered.\nIf you have an API key from Arctos, please set it with the `set_api_key` function."
 
 set_api_key <- function(key) {
-  ARCTOSR_API_KEY <<- key
+  ARCTOSR_STATE$API_KEY <<- key
 }
 
 get_api_key <- function() {
-  if (is.null(ARCTOSR_API_KEY)) {
+  if (is.null(ARCTOSR_STATE$API_KEY)) {
     warning(WARN_MISSING_API_KEY)
     NULL
   } else {
-    ARCTOSR_API_KEY
+    ARCTOSR_STATE$API_KEY
   }
+}
+
+perform_request <- function(url) {
+  ARCTOSR_STATE$LAST_REQUEST <<- curl::curl_fetch_memory(new_arctosr_handle(), url = url)
+  ARCTOSR_STATE$LAST_REQUEST
+}
+
+last_request <- function() {
+  ARCTOSR_STATE$LAST_REQUEST
 }
 
 new_arctosr_handle <- function() {

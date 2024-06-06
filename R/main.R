@@ -3,12 +3,12 @@ catalog_search_raw <- function(queries) {
   queries$queryformat <- "struct"
 
   url <- build_authenticated_url("catalog.cfc", queries)
-  curl::curl_fetch_memory(new_arctosr_handle(), url = url)
+  perform_request(url)
 }
 
 catalog_about_raw <- function() {
   url <- build_url("catalog.cfc", list("method" = "about"))
-  curl::curl_fetch_memory(new_arctosr_handle(), url = url)
+  perform_request(url)
 }
 
 catalog_search <- function(...) {
