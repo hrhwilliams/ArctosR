@@ -1,6 +1,6 @@
 catalog_search_raw <- function(queries) {
   queries$method <- "getCatalogData"
-  queries$queryformat <- "struct"
+  queries$queryformat <- "struct"  # returns rows as "dicts"
 
   url <- build_authenticated_url("catalog.cfc", queries)
   perform_request(url)
@@ -11,9 +11,11 @@ catalog_about_raw <- function() {
   perform_request(url)
 }
 
+#' @examples
+#' j <- catalog_search(species="Canis", genus="lupus")
 catalog_search <- function(...) {
   response <- catalog_search_raw(list(...))
-  json <- jsonlite::fromJSON(rawToChar(response$content))
+  json <- jsonlite::fromJSON(rawToChar(response$content), simplifyDataFrame=T)
 
   if (response$status_code == 200) {
     json
