@@ -7,7 +7,8 @@ new_response <- function(query, response) {
     length = response$recordsTotal,    # number of records
     stop = length(response$DATA$DATA), # maximum index downloaded
     tbl = response$tbl,                # table to query more from
-    data = response$DATA$DATA          # data.frame of the returned data
+    data = response$DATA$DATA,         # data.frame of the returned data
+    timestamp = integer()              # time of last request (tbl only exists for 24 hours)
   )
 }
 
