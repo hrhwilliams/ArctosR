@@ -42,3 +42,26 @@ catalog_about <- function() {
     }
   }
 }
+
+
+
+
+
+# grabbing parts from a search:
+# part_search=<query, e.g. ectoparasite, endoparasite>
+# cols=parts,partdetail
+
+# partdetails returns another json-formatted list in queryformat=struct as
+# a string
+
+# finding related records:
+# cols=relatedcatalogeditems
+# returns (host of), (parasite of) relations for records with parasites
+# and parasites that were in a record
+
+# has para in collection
+# https://arctos.database.museum/guid/MSB:Mamm:311637
+# https://arctos.database.museum/guid/MSB:Para:38129
+
+# examined for and detected orthohauntavirus
+# https://arctos.database.museum/guid/MSB:Mamm:131807
