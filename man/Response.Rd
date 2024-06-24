@@ -17,11 +17,18 @@ Response returned from Arctos
 \if{html}{\out{<a id="method-Response-new"></a>}}
 \if{latex}{\out{\hypertarget{method-Response-new}{}}}
 \subsection{Method \code{new()}}{
-Creates response object
+Creates an Arctos response object from a curl response
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$new()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Response$new(response)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{response}}{(\code{list}) curl response}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 \link{Response}.
 }

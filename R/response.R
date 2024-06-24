@@ -5,14 +5,23 @@
 #' @export
 Response <- R6::R6Class("Response",
   public = list(
-    #' @description Creates response object
+    #' @description Creates an Arctos response object from a curl response
     #'
+    #' @param response (`list`) curl response
     #' @return [Response].
-    initialize = function() {
-
+    initialize = function(response) {
+      private$url <- response$url
+      private$status_code <- response$status_code
+      private$type <- response$type
+      private$headers <- rawToChar(response$headers)
+      private$content <- rawToChar(response$content)
     }
   ),
   private = list(
-    status_code = integer(0)
+    url = NULL,
+    status_code = integer(0),
+    type = NULL,
+    headers = NULL,
+    content = NULL
   )
 )
