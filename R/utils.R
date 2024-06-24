@@ -1,3 +1,6 @@
+#' @import curl
+#' @import jsonlite
+
 ARCTOS_URL <- "https://arctos.database.museum"
 ARCTOS_API_URL <- "component/api/v2"
 ARCTOSR_AGENT_STRING <- "ArctosR/0.1.0"

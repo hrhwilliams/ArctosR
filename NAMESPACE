@@ -3,3 +3,5 @@
 export(RequestBuilder)
 export(Response)
 import(R6)
+import(curl)
+import(jsonlite)

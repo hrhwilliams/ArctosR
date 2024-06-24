@@ -1,13 +1,15 @@
 #' @title ArctosResponse
-#' @description Response returned from Arctos
+#' @description Response returned from Arctos.
 #'
-#' @imports R6, jsonlite
+#' @import R6
+#' @import jsonlite
 #' @export
 Response <- R6::R6Class("Response",
   public = list(
-    #' @description Creates an Arctos response object from a curl response
+    #' @description Creates an Arctos response object from a curl response.
     #'
-    #' @params response (`list`), url_params (`list`)
+    #' @param raw_response (`list`)
+    #' @param url_params (`list`)
     #' @return [Response].
     initialize = function(raw_response, url_params) {
       private$url <- raw_response$url
@@ -19,17 +21,24 @@ Response <- R6::R6Class("Response",
       private$content <- rawToChar(raw_response$content)
 
       json <- parse_response(raw_response)
-      private$total_records <- json$recordsTotal
-      private$downloaded_records <- length(json$DATA$DATA)
-      private$tbl <- json$tbl
-      private$data <- as.data.frame(json$DATA)
+      if (is.null(json$error)) {
+        private$total_records <- json$recordsTotal
+        private$downloaded_records <- length(json$DATA$DATA)
+        private$tbl <- json$tbl
+        private$data <- as.data.frame(json$DATA)
+      } else {
+        private$error = json$Message
+      }
     },
 
-    #' @description Requests more records from Arctos
+    #' @description Requests more records from Arctos.
     #'
     #' @param count (`integer`)
     #' @return [Response].
     request_more = function(count) {
+      if (!is.null(private$error)) {
+        stop("Response returned an error; unable to request data")
+      }
       url_params <- list(
         method = "getCatalogData", queryformat = "struct", api_key = private$api_key,
         tbl = private$tbl, start = private$downloaded_records, length = count)
@@ -37,9 +46,19 @@ Response <- R6::R6Class("Response",
       raw_response <- perform_request(request_url)
       json <- parse_response(raw_response)
 
-      private$data <- rbind(private$data, as.data.frame(json$DATA))
+      if (raw_response$status_code == 200) {
+        private$data <- rbind(private$data, as.data.frame(json$DATA))
+        return(invisible(self))
+      } else {
+        stop(sprintf("%s: %s", json$error, json$message))
+      }
+    },
 
-      invisible(self)
+    #' @description Returns data from the response as a dataframe object.
+    #'
+    #' @return (`data.frame`).
+    as_data_frame = function() {
+      private$data
     }
   ),
   private = list(
@@ -47,6 +66,7 @@ Response <- R6::R6Class("Response",
     url = NULL,
     url_params = NULL,
     status_code = integer(0),
+    error = NULL,
     type = NULL,
     headers = NULL,
     content = NULL,

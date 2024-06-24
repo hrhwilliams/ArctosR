@@ -4,13 +4,14 @@
 \alias{Response}
 \title{ArctosResponse}
 \description{
-Response returned from Arctos
+Response returned from Arctos.
 }
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-Response-new}{\code{Response$new()}}
 \item \href{#method-Response-request_more}{\code{Response$request_more()}}
+\item \href{#method-Response-as_data_frame}{\code{Response$as_data_frame()}}
 \item \href{#method-Response-clone}{\code{Response$clone()}}
 }
 }
@@ -18,11 +19,20 @@ Response returned from Arctos
 \if{html}{\out{<a id="method-Response-new"></a>}}
 \if{latex}{\out{\hypertarget{method-Response-new}{}}}
 \subsection{Method \code{new()}}{
-Creates an Arctos response object from a curl response
+Creates an Arctos response object from a curl response.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$new(response, url_params)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Response$new(raw_response, url_params)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{raw_response}}{(\code{list})}
+
+\item{\code{url_params}}{(\code{list})}
+}
+\if{html}{\out{</div>}}
+}
 \subsection{Returns}{
 \link{Response}.
 }
@@ -31,7 +41,7 @@ Creates an Arctos response object from a curl response
 \if{html}{\out{<a id="method-Response-request_more"></a>}}
 \if{latex}{\out{\hypertarget{method-Response-request_more}{}}}
 \subsection{Method \code{request_more()}}{
-Requests more records from Arctos
+Requests more records from Arctos.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Response$request_more(count)}\if{html}{\out{</div>}}
 }
@@ -45,6 +55,19 @@ Requests more records from Arctos
 }
 \subsection{Returns}{
 \link{Response}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Response-as_data_frame"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-as_data_frame}{}}}
+\subsection{Method \code{as_data_frame()}}{
+Returns data from the response as a dataframe object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Response$as_data_frame()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+(\code{data.frame}).
 }
 }
 \if{html}{\out{<hr>}}
