@@ -86,7 +86,7 @@ RequestBuilder <- R6::R6Class("RequestBuilder",
 
       private$request_url <- build_url("catalog.cfc", url_params)
       raw_response <- perform_request(self$request_url)
-      raw_response
+      Response$new(raw_response, url_params)
     }
   ),
   private = list(

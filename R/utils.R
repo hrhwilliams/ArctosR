@@ -2,35 +2,23 @@ ARCTOS_URL <- "https://arctos.database.museum"
 ARCTOS_API_URL <- "component/api/v2"
 ARCTOSR_AGENT_STRING <- "ArctosR/0.1.0"
 
-ARCTOSR_STATE <- list()
-
 WARN_MISSING_API_KEY = "Your API key for Arctos is not currently registered.\nIf you have an API key from Arctos, please set it with the `set_api_key` function."
 
-
-set_api_key <- function(key) {
-  ARCTOSR_STATE$API_KEY <<- key
-}
-
-get_api_key <- function() {
-  if (is.null(ARCTOSR_STATE$API_KEY)) {
-    warning(WARN_MISSING_API_KEY)
-    NULL
-  } else {
-    ARCTOSR_STATE$API_KEY
-  }
+new_arctosr_handle <- function() {
+  h <- curl::new_handle() |>
+    curl::handle_setheaders("User-Agent"=ARCTOSR_AGENT_STRING)
 }
 
 perform_request <- function(url) {
   curl::curl_fetch_memory(new_arctosr_handle(), url = url)
 }
 
-last_request <- function() {
-  ARCTOSR_STATE$LAST_REQUEST
-}
-
-new_arctosr_handle <- function() {
-  h <- curl::new_handle() |>
-    curl::handle_setheaders("User-Agent"=ARCTOSR_AGENT_STRING)
+parse_response <- function(raw_response) {
+  if (raw_response$type == "application/json;charset=UTF-8") {
+    return(jsonlite::fromJSON(rawToChar(raw_response$content), simplifyDataFrame=T))
+  } else {
+    stop("Expected response in JSON format")
+  }
 }
 
 build_url <- function(endpoint, queries = NULL) {
@@ -39,11 +27,6 @@ build_url <- function(endpoint, queries = NULL) {
   } else {
     sprintf("%s/%s/%s?%s", ARCTOS_URL, ARCTOS_API_URL, endpoint, encode_params(queries))
   }
-}
-
-build_authenticated_url <- function(endpoint, queries = NULL) {
-  queries$api_key <- get_api_key()
-  build_url(endpoint, queries)
 }
 
 encode_params <- function(params) {
