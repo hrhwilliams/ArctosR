@@ -10,6 +10,7 @@ Response returned from Arctos
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-Response-new}{\code{Response$new()}}
+\item \href{#method-Response-request_more}{\code{Response$request_more()}}
 \item \href{#method-Response-clone}{\code{Response$clone()}}
 }
 }
@@ -19,13 +20,26 @@ Response returned from Arctos
 \subsection{Method \code{new()}}{
 Creates an Arctos response object from a curl response
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$new(response)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Response$new(response, url_params)}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+\link{Response}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Response-request_more"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-request_more}{}}}
+\subsection{Method \code{request_more()}}{
+Requests more records from Arctos
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Response$request_more(count)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{response}}{(\code{list}) curl response}
+\item{\code{count}}{(\code{integer})}
 }
 \if{html}{\out{</div>}}
 }
