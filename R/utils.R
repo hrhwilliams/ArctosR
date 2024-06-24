@@ -6,6 +6,7 @@ ARCTOSR_STATE <- list()
 
 WARN_MISSING_API_KEY = "Your API key for Arctos is not currently registered.\nIf you have an API key from Arctos, please set it with the `set_api_key` function."
 
+
 set_api_key <- function(key) {
   ARCTOSR_STATE$API_KEY <<- key
 }
@@ -20,8 +21,7 @@ get_api_key <- function() {
 }
 
 perform_request <- function(url) {
-  ARCTOSR_STATE$LAST_REQUEST <<- curl::curl_fetch_memory(new_arctosr_handle(), url = url)
-  ARCTOSR_STATE$LAST_REQUEST
+  curl::curl_fetch_memory(new_arctosr_handle(), url = url)
 }
 
 last_request <- function() {

@@ -1,25 +1,18 @@
-new_response <- function(query, response) {
-  structure(
-    list(),
-    class = "ArctosResponse",
-    query = query,                     # query parameters list
-    cols = response$DATA$COLUMNS,      # columns of the returned table
-    length = response$recordsTotal,    # number of records
-    stop = length(response$DATA$DATA), # maximum index downloaded
-    tbl = response$tbl,                # table to query more from
-    data = response$DATA$DATA,         # data.frame of the returned data
-    timestamp = integer()              # time of last request (tbl only exists for 24 hours)
+#' @title ArctosResponse
+#' @description Response returned from Arctos
+#'
+#' @import R6
+#' @export
+Response <- R6::R6Class("Response",
+  public = list(
+    #' @description Creates response object
+    #'
+    #' @return [Response].
+    initialize = function() {
+
+    }
+  ),
+  private = list(
+    status_code = integer(0)
   )
-}
-
-request_more(response, stop) {
-
-}
-
-`[.ArctosResponse` <- function(r, i) {
-  if (i > attr(r, "stop")) {
-    request_more(r, i)
-  }
-
-  attr(r, "data")[i]
-}
+)
