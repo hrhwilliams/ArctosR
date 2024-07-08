@@ -54,6 +54,14 @@ Response <- R6::R6Class("Response",
       }
     },
 
+    get_error = function() {
+      private$error
+    },
+
+    get_url = function() {
+      private$url
+    },
+
     #' @description Returns data from the response as a dataframe object.
     #'
     #' @return (`data.frame`).

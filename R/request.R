@@ -37,8 +37,8 @@ RequestBuilder <- R6::R6Class("RequestBuilder",
     #'
     #' @param query (`list`).
     #' @return [RequestBuilder].
-    set_query = function(query) {
-      private$query <- query
+    set_query = function(...) {
+      private$query <- list(...)
       invisible(self)
     },
 
@@ -46,8 +46,8 @@ RequestBuilder <- R6::R6Class("RequestBuilder",
     #'
     #' @param parts (`list`).
     #' @return [RequestBuilder].
-    set_parts = function(parts) {
-      private$parts <- parts
+    set_parts = function(...) {
+      private$parts <- list(...)
       invisible(self)
     },
 
@@ -55,8 +55,8 @@ RequestBuilder <- R6::R6Class("RequestBuilder",
     #'
     #' @param attributes (`list`).
     #' @return [RequestBuilder].
-    set_attributes = function(attributes) {
-      private$attributes <- attributes
+    set_attributes = function(...) {
+      private$attributes <- list(...)
       invisible(self)
     },
 
@@ -64,8 +64,8 @@ RequestBuilder <- R6::R6Class("RequestBuilder",
     #'
     #' @param cols (`list`).
     #' @return [RequestBuilder].
-    set_columns = function(cols) {
-      private$cols <- cols
+    set_columns = function(...) {
+      private$cols <- list(...)
       invisible(self)
     },
 
@@ -82,17 +82,17 @@ RequestBuilder <- R6::R6Class("RequestBuilder",
       # TODO research how to encode parts queries and attributes queries
       # url_params <- c(url_params, private$parts) ?
       # url_params <- c(url_params, private$attributes) ?
-      url_params$cols <- private$cols
+      url_params$cols <- encode_list(private$cols, ",")
 
       private$request_url <- build_url("catalog.cfc", url_params)
-      raw_response <- perform_request(self$request_url)
+      raw_response <- perform_request(private$request_url)
       Response$new(raw_response, url_params)
     }
   ),
   private = list(
     request_url = NULL,
     api_key = integer(0),
-    limit = integer(1000),
+    limit = 100,
     query = NULL,
     parts = NULL,
     attributes = NULL,
