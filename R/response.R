@@ -1,8 +1,7 @@
-#' @title ArctosResponse
+#' @title Response
 #' @description Response returned from Arctos.
 #'
 #' @import R6
-#' @import jsonlite
 #' @export
 Response <- R6::R6Class("Response",
   public = list(
@@ -23,9 +22,9 @@ Response <- R6::R6Class("Response",
       json <- parse_response(raw_response)
       if (is.null(json$error)) {
         private$total_records <- json$recordsTotal
-        private$downloaded_records <- length(json$DATA$DATA)
         private$tbl <- json$tbl
         private$data <- as.data.frame(json$DATA)
+        private$downloaded_records <- nrow(private$data)
       } else {
         private$error = json$Message
       }
@@ -48,6 +47,7 @@ Response <- R6::R6Class("Response",
 
       if (raw_response$status_code == 200) {
         private$data <- rbind(private$data, as.data.frame(json$DATA))
+        private$downloaded_records <- nrow(private$data)
         return(invisible(self))
       } else {
         stop(sprintf("%s: %s", json$error, json$message))
@@ -73,6 +73,7 @@ Response <- R6::R6Class("Response",
     total_records = integer(0),
     downloaded_records = integer(0),
     tbl = NULL,
-    data = NULL
+    data = NULL,
+    timestamp = NULL
   )
 )
