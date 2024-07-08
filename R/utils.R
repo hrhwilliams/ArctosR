@@ -32,7 +32,7 @@ build_url <- function(endpoint, queries = NULL) {
   }
 }
 
-encode_params <- function(params) {
+encode_list <- function(params, collapse) {
   qq <- c()
 
   for (i in 1:length(params)) {
@@ -43,5 +43,9 @@ encode_params <- function(params) {
     }
   }
 
-  paste(qq, collapse="&")
+  paste(qq, collapse=collapse)
+}
+
+encode_params <- function(params) {
+  encode_list(params, "&")
 }
