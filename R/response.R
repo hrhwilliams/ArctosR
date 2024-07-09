@@ -54,13 +54,39 @@ Response <- R6::R6Class("Response",
       }
     },
 
+    #' @description Returns any API error returned from Arctos.
     get_error = function() {
       private$error
     },
 
+    #' @description Returns the request URL for debugging purposes.
     get_url = function() {
       private$url
     },
+
+    #' @description Writes the data in the response object to a CSV file.
+    to_csv = function(path) {
+      if (is.null(private$data)) {
+        stop("No data to export.")
+      }
+
+      write.csv(private$data, path)
+    },
+
+    #' @description Using the records in this response, request a new table
+    #' consisting of all records that are referenced in relatedcatalogeditems
+    get_relations = function() {
+      stop("Unimplemented.")
+
+      by(private$data, seq_len(nrow(private$data)), function (record) {
+        url_params <- list(
+          method = "getCatalogData", queryformat = "struct", api_key = private$api_key,
+          collection_object_id = record$collection_object_id, cols = "relatedcatalogeditems")
+        request_url <- build_url("catalog.cfc", url_params)
+        raw_response <- perform_request(request_url)
+        json <- parse_response(raw_response)
+      })
+    }
 
     #' @description Returns data from the response as a dataframe object.
     #'
