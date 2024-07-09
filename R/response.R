@@ -78,6 +78,9 @@ Response <- R6::R6Class("Response",
     get_relations = function() {
       stop("Unimplemented.")
 
+      # first get all related items for the records we have
+      related <- data.frame()
+
       by(private$data, seq_len(nrow(private$data)), function (record) {
         url_params <- list(
           method = "getCatalogData", queryformat = "struct", api_key = private$api_key,
@@ -85,6 +88,14 @@ Response <- R6::R6Class("Response",
         request_url <- build_url("catalog.cfc", url_params)
         raw_response <- perform_request(request_url)
         json <- parse_response(raw_response)
+
+        related <- rbind(related, as.data.frame(json$DATA))
+      })
+
+      new_related <- data.frame()
+
+      by(related, seq_len(nrow(related)), function(record) {
+
       })
     }
 
