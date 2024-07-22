@@ -60,6 +60,15 @@ RequestBuilder <- R6::R6Class("RequestBuilder",
       invisible(self)
     },
 
+    #' @description Set components to query over
+    #'
+    #' @param components (`list`).
+    #' @return [RequestBuilder].
+    set_components = function(...) {
+      private$components <- list(...)
+      invisible(self)
+    },
+
     #' @description Sets the columns in the dataframe returned by Arctos
     #'
     #' @param cols (`list`).
@@ -72,12 +81,19 @@ RequestBuilder <- R6::R6Class("RequestBuilder",
     #' @description Builds and sends the request to Arctos
     #'
     #' @return [RequestBuilder]
-    perform_request = function() {
+    perform_request = function(response = NULL, status_code = 200) {
       url_params <- list()
       url_params$method <- "getCatalogData"
       url_params$queryformat <- "struct"
       url_params$api_key <- private$api_key
       url_params$length  <- private$limit
+
+      # require GUID by default in case we need to perform a request on a
+      # particular record. alternatively we can use collection_object_id
+      if (!("guid" %in% private$query)) {
+        private$query <- c(private$query, list("guid"))
+      }
+
       url_params <- c(url_params, private$query)
       # TODO research how to encode parts queries and attributes queries
       # url_params <- c(url_params, private$parts) ?
@@ -85,7 +101,18 @@ RequestBuilder <- R6::R6Class("RequestBuilder",
       url_params$cols <- encode_list(private$cols, ",")
 
       private$request_url <- build_url("catalog.cfc", url_params)
-      raw_response <- perform_request(private$request_url)
+
+      if (!is.null(response)) {
+        raw_response <- list()
+        raw_response$url <- private$request_url
+        raw_response$status_code <- status_code
+        raw_response$type <- "application/json;charset=UTF-8"
+        raw_response$content <- charToRaw(response)
+        raw_response$headers <- charToRaw("headers")
+      } else {
+        raw_response <- perform_request(private$request_url)
+      }
+
       Response$new(raw_response, url_params)
     }
   ),
@@ -96,6 +123,7 @@ RequestBuilder <- R6::R6Class("RequestBuilder",
     query = NULL,
     parts = NULL,
     attributes = NULL,
+    components = NULL,
     cols = NULL
   )
 )
