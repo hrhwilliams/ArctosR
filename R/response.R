@@ -80,7 +80,18 @@ Response <- R6::R6Class("Response",
       }
     },
 
-    save_rdata = function(path) {
+    save_dataframe = function(path) {
+
+    },
+
+    #' @description Store the response object as an .RData file which can be
+    #' later loaded using Response$from_file
+    #'
+    #' @examples
+    #' r <- ArctosR::Response$from_file("response.RData")
+    #'
+    #' @param path (`string`)
+    save_object = function(path) {
       arctos_env$arctosr_response <- self
 
       file_ext <- tail(unlist(strsplit(path, "[.]")), n=1)

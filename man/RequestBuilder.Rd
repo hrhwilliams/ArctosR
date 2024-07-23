@@ -8,10 +8,10 @@ An Arctos Request
 }
 \examples{
 response <- ArctosR::RequestBuilder$new()$
-  set_api_key(API_KEY)$
+  set_api_key("<API_KEY>")$
   set_limit(500)$
   set_query(guid_prefix="MSB:Mamm", locality="New Mexico")$
-  set_parts(has_tissue)$
+  set_parts("has_tissue")$
   set_attributes(detected="Orthohauntavirus")$
   perform_request()
 

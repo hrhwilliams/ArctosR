@@ -6,6 +6,15 @@
 \description{
 Response returned from Arctos.
 }
+\examples{
+
+## ------------------------------------------------
+## Method `Response$save_object`
+## ------------------------------------------------
+
+r <- ArctosR::Response$from_file("response.RData")
+
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
@@ -13,7 +22,9 @@ Response returned from Arctos.
 \item \href{#method-Response-request_more}{\code{Response$request_more()}}
 \item \href{#method-Response-get_error}{\code{Response$get_error()}}
 \item \href{#method-Response-get_url}{\code{Response$get_url()}}
-\item \href{#method-Response-to_csv}{\code{Response$to_csv()}}
+\item \href{#method-Response-save_csv}{\code{Response$save_csv()}}
+\item \href{#method-Response-save_dataframe}{\code{Response$save_dataframe()}}
+\item \href{#method-Response-save_object}{\code{Response$save_object()}}
 \item \href{#method-Response-get_relations}{\code{Response$get_relations()}}
 \item \href{#method-Response-as_data_frame}{\code{Response$as_data_frame()}}
 \item \href{#method-Response-expand_col}{\code{Response$expand_col()}}
@@ -83,12 +94,48 @@ Returns the request URL for debugging purposes.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Response-to_csv"></a>}}
-\if{latex}{\out{\hypertarget{method-Response-to_csv}{}}}
-\subsection{Method \code{to_csv()}}{
+\if{html}{\out{<a id="method-Response-save_csv"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-save_csv}{}}}
+\subsection{Method \code{save_csv()}}{
 Writes the data in the response object to a CSV file.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$to_csv(path)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Response$save_csv(path)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Response-save_dataframe"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-save_dataframe}{}}}
+\subsection{Method \code{save_dataframe()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Response$save_dataframe(path)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Response-save_object"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-save_object}{}}}
+\subsection{Method \code{save_object()}}{
+Store the response object as an .RData file which can be
+later loaded using Response$from_file
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Response$save_object(path)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{path}}{(\code{string})}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{r <- ArctosR::Response$from_file("response.RData")
+
+}
+\if{html}{\out{</div>}}
+
 }
 
 }
