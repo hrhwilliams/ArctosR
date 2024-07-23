@@ -2,7 +2,7 @@
 % Please edit documentation in R/response.R
 \name{Response}
 \alias{Response}
-\title{ArctosResponse}
+\title{Response}
 \description{
 Response returned from Arctos.
 }
@@ -11,7 +11,12 @@ Response returned from Arctos.
 \itemize{
 \item \href{#method-Response-new}{\code{Response$new()}}
 \item \href{#method-Response-request_more}{\code{Response$request_more()}}
+\item \href{#method-Response-get_error}{\code{Response$get_error()}}
+\item \href{#method-Response-get_url}{\code{Response$get_url()}}
+\item \href{#method-Response-to_csv}{\code{Response$to_csv()}}
+\item \href{#method-Response-get_relations}{\code{Response$get_relations()}}
 \item \href{#method-Response-as_data_frame}{\code{Response$as_data_frame()}}
+\item \href{#method-Response-expand_col}{\code{Response$expand_col()}}
 \item \href{#method-Response-clone}{\code{Response$clone()}}
 }
 }
@@ -58,6 +63,47 @@ Requests more records from Arctos.
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Response-get_error"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-get_error}{}}}
+\subsection{Method \code{get_error()}}{
+Returns any API error returned from Arctos.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Response$get_error()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Response-get_url"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-get_url}{}}}
+\subsection{Method \code{get_url()}}{
+Returns the request URL for debugging purposes.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Response$get_url()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Response-to_csv"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-to_csv}{}}}
+\subsection{Method \code{to_csv()}}{
+Writes the data in the response object to a CSV file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Response$to_csv(path)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Response-get_relations"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-get_relations}{}}}
+\subsection{Method \code{get_relations()}}{
+Using the records in this response, request a new table
+consisting of all records that are referenced in relatedcatalogeditems
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Response$get_relations()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Response-as_data_frame"></a>}}
 \if{latex}{\out{\hypertarget{method-Response-as_data_frame}{}}}
 \subsection{Method \code{as_data_frame()}}{
@@ -68,6 +114,23 @@ Returns data from the response as a dataframe object.
 
 \subsection{Returns}{
 (\code{data.frame}).
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Response-expand_col"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-expand_col}{}}}
+\subsection{Method \code{expand_col()}}{
+Expand nested JSON objects to dataframes in place
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Response$expand_col(column)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{col}}{(\code{string})}
+}
+\if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}

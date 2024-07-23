@@ -7,13 +7,13 @@
 An Arctos Request
 }
 \examples{
-response <- ArctosR::RequestBuilder$new()
-  $set_api_key(API_KEY)
-  $set_limit(500)
-  $set_query(guid_prefix="MSB:Mamm", locality="New Mexico")
-  $set_parts(has_tissue)
-  $set_attributes(detected="Orthohauntavirus")
-  $perform_request()
+response <- ArctosR::RequestBuilder$new()$
+  set_api_key(API_KEY)$
+  set_limit(500)$
+  set_query(guid_prefix="MSB:Mamm", locality="New Mexico")$
+  set_parts(has_tissue)$
+  set_attributes(detected="Orthohauntavirus")$
+  perform_request()
 
 }
 \section{Methods}{
@@ -24,6 +24,7 @@ response <- ArctosR::RequestBuilder$new()
 \item \href{#method-RequestBuilder-set_query}{\code{RequestBuilder$set_query()}}
 \item \href{#method-RequestBuilder-set_parts}{\code{RequestBuilder$set_parts()}}
 \item \href{#method-RequestBuilder-set_attributes}{\code{RequestBuilder$set_attributes()}}
+\item \href{#method-RequestBuilder-set_components}{\code{RequestBuilder$set_components()}}
 \item \href{#method-RequestBuilder-set_columns}{\code{RequestBuilder$set_columns()}}
 \item \href{#method-RequestBuilder-perform_request}{\code{RequestBuilder$perform_request()}}
 \item \href{#method-RequestBuilder-clone}{\code{RequestBuilder$clone()}}
@@ -76,7 +77,7 @@ from Arctos.
 \subsection{Method \code{set_query()}}{
 Sets the query parameters to use to search Arctos
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{RequestBuilder$set_query(query)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{RequestBuilder$set_query(...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -96,7 +97,7 @@ Sets the query parameters to use to search Arctos
 \subsection{Method \code{set_parts()}}{
 Set parts to query over
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{RequestBuilder$set_parts(parts)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{RequestBuilder$set_parts(...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -116,7 +117,7 @@ Set parts to query over
 \subsection{Method \code{set_attributes()}}{
 Set attributes to query over
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{RequestBuilder$set_attributes(attributes)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{RequestBuilder$set_attributes(...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -131,12 +132,32 @@ Set attributes to query over
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-RequestBuilder-set_components"></a>}}
+\if{latex}{\out{\hypertarget{method-RequestBuilder-set_components}{}}}
+\subsection{Method \code{set_components()}}{
+Set components to query over
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{RequestBuilder$set_components(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{components}}{(\code{list}).}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\link{RequestBuilder}.
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-RequestBuilder-set_columns"></a>}}
 \if{latex}{\out{\hypertarget{method-RequestBuilder-set_columns}{}}}
 \subsection{Method \code{set_columns()}}{
 Sets the columns in the dataframe returned by Arctos
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{RequestBuilder$set_columns(cols)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{RequestBuilder$set_columns(...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -156,7 +177,7 @@ Sets the columns in the dataframe returned by Arctos
 \subsection{Method \code{perform_request()}}{
 Builds and sends the request to Arctos
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{RequestBuilder$perform_request()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{RequestBuilder$perform_request(response = NULL, status_code = 200)}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
