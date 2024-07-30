@@ -1,5 +1,13 @@
 #' @title CatalogRequestBuilder
 #'
+#' @examples
+#' results <- ArctosR::CatalogRequestBuilder$new()$
+#'   default_api_key()$
+#'   set_query(scientific_name="Canis lupus")$
+#'   set_columns("guid", "parts", "partdetail")$
+#'   set_limit(50)$
+#'   perform_request()
+#'
 #' @import R6
 #' @export
 CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
@@ -60,6 +68,23 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
       invisible(self)
     },
 
+    #' @description Sets the columns in the dataframe returned by Arctos.
+    #'
+    #' @param response
+    #' @return [FromResponseRequestBuilder].
+    from_previous_response = function(response) {
+      FromResponseRequestBuilder$new(response)
+    },
+
+    request_more = function(count) {
+      if (is.null(private$previous_response)) {
+        stop("no previous response given to request more from")
+      }
+
+      tbl <- response$table_id()
+      # &start={current_count}&limit={count}
+    },
+
     perform_request = function(response = NULL, status_code = 200) {
       url_params <- list()
       url_params$method <- "getCatalogData"
@@ -69,15 +94,17 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
 
       # require GUID by default in case we need to perform a request on a
       # particular record. alternatively we can use collection_object_id.
-      if (!("guid" %in% private$query)) {
-        private$query <- c(private$query, list("guid"))
-      }
+      # if (!("guid" %in% private$query)) {
+      #   private$query <- c(private$query, list("guid"))
+      # }
 
       url_params <- c(url_params, private$query)
       # TODO research how to encode parts queries and attributes queries
       # url_params <- c(url_params, private$parts) ?
       # url_params <- c(url_params, private$attributes) ?
-      url_params$cols <- encode_list(private$cols, ",")
+      if (!is.null(private$cols)) {
+        url_params$cols <- encode_list(private$cols, ",")
+      }
 
       private$request_url <- build_url("catalog.cfc", url_params)
 
@@ -96,6 +123,7 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
     }
   ),
   private = list(
+    previous_response = NULL,
     request_url = NULL,
     limit = 100,
     query = NULL,

@@ -38,28 +38,16 @@ Response <- R6::R6Class("Response",
       private$status_code == 200
     },
 
-    #' @description Requests more records from Arctos.
-    #'
-    #' @param count (`integer`)
-    #' @return [Response].
-    request_more = function(count) {
-      if (!is.null(private$error)) {
-        stop("Response returned an error; unable to request data")
-      }
-      url_params <- list(
-        method = "getCatalogData", queryformat = "struct", api_key = private$api_key,
-        tbl = private$tbl, start = private$downloaded_records, length = count)
-      request_url <- build_url("catalog.cfc", url_params)
-      raw_response <- perform_request(request_url)
-      json <- parse_response(raw_response)
+    get_table_id = function() {
+      private$tbl
+    },
 
-      if (raw_response$status_code == 200) {
-        private$data <- rbind(private$data, as.data.frame(json$DATA))
-        private$downloaded_records <- nrow(private$data)
-        return(invisible(self))
-      } else {
-        stop(sprintf("%s: %s", json$error, json$message))
-      }
+    get_api_key = function() {
+      private$api_key
+    },
+
+    get_record_count = function() {
+      nrow(private$data)
     },
 
     #' @description Returns any API error returned from Arctos.
