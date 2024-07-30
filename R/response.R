@@ -7,6 +7,8 @@ arctos_env <- new.env(parent = baseenv())
 #' @export
 Response <- R6::R6Class("Response",
   public = list(
+    json = NULL,
+
     #' @description Creates an Arctos response object from a curl response.
     #'
     #' @param raw_response (`list`)
@@ -21,15 +23,19 @@ Response <- R6::R6Class("Response",
       private$headers <- rawToChar(raw_response$headers)
       private$content <- rawToChar(raw_response$content)
 
-      json <- parse_response(raw_response)
-      if (is.null(json$error)) {
-        private$total_records <- json$recordsTotal
-        private$tbl <- json$tbl
-        private$data <- as.data.frame(json$DATA)
+      self$json <- parse_response(raw_response)
+      if (is.null(self$json$error)) {
+        private$total_records <- self$json$recordsTotal
+        private$tbl <- self$json$tbl
+        private$data <- as.data.frame(self$json$DATA)
         private$downloaded_records <- nrow(private$data)
       } else {
-        private$error = json$Message
+        private$error = self$json$Message
       }
+    },
+
+    was_success = function() {
+      private$status_code == 200
     },
 
     #' @description Requests more records from Arctos.
@@ -81,11 +87,13 @@ Response <- R6::R6Class("Response",
     },
 
     save_dataframe = function(path) {
-
+      if (is.null(private$data)) {
+        stop("No data to export.")
+      }
     },
 
-    #' @description Store the response object as an .RData file which can be
-    #' later loaded using Response$from_file
+    #' @description Store the entire response object as an .RData file which can
+    #' be later loaded using Response$from_file
     #'
     #' @examples
     #' r <- ArctosR::Response$from_file("response.RData")
@@ -103,7 +111,7 @@ Response <- R6::R6Class("Response",
     },
 
     #' @description Using the records in this response, request a new table
-    #' consisting of all records that are referenced in relatedcatalogeditems
+    #' consisting of all records that are referenced in relatedcatalogeditems.
     get_relations = function() {
       stop("Unimplemented.")
 
@@ -135,11 +143,16 @@ Response <- R6::R6Class("Response",
       private$data
     },
 
-    #' @description Expand nested JSON objects to dataframes in place
+    #' @description Expand a column of nested JSON tables to a list of
+    #' dataframes.
     #'
     #' @param col (`string`)
     expand_col = function(column) {
-      lapply(d[[column]], function (j) {
+      if (is.null(private$data)) {
+        stop("No data to expand")
+      }
+
+      lapply(private$data[[column]], function (j) {
         jsonlite::fromJSON(j, simplifyDataFrame=T)
       })
     }
@@ -164,6 +177,5 @@ Response <- R6::R6Class("Response",
 
 Response$from_file <- function(path) {
   load(path, envir=arctos_env)
-
   arctos_env$arctosr_response$clone(deep=T)
 }

@@ -1,129 +1,28 @@
-#' @title RequestBuilder
-#' @description An Arctos Request
-#'
-#' @examples
-#' response <- ArctosR::RequestBuilder$new()$
-#'   set_api_key("<API_KEY>")$
-#'   set_limit(500)$
-#'   set_query(guid_prefix="MSB:Mamm", locality="New Mexico")$
-#'   set_parts("has_tissue")$
-#'   set_attributes(detected="Orthohauntavirus")$
-#'   perform_request()
+#' @title Request
+#' @description An Arctos request. Not to be used directly.
 #'
 #' @import R6
 #' @export
-RequestBuilder <- R6::R6Class("RequestBuilder",
+Request <- R6::R6Class("Request",
   public = list(
-    #' @description Sets the Arctos API key to be used for this request.
-    #'
-    #' @param key (`string`).
-    #' @return [RequestBuilder].
-    set_api_key = function(key) {
-      private$api_key <- key
+    endpoint = NULL,
+
+    initialize = function(...) {
+      private$url_params <- list(...)
       invisible(self)
     },
 
-    #' @description Sets the limit on how many records to initially request
-    #' from Arctos.
-    #'
-    #' @param limit (`integer(1)`).
-    #' @return [RequestBuilder].
-    set_limit = function(limit) {
-      private$limit <- limit
-      invisible(self)
-    },
-
-    #' @description Sets the query parameters to use to search Arctos
-    #'
-    #' @param query (`list`).
-    #' @return [RequestBuilder].
-    set_query = function(...) {
-      private$query <- list(...)
-      invisible(self)
-    },
-
-    #' @description Set parts to query over
-    #'
-    #' @param parts (`list`).
-    #' @return [RequestBuilder].
-    set_parts = function(...) {
-      private$parts <- list(...)
-      invisible(self)
-    },
-
-    #' @description Set attributes to query over
-    #'
-    #' @param attributes (`list`).
-    #' @return [RequestBuilder].
-    set_attributes = function(...) {
-      private$attributes <- list(...)
-      invisible(self)
-    },
-
-    #' @description Set components to query over
-    #'
-    #' @param components (`list`).
-    #' @return [RequestBuilder].
-    set_components = function(...) {
-      private$components <- list(...)
-      invisible(self)
-    },
-
-    #' @description Sets the columns in the dataframe returned by Arctos
-    #'
-    #' @param cols (`list`).
-    #' @return [RequestBuilder].
-    set_columns = function(...) {
-      private$cols <- list(...)
-      invisible(self)
-    },
-
-    #' @description Builds and sends the request to Arctos
-    #'
-    #' @return [RequestBuilder]
-    perform_request = function(response = NULL, status_code = 200) {
-      url_params <- list()
-      url_params$method <- "getCatalogData"
-      url_params$queryformat <- "struct"
-      url_params$api_key <- private$api_key
-      url_params$length  <- private$limit
-
-      # require GUID by default in case we need to perform a request on a
-      # particular record. alternatively we can use collection_object_id
-      if (!("guid" %in% private$query)) {
-        private$query <- c(private$query, list("guid"))
+    perform = function() {
+      if (is.null(self$endpoint)) {
+        stop("No endpoint given")
       }
 
-      url_params <- c(url_params, private$query)
-      # TODO research how to encode parts queries and attributes queries
-      # url_params <- c(url_params, private$parts) ?
-      # url_params <- c(url_params, private$attributes) ?
-      url_params$cols <- encode_list(private$cols, ",")
-
-      private$request_url <- build_url("catalog.cfc", url_params)
-
-      if (!is.null(response)) {
-        raw_response <- list()
-        raw_response$url <- private$request_url
-        raw_response$status_code <- status_code
-        raw_response$type <- "application/json;charset=UTF-8"
-        raw_response$content <- charToRaw(response)
-        raw_response$headers <- charToRaw("headers")
-      } else {
-        raw_response <- perform_request(private$request_url)
-      }
-
-      Response$new(raw_response, url_params)
+      url <- build_url(self$endpoint, private$url_params)
+      raw_response <- perform_request(url)
+      ArctosR::Response$new(raw_response, private$url_params)
     }
   ),
   private = list(
-    request_url = NULL,
-    api_key = integer(0),
-    limit = 100,
-    query = NULL,
-    parts = NULL,
-    attributes = NULL,
-    components = NULL,
-    cols = NULL
+    url_params = list()
   )
 )
