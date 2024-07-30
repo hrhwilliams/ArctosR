@@ -5,13 +5,6 @@
 #' @export
 Request <- R6::R6Class("Request",
   public = list(
-    endpoint = NULL,
-
-    initialize = function(...) {
-      private$url_params <- list(...)
-      invisible(self)
-    },
-
     with_endpoint = function(endpoint) {
       private$end_point <- endpoint
       invisible(self)
@@ -27,9 +20,13 @@ Request <- R6::R6Class("Request",
         stop("No endpoint given")
       }
 
-      url <- build_url(private$end_point, private$url_params)
-      raw_response <- perform_request(url)
+      raw_response <- perform_request(self$url)
       ArctosR::Response$new(raw_response, private$url_params)
+    }
+  ),
+  active = list(
+    url = function() {
+      build_url(private$end_point, private$url_params)
     }
   ),
   private = list(

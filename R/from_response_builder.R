@@ -16,6 +16,10 @@ FromResponseRequestBuilder <- R6::R6Class("FromResponseRequestBuilder",
       invisible(self)
     },
 
+    add_column = function(col) {
+      invisible(self)
+    },
+
     perform_request = function() {
       request <- ArctosR::Request$new()$
         with_endpoint("catalog.cfc")$
@@ -24,12 +28,18 @@ FromResponseRequestBuilder <- R6::R6Class("FromResponseRequestBuilder",
         add_param(api_key = private$api_key)
 
       if (private$more > 0) {
-        request <- request$add_param(tbl = response$get_table_id())$
-          add_param(start = response$get_record_count())$
+        request <- request$add_param(tbl = private$response$get_table_id())$
+          add_param(start = private$response$get_index())$
           add_param(length = private$more)
       }
 
-      request$perform()
+      if (private$debug_print) {
+        print(request$url)
+      }
+
+      response <- request$perform()
+      response$set_index(response$get_index() + private$response$get_index())
+      response
     }
   ),
   private = list(

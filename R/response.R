@@ -29,6 +29,7 @@ Response <- R6::R6Class("Response",
         private$tbl <- self$json$tbl
         private$data <- as.data.frame(self$json$DATA)
         private$downloaded_records <- nrow(private$data)
+        private$index <- private$downloaded_records
       } else {
         private$error = self$json$Message
       }
@@ -44,6 +45,19 @@ Response <- R6::R6Class("Response",
 
     get_api_key = function() {
       private$api_key
+    },
+
+    get_total_record_count = function() {
+      private$total_records
+    },
+
+    get_index = function() {
+      private$index
+    },
+
+    set_index = function(index) {
+      private$index <- index
+      invisible(self)
     },
 
     get_record_count = function() {
@@ -155,6 +169,7 @@ Response <- R6::R6Class("Response",
     type = NULL,
     headers = NULL,
     content = NULL,
+    index = integer(0),
     total_records = integer(0),
     downloaded_records = integer(0),
     tbl = NULL,

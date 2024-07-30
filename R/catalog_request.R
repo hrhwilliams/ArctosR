@@ -120,6 +120,12 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
       }
 
       Response$new(raw_response, url_params)
+    },
+
+    record_count = function() {
+      private$limit <- 1
+      response <- self$perform_request()
+      response$get_total_record_count()
     }
   ),
   private = list(

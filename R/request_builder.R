@@ -10,17 +10,23 @@ RequestBuilder <- R6::R6Class("RequestBuilder",
       invisible(self)
     },
 
+    debug = function() {
+      private$debug_print <- TRUE
+      invisible(self)
+    },
+
     default_api_key= function() {
       private$api_key <- PACKAGE_API_KEY
       invisible(self)
     },
 
     perform_request = function() {
-      stop("unable to perform request for generic builder")
+      stop("Unimplemented for this type")
     }
   ),
   private = list(
-    api_key = NULL
+    api_key = NULL,
+    debug_print = FALSE
   )
 )
 
