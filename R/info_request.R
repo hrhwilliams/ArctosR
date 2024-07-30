@@ -1,10 +1,40 @@
 #' @title InfoRequestBuilder
+#' @description
+#' Builder for a request for query parameter or result parameter documentation
+#' from Arctos. For a valid request, only one method to specify the type of
+#' request can be called.
+#'
+#' @examples
+#' results <- ArctosR::InfoRequestBuilder$new()$
+#'   all_query_params()$
+#'   perform_request()
+#'
+#' results <- ArctosR::InfoRequestBuilder$new()$
+#'   all_result_params()$
+#'   perform_request()
+#'
+#' results <- ArctosR::InfoRequestBuilder$new()$
+#'   by_query_category("parts")$
+#'   perform_request()
+#'
+#' results <- ArctosR::InfoRequestBuilder$new()$
+#'   by_result_category("core")$
+#'   perform_request()
+#'
+#' results <- ArctosR::InfoRequestBuilder$new()$
+#'   for_query_param("guid")$
+#'   perform_request()
+#'
+#' results <- ArctosR::InfoRequestBuilder$new()$
+#'   for_result_param("guid")$
+#'   perform_request()
 #'
 #' @import R6
 #' @export
 InfoRequestBuilder <- R6::R6Class("InfoRequestBuilder",
   inherit = RequestBuilder,
   public  = list(
+    #' @description Requests all parameters that can be used as part of a query.
     all_query_params = function() {
       if (!private$validate_all_empty()) {
         stop("can only specify one thing to request")
@@ -14,6 +44,7 @@ InfoRequestBuilder <- R6::R6Class("InfoRequestBuilder",
       invisible(self)
     },
 
+    #' @description Requests all columns that can be returned with a request.
     all_result_params = function() {
       if (!private$validate_all_empty()) {
         stop("can only specify one thing to request")
@@ -23,6 +54,9 @@ InfoRequestBuilder <- R6::R6Class("InfoRequestBuilder",
       invisible(self)
     },
 
+    #' @description Requests all query parameters by category.
+    #'
+    #' @param category Name of query category.
     by_query_category = function(category) {
       if (!private$validate_all_empty()) {
         stop("can only specify one thing to request")
@@ -32,6 +66,9 @@ InfoRequestBuilder <- R6::R6Class("InfoRequestBuilder",
       invisible(self)
     },
 
+    #' @description Requests all result parameters by category.
+    #'
+    #' @param category Name of result category.
     by_result_category = function(category) {
       if (!private$validate_all_empty()) {
         stop("can only specify one thing to request")
@@ -41,6 +78,9 @@ InfoRequestBuilder <- R6::R6Class("InfoRequestBuilder",
       invisible(self)
     },
 
+    #' @description Requests a specific query parameter.
+    #'
+    #' @param param Name of query parameter.
     for_query_param = function(param) {
       if (!private$validate_all_empty()) {
         stop("can only specify one thing to request")
@@ -50,6 +90,9 @@ InfoRequestBuilder <- R6::R6Class("InfoRequestBuilder",
       invisible(self)
     },
 
+    #' @description Requests a specific result parameter.
+    #'
+    #' @param param Name of result parameter.
     for_result_param = function(param) {
       if (!private$validate_all_empty()) {
         stop("can only specify one thing to request")
@@ -59,6 +102,9 @@ InfoRequestBuilder <- R6::R6Class("InfoRequestBuilder",
       invisible(self)
     },
 
+    #' @description Performs the request.
+    #'
+    #' @return [data.frame]
     perform_request = function() {
       if (private$validate_all_empty()) {
         stop("nothing specified")
@@ -90,7 +136,7 @@ InfoRequestBuilder <- R6::R6Class("InfoRequestBuilder",
           response$json$QUERY_PARAMS[index,]
         }
       } else if (!is.null(private$result)) {
-        index <-which(response$json$RESULTS_PARAMS[,2] == private$query)
+        index <-which(response$json$RESULTS_PARAMS[,2] == private$result)
         if (length(index) == 0) {
           stop("no such result parameter")
         } else {
