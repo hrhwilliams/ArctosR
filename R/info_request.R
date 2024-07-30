@@ -110,7 +110,12 @@ InfoRequestBuilder <- R6::R6Class("InfoRequestBuilder",
         stop("nothing specified")
       }
 
-      request <- ArctosR::Request$new(method = "about")
+      request <- if (!is.null(private$api_key)) {
+        ArctosR::Request$new(method = "about", api_key = private$api_key)
+      } else {
+        ArctosR::Request$new(method = "about")
+      }
+
       request$endpoint <- "catalog.cfc"
       response <- request$perform()
 
