@@ -14,3 +14,6 @@ Imports:
     R6 (>= 2.5.1),
     curl (>= 5.0.0),
     jsonlite (>= 1.8.0)
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
