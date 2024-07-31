@@ -53,6 +53,7 @@ results <- ArctosR::InfoRequestBuilder$new()$
 \if{html}{\out{
 <details open><summary>Inherited methods</summary>
 <ul>
+<li><span class="pkg-link" data-pkg="ArctosR" data-topic="RequestBuilder" data-id="debug"><a href='../../ArctosR/html/RequestBuilder.html#method-RequestBuilder-debug'><code>ArctosR::RequestBuilder$debug()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="ArctosR" data-topic="RequestBuilder" data-id="default_api_key"><a href='../../ArctosR/html/RequestBuilder.html#method-RequestBuilder-default_api_key'><code>ArctosR::RequestBuilder$default_api_key()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="ArctosR" data-topic="RequestBuilder" data-id="set_api_key"><a href='../../ArctosR/html/RequestBuilder.html#method-RequestBuilder-set_api_key'><code>ArctosR::RequestBuilder$set_api_key()</code></a></span></li>
 </ul>

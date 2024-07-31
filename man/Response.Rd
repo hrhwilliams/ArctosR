@@ -19,7 +19,13 @@ r <- ArctosR::Response$from_file("response.RData")
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-Response-new}{\code{Response$new()}}
-\item \href{#method-Response-request_more}{\code{Response$request_more()}}
+\item \href{#method-Response-was_success}{\code{Response$was_success()}}
+\item \href{#method-Response-get_table_id}{\code{Response$get_table_id()}}
+\item \href{#method-Response-get_api_key}{\code{Response$get_api_key()}}
+\item \href{#method-Response-get_total_record_count}{\code{Response$get_total_record_count()}}
+\item \href{#method-Response-get_index}{\code{Response$get_index()}}
+\item \href{#method-Response-set_index}{\code{Response$set_index()}}
+\item \href{#method-Response-get_record_count}{\code{Response$get_record_count()}}
 \item \href{#method-Response-get_error}{\code{Response$get_error()}}
 \item \href{#method-Response-get_url}{\code{Response$get_url()}}
 \item \href{#method-Response-save_csv}{\code{Response$save_csv()}}
@@ -54,24 +60,67 @@ Creates an Arctos response object from a curl response.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Response-request_more"></a>}}
-\if{latex}{\out{\hypertarget{method-Response-request_more}{}}}
-\subsection{Method \code{request_more()}}{
-Requests more records from Arctos.
+\if{html}{\out{<a id="method-Response-was_success"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-was_success}{}}}
+\subsection{Method \code{was_success()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$request_more(count)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Response$was_success()}\if{html}{\out{</div>}}
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{count}}{(\code{integer})}
 }
-\if{html}{\out{</div>}}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Response-get_table_id"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-get_table_id}{}}}
+\subsection{Method \code{get_table_id()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Response$get_table_id()}\if{html}{\out{</div>}}
 }
-\subsection{Returns}{
-\link{Response}.
+
 }
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Response-get_api_key"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-get_api_key}{}}}
+\subsection{Method \code{get_api_key()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Response$get_api_key()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Response-get_total_record_count"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-get_total_record_count}{}}}
+\subsection{Method \code{get_total_record_count()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Response$get_total_record_count()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Response-get_index"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-get_index}{}}}
+\subsection{Method \code{get_index()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Response$get_index()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Response-set_index"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-set_index}{}}}
+\subsection{Method \code{set_index()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Response$set_index(index)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Response-get_record_count"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-get_record_count}{}}}
+\subsection{Method \code{get_record_count()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Response$get_record_count()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Response-get_error"></a>}}
@@ -116,8 +165,8 @@ Writes the data in the response object to a CSV file.
 \if{html}{\out{<a id="method-Response-save_object"></a>}}
 \if{latex}{\out{\hypertarget{method-Response-save_object}{}}}
 \subsection{Method \code{save_object()}}{
-Store the response object as an .RData file which can be
-later loaded using Response$from_file
+Store the entire response object as an .RData file which can
+be later loaded using Response$from_file
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Response$save_object(path)}\if{html}{\out{</div>}}
 }
@@ -144,7 +193,7 @@ later loaded using Response$from_file
 \if{latex}{\out{\hypertarget{method-Response-get_relations}{}}}
 \subsection{Method \code{get_relations()}}{
 Using the records in this response, request a new table
-consisting of all records that are referenced in relatedcatalogeditems
+consisting of all records that are referenced in relatedcatalogeditems.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Response$get_relations()}\if{html}{\out{</div>}}
 }
@@ -167,7 +216,8 @@ Returns data from the response as a dataframe object.
 \if{html}{\out{<a id="method-Response-expand_col"></a>}}
 \if{latex}{\out{\hypertarget{method-Response-expand_col}{}}}
 \subsection{Method \code{expand_col()}}{
-Expand nested JSON objects to dataframes in place
+Expand a column of nested JSON tables to a list of
+dataframes.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Response$expand_col(column)}\if{html}{\out{</div>}}
 }
