@@ -30,7 +30,6 @@ results <- ArctosR::CatalogRequestBuilder$new()$
 \item \href{#method-CatalogRequestBuilder-set_components}{\code{CatalogRequestBuilder$set_components()}}
 \item \href{#method-CatalogRequestBuilder-set_columns}{\code{CatalogRequestBuilder$set_columns()}}
 \item \href{#method-CatalogRequestBuilder-from_previous_response}{\code{CatalogRequestBuilder$from_previous_response()}}
-\item \href{#method-CatalogRequestBuilder-request_more}{\code{CatalogRequestBuilder$request_more()}}
 \item \href{#method-CatalogRequestBuilder-perform_request}{\code{CatalogRequestBuilder$perform_request()}}
 \item \href{#method-CatalogRequestBuilder-record_count}{\code{CatalogRequestBuilder$record_count()}}
 \item \href{#method-CatalogRequestBuilder-clone}{\code{CatalogRequestBuilder$clone()}}
@@ -187,22 +186,18 @@ Sets the columns in the dataframe returned by Arctos.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CatalogRequestBuilder-request_more"></a>}}
-\if{latex}{\out{\hypertarget{method-CatalogRequestBuilder-request_more}{}}}
-\subsection{Method \code{request_more()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CatalogRequestBuilder$request_more(count)}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CatalogRequestBuilder-perform_request"></a>}}
 \if{latex}{\out{\hypertarget{method-CatalogRequestBuilder-perform_request}{}}}
 \subsection{Method \code{perform_request()}}{
+Send a request for data to Arctos with parameters specified
+by the other methods called on this class.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CatalogRequestBuilder$perform_request(response = NULL, status_code = 200)}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+\link{Response}.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CatalogRequestBuilder-record_count"></a>}}

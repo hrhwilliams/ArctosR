@@ -41,6 +41,7 @@ response <- ArctosR::CatalogRequestBuilder$new()$
   set_limit(500)$
   perform_request()
 
+responses <- c(response)
 data <- response$as_data_frame()
 
 # Because Arctos paginates the records returned by a query, it is necessary to
@@ -53,6 +54,7 @@ while (nrow(data) < count) {
     perform_request()
 
   data <- rbind(data, response$as_data_frame())
+  responses <- c(responses, response)
 }
 
 # Saves the dataframe as a comma-separated value file.

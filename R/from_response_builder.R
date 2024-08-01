@@ -1,4 +1,20 @@
 #' @title FromResponseRequestBuilder
+#' @description Builder for the case where a request is made with the context
+#' of a previous response.
+#'
+#' @examples
+#' response <- ArctosR::CatalogRequestBuilder$new()$
+#'   default_api_key()$
+#'   set_query(scientific_name="Canis lupus", guid_prefix="MSB:Mamm")$
+#'   set_columns("guid", "parts", "partdetail")$
+#'   set_limit(500)$
+#'   perform_request()
+#'
+#' response <- ArctosR::CatalogRequestBuilder$new()$
+#'   from_previous_response(response)$
+#'   request_more(500)$
+#'   perform_request()
+#'
 
 #' @import R6
 #' @export
@@ -11,6 +27,11 @@ FromResponseRequestBuilder <- R6::R6Class("FromResponseRequestBuilder",
       invisible(self)
     },
 
+    #' @description Request at most `count` more records from this response's
+    #' original query
+    #'
+    #' @param count number of additional records to request
+    #' @return FromResponseRequestBuilder
     request_more = function(count) {
       private$more <- count
       invisible(self)
@@ -20,6 +41,8 @@ FromResponseRequestBuilder <- R6::R6Class("FromResponseRequestBuilder",
       invisible(self)
     },
 
+    #' @description Perform the request.
+    #' @return Response
     perform_request = function() {
       request <- ArctosR::Request$new()$
         with_endpoint("catalog.cfc")$

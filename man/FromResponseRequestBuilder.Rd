@@ -4,9 +4,22 @@
 \alias{FromResponseRequestBuilder}
 \title{FromResponseRequestBuilder}
 \description{
-FromResponseRequestBuilder
+Builder for the case where a request is made with the context
+of a previous response.
+}
+\examples{
+response <- ArctosR::CatalogRequestBuilder$new()$
+  default_api_key()$
+  set_query(scientific_name="Canis lupus", guid_prefix="MSB:Mamm")$
+  set_columns("guid", "parts", "partdetail")$
+  set_limit(500)$
+  perform_request()
 
-FromResponseRequestBuilder
+response <- ArctosR::CatalogRequestBuilder$new()$
+  from_previous_response(response)$
+  request_more(500)$
+  perform_request()
+
 }
 \section{Super class}{
 \code{\link[ArctosR:RequestBuilder]{ArctosR::RequestBuilder}} -> \code{FromResponseRequestBuilder}
@@ -43,10 +56,22 @@ FromResponseRequestBuilder
 \if{html}{\out{<a id="method-FromResponseRequestBuilder-request_more"></a>}}
 \if{latex}{\out{\hypertarget{method-FromResponseRequestBuilder-request_more}{}}}
 \subsection{Method \code{request_more()}}{
+Request at most \code{count} more records from this response's
+original query
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{FromResponseRequestBuilder$request_more(count)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{count}}{number of additional records to request}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+FromResponseRequestBuilder
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-FromResponseRequestBuilder-add_column"></a>}}
@@ -61,10 +86,14 @@ FromResponseRequestBuilder
 \if{html}{\out{<a id="method-FromResponseRequestBuilder-perform_request"></a>}}
 \if{latex}{\out{\hypertarget{method-FromResponseRequestBuilder-perform_request}{}}}
 \subsection{Method \code{perform_request()}}{
+Perform the request.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{FromResponseRequestBuilder$perform_request()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+Response
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-FromResponseRequestBuilder-clone"></a>}}

@@ -4,7 +4,8 @@
 \alias{Request}
 \title{Request}
 \description{
-An Arctos request. Not to be used directly.
+A generic Arctos request. Not intended to be used directly. See
+InfoRequestBuilder and CatalogRequestBuilder.
 }
 \section{Methods}{
 \subsection{Public methods}{

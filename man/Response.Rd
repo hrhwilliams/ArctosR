@@ -6,15 +6,6 @@
 \description{
 Response returned from Arctos.
 }
-\examples{
-
-## ------------------------------------------------
-## Method `Response$save_object`
-## ------------------------------------------------
-
-r <- ArctosR::Response$from_file("response.RData")
-
-}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
@@ -31,7 +22,6 @@ r <- ArctosR::Response$from_file("response.RData")
 \item \href{#method-Response-save_csv}{\code{Response$save_csv()}}
 \item \href{#method-Response-save_dataframe}{\code{Response$save_dataframe()}}
 \item \href{#method-Response-save_object}{\code{Response$save_object()}}
-\item \href{#method-Response-get_relations}{\code{Response$get_relations()}}
 \item \href{#method-Response-as_data_frame}{\code{Response$as_data_frame()}}
 \item \href{#method-Response-expand_col}{\code{Response$expand_col()}}
 \item \href{#method-Response-clone}{\code{Response$clone()}}
@@ -178,26 +168,6 @@ be later loaded using Response$from_file
 }
 \if{html}{\out{</div>}}
 }
-\subsection{Examples}{
-\if{html}{\out{<div class="r example copy">}}
-\preformatted{r <- ArctosR::Response$from_file("response.RData")
-
-}
-\if{html}{\out{</div>}}
-
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Response-get_relations"></a>}}
-\if{latex}{\out{\hypertarget{method-Response-get_relations}{}}}
-\subsection{Method \code{get_relations()}}{
-Using the records in this response, request a new table
-consisting of all records that are referenced in relatedcatalogeditems.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$get_relations()}\if{html}{\out{</div>}}
-}
-
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Response-as_data_frame"></a>}}
@@ -216,8 +186,8 @@ Returns data from the response as a dataframe object.
 \if{html}{\out{<a id="method-Response-expand_col"></a>}}
 \if{latex}{\out{\hypertarget{method-Response-expand_col}{}}}
 \subsection{Method \code{expand_col()}}{
-Expand a column of nested JSON tables to a list of
-dataframes.
+Expand a column of nested JSON tables in the response to a
+list of dataframes. This does not modify the original data.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Response$expand_col(column)}\if{html}{\out{</div>}}
 }

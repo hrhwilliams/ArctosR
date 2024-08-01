@@ -1,5 +1,6 @@
 #' @title Request
-#' @description An Arctos request. Not to be used directly.
+#' @description A generic Arctos request. Not intended to be used directly. See
+#' InfoRequestBuilder and CatalogRequestBuilder.
 #'
 #' @import R6
 #' @export

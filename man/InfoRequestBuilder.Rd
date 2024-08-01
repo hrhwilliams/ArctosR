@@ -68,6 +68,9 @@ Requests all parameters that can be used as part of a query.
 \if{html}{\out{<div class="r">}}\preformatted{InfoRequestBuilder$all_query_params()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+InfoRequestBuilder
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-InfoRequestBuilder-all_result_params"></a>}}

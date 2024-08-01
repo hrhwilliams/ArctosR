@@ -76,15 +76,10 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
       FromResponseRequestBuilder$new(response)
     },
 
-    request_more = function(count) {
-      if (is.null(private$previous_response)) {
-        stop("no previous response given to request more from")
-      }
-
-      tbl <- response$table_id()
-      # &start={current_count}&limit={count}
-    },
-
+    #' @description Send a request for data to Arctos with parameters specified
+    #' by the other methods called on this class.
+    #'
+    #' @return [Response].
     perform_request = function(response = NULL, status_code = 200) {
       url_params <- list()
       url_params$method <- "getCatalogData"
@@ -92,18 +87,21 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
       url_params$api_key <- private$api_key
       url_params$length  <- private$limit
 
-      # require GUID by default in case we need to perform a request on a
-      # particular record. alternatively we can use collection_object_id.
-      # if (!("guid" %in% private$query)) {
-      #   private$query <- c(private$query, list("guid"))
-      # }
-
       url_params <- c(url_params, private$query)
       # TODO research how to encode parts queries and attributes queries
       # url_params <- c(url_params, private$parts) ?
       # url_params <- c(url_params, private$attributes) ?
       if (!is.null(private$cols)) {
         url_params$cols <- encode_list(private$cols, ",")
+      }
+      if (!is.null(private$parts)) {
+        url_params$cols <- encode_list(private$parts, ",")
+      }
+      if (!is.null(private$attributes)) {
+        url_params$cols <- encode_list(private$attributes, ",")
+      }
+      if (!is.null(private$components)) {
+        url_params$cols <- encode_list(private$components, ",")
       }
 
       private$request_url <- build_url("catalog.cfc", url_params)

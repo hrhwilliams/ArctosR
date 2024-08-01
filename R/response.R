@@ -97,9 +97,6 @@ Response <- R6::R6Class("Response",
     #' @description Store the entire response object as an .RData file which can
     #' be later loaded using Response$from_file
     #'
-    #' @examples
-    #' r <- ArctosR::Response$from_file("response.RData")
-    #'
     #' @param path (`string`)
     save_object = function(path) {
       arctos_env$arctosr_response <- self
@@ -112,32 +109,6 @@ Response <- R6::R6Class("Response",
       }
     },
 
-    #' @description Using the records in this response, request a new table
-    #' consisting of all records that are referenced in relatedcatalogeditems.
-    get_relations = function() {
-      stop("Unimplemented.")
-
-      # first get all related items for the records we have
-      related <- data.frame()
-
-      by(private$data, seq_len(nrow(private$data)), function (record) {
-        url_params <- list(
-          method = "getCatalogData", queryformat = "struct", api_key = private$api_key,
-          collection_object_id = record$collection_object_id, cols = "relatedcatalogeditems")
-        request_url <- build_url("catalog.cfc", url_params)
-        raw_response <- perform_request(request_url)
-        json <- parse_response(raw_response)
-
-        related <- rbind(related, as.data.frame(json$DATA))
-      })
-
-      new_related <- data.frame()
-
-      by(related, seq_len(nrow(related)), function(record) {
-
-      })
-    },
-
     #' @description Returns data from the response as a dataframe object.
     #'
     #' @return (`data.frame`).
@@ -145,8 +116,8 @@ Response <- R6::R6Class("Response",
       private$data
     },
 
-    #' @description Expand a column of nested JSON tables to a list of
-    #' dataframes.
+    #' @description Expand a column of nested JSON tables in the response to a
+    #' list of dataframes. This does not modify the original data.
     #'
     #' @param col (`string`)
     expand_col = function(column) {
