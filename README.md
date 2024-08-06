@@ -12,8 +12,8 @@ You can install the development version of ArctosR from
 [GitHub](https://github.com/) with:
 
 ``` r
-install.packages("devtools")
-devtools::install_github("hrhwilliams/ArctosR")
+install.packages("remotes")
+remotes::install_github("hrhwilliams/ArctosR")
 ```
 
 ## Example
