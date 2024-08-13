@@ -114,10 +114,13 @@ Response <- R6::R6Class("Response",
         exclude <- names(df) %in% names(list_cols)
         write.csv(df[!exclude], sprintf("%s.csv", encode_win_filename(col_name_path)))
 
-        for (col in list_cols) {
+        for (col in names(list_cols)) {
           for (row in 1:nrow(df)) {
-            recursive_write(df[[col]][[row]], sprintf("%s_%s", encode_win_filename(col_name_path),
-              encode_win_filename(df[[1]][[row]])))
+            if (is.null(df[[col]][[row]])) {
+              next
+            }
+            recursive_write(df[[col]][[row]], sprintf("%s_%s-%s", encode_win_filename(col_name_path),
+              encode_win_filename(df[[1]][[row]]), col))
           }
         }
       }
