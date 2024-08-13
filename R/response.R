@@ -75,7 +75,7 @@ Response <- R6::R6Class("Response",
     },
 
     #' @description Writes the data in the response object to a CSV file.
-    save_csv = function(path) {
+    save_flat_csv = function(path) {
       if (is.null(private$data)) {
         stop("No data to export.")
       }
@@ -96,10 +96,34 @@ Response <- R6::R6Class("Response",
       }
     },
 
-    save_dataframe = function(path) {
+    save_expanded_csvs = function(path) {
       if (is.null(private$data)) {
         stop("No data to export.")
       }
+
+      if (dir.exists(path)) {
+        stop("Directory already exists")
+      }
+
+      dir.create(path)
+      setwd(path)
+
+      recursive_write <- function(df, col_name_path) {
+        col_types <- sapply(df, class)
+        list_cols <- which(col_types == "list")
+        exclude <- names(df) %in% names(list_cols)
+        write.csv(df[!exclude], sprintf("%s.csv", encode_win_filename(col_name_path)))
+
+        for (col in list_cols) {
+          for (row in 1:nrow(df)) {
+            recursive_write(df[[col]][[row]], sprintf("%s_%s", encode_win_filename(col_name_path),
+              encode_win_filename(df[[1]][[row]])))
+          }
+        }
+      }
+
+      recursive_write(private$data, path)
+      setwd("..")
     },
 
     #' @description Store the entire response object as an .RData file which can
@@ -137,7 +161,7 @@ Response <- R6::R6Class("Response",
         stop("No such column")
       }
 
-      if (!(column %in% private$expanded_cols)) {
+      if (!(column %in% names(private$expanded_cols))) {
         private$expanded_cols = c(private$expanded_cols,
           setNames(list(private$data[[column]]), c(column))
         )

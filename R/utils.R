@@ -50,3 +50,8 @@ encode_list <- function(params, collapse) {
 encode_params <- function(params) {
   encode_list(params, "&")
 }
+
+encode_win_filename <- function(path) {
+  "\\/:*?\"<>|"
+  gsub("[\\\\/:*?\"<>|]", "-", path)
+}
