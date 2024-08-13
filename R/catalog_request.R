@@ -80,14 +80,18 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
     #' by the other methods called on this class.
     #'
     #' @return [Response].
-    perform_request = function(response = NULL, status_code = 200) {
-      url_params <- list()
-      url_params$method <- "getCatalogData"
-      url_params$queryformat <- "struct"
-      url_params$api_key <- private$api_key
-      url_params$length  <- private$limit
+    perform_request = function() {
+      if (is.null(private$query)) {
+        stop("Unable to perform request: No query parameters specified.")
+      }
 
+      if (is.null(private$api_key)) {
+        private$api_key <- PACKAGE_API_KEY
+      }
+
+      url_params <- list()
       url_params <- c(url_params, private$query)
+
       # TODO research how to encode parts queries and attributes queries
       # url_params <- c(url_params, private$parts) ?
       # url_params <- c(url_params, private$attributes) ?
@@ -104,20 +108,15 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
         url_params$cols <- encode_list(private$components, ",")
       }
 
-      private$request_url <- build_url("catalog.cfc", url_params)
+      request <- ArctosR::Request$new()$
+        with_endpoint("catalog.cfc")$
+        add_param(method = "getCatalogData")$
+        add_param(queryformat = "struct")$
+        add_param(api_key = private$api_key)$
+        add_param(length = private$limit)$
+        add_params(url_params)
 
-      if (!is.null(response)) {
-        raw_response <- list()
-        raw_response$url <- private$request_url
-        raw_response$status_code <- status_code
-        raw_response$type <- "application/json;charset=UTF-8"
-        raw_response$content <- charToRaw(response)
-        raw_response$headers <- charToRaw("headers")
-      } else {
-        raw_response <- perform_request(private$request_url)
-      }
-
-      Response$new(raw_response, url_params)
+      request$perform()
     },
 
     record_count = function() {
