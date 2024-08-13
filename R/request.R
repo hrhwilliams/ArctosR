@@ -16,6 +16,11 @@ Request <- R6::R6Class("Request",
       invisible(self)
     },
 
+    add_params = function(params) {
+      private$url_params <- c(private$url_params, params)
+      invisible(self)
+    },
+
     perform = function() {
       if (is.null(private$end_point)) {
         stop("No endpoint given")

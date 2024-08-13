@@ -35,6 +35,7 @@ InfoRequestBuilder <- R6::R6Class("InfoRequestBuilder",
   inherit = RequestBuilder,
   public  = list(
     #' @description Requests all parameters that can be used as part of a query.
+    #' @return InfoRequestBuilder
     all_query_params = function() {
       if (!private$validate_all_empty()) {
         stop("can only specify one thing to request")

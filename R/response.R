@@ -80,11 +80,19 @@ Response <- R6::R6Class("Response",
         stop("No data to export.")
       }
 
+      for (column in names(private$expanded_cols)) {
+        private$data[[column]] = private$expanded_cols[[column]]
+      }
+
       file_ext <- tail(unlist(strsplit(path, "[.]")), n=1)
       if (file_ext != "csv") {
         write.csv(private$data, sprintf("%s.csv", path))
       } else {
         write.csv(private$data, path)
+      }
+
+      for (column in names(private$expanded_cols)) {
+        self$expand_col(column)
       }
     },
 
@@ -125,7 +133,17 @@ Response <- R6::R6Class("Response",
         stop("No data to expand")
       }
 
-      lapply(private$data[[column]], function (j) {
+      if (is.null(private$data[[column]])) {
+        stop("No such column")
+      }
+
+      if (!(column %in% private$expanded_cols)) {
+        private$expanded_cols = c(private$expanded_cols,
+          setNames(list(private$data[[column]]), c(column))
+        )
+      }
+
+      private$data[[column]] = lapply(private$data[[column]], function (j) {
         jsonlite::fromJSON(j, simplifyDataFrame=T)
       })
     }
@@ -145,7 +163,8 @@ Response <- R6::R6Class("Response",
     downloaded_records = integer(0),
     tbl = NULL,
     data = NULL,
-    timestamp = NULL
+    timestamp = NULL,
+    expanded_cols = NULL
   )
 )
 
