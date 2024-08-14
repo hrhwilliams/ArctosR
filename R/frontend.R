@@ -10,7 +10,6 @@ get_result_parameters <- function() {
            perform_request())
 }
 
-
 get_record_count <- function(...) {
   return(ArctosR::CatalogRequestBuilder$new()$
            default_api_key()$
@@ -49,4 +48,26 @@ response_data <- function(response) {
 
 response_metadata <- function(response) {
   return(response$get_metadata())
+}
+
+# expand dataframe by default
+# => need to just record which columns need to be expanded
+
+# saveRDS the expanded dataframe
+
+save_response_csv <- function(response, path, expanded = FALSE, with_metadata = TRUE) {
+  if (expanded) {
+    stop("unimplemented")
+  } else {
+    response$save_flat_csv(path)
+
+    if (with_metadata) {
+      write(jsonlite::toJSON(response_metadata(response), pretty=TRUE),
+            file = sprintf("%s.json", path))
+    }
+  }
+}
+
+save_response_object <- function(response, path) {
+  response$save_object(path)
 }
