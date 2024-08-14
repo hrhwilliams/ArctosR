@@ -116,7 +116,7 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
         add_param(length = private$limit)$
         add_params(url_params)
 
-      request$perform()
+      request$perform(query = private$query)
     },
 
     record_count = function() {

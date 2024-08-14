@@ -14,7 +14,7 @@ Response <- R6::R6Class("Response",
     #' @param raw_response (`list`)
     #' @param url_params (`list`)
     #' @return [Response].
-    initialize = function(raw_response, url_params) {
+    initialize = function(raw_response, url_params, ...) {
       private$url <- raw_response$url
       private$url_params <- url_params
       private$api_key <- url_params$api_key
@@ -22,6 +22,7 @@ Response <- R6::R6Class("Response",
       private$type <- raw_response$type
       private$headers <- rawToChar(raw_response$headers)
       private$content <- rawToChar(raw_response$content)
+      private$extra_data <- list(...)
 
       self$json <- parse_response(raw_response)
       if (is.null(self$json$error)) {
@@ -33,6 +34,10 @@ Response <- R6::R6Class("Response",
       } else {
         private$error = self$json$Message
       }
+    },
+
+    get_metadata = function() {
+      list(query = private$extra_data$query)
     },
 
     was_success = function() {
@@ -191,7 +196,8 @@ Response <- R6::R6Class("Response",
     tbl = NULL,
     data = NULL,
     timestamp = NULL,
-    expanded_cols = NULL
+    expanded_cols = NULL,
+    extra_data = NULL
   )
 )
 

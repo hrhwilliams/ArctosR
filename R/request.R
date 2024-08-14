@@ -21,13 +21,13 @@ Request <- R6::R6Class("Request",
       invisible(self)
     },
 
-    perform = function() {
+    perform = function(...) {
       if (is.null(private$end_point)) {
         stop("No endpoint given")
       }
 
       raw_response <- perform_request(self$url)
-      ArctosR::Response$new(raw_response, private$url_params)
+      ArctosR::Response$new(raw_response, private$url_params, ...)
     }
   ),
   active = list(
