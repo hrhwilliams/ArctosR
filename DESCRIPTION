@@ -1,10 +1,19 @@
 Package: ArctosR
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
-Authors@R: 
-    person("Harlan", "Williams", , "harlanrhwilliams@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Title: An Interface to the Arctos Database
+Version: 0.1.0
+Authors@R: c(
+    person("Harlan", "Williams", "harlanrhwilliams@gmail.com", role = c("aut", "cre")),
+    person("Marlon E.", "Cobos", email = "manubio13@gmail.com", role = "aut"),
+    person("Jocelyn P.", "Colella", email = "colella@ku.edu", role = "aut"),
+    person("Michelle S.", "Koo", email = "mkoo@berkeley.edu", role = "aut"),
+    person("Vijay", "Barve", email = "vijay.barve@gmail.com", role = "aut")
+)
+Maintainer: Harlan Williams <harlanrhwilliams@gmail.com>
+Date: 2024-08-22
+Description: This package provides a set of functions to help users perform
+    requests to the Arctos API to download data. It provides a set of builder
+    classes for performing complex requests, as well as a set of simple
+    functions for automating many common requests and workflows.
 License: GPL (== 3)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
