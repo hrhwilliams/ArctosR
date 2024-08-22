@@ -6,8 +6,7 @@ Authors@R: c(
     person("Marlon E.", "Cobos", email = "manubio13@gmail.com", role = "aut"),
     person("Jocelyn P.", "Colella", email = "colella@ku.edu", role = "aut"),
     person("Michelle S.", "Koo", email = "mkoo@berkeley.edu", role = "aut"),
-    person("Vijay", "Barve", email = "vijay.barve@gmail.com", role = "aut")
-)
+    person("Vijay", "Barve", email = "vijay.barve@gmail.com", role = "aut"))
 Maintainer: Harlan Williams <harlanrhwilliams@gmail.com>
 Date: 2024-08-22
 Description: This package provides a set of functions to help users perform
