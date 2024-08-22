@@ -12,6 +12,7 @@ InfoRequestBuilder and CatalogRequestBuilder.
 \itemize{
 \item \href{#method-Request-with_endpoint}{\code{Request$with_endpoint()}}
 \item \href{#method-Request-add_param}{\code{Request$add_param()}}
+\item \href{#method-Request-add_params}{\code{Request$add_params()}}
 \item \href{#method-Request-perform}{\code{Request$perform()}}
 \item \href{#method-Request-clone}{\code{Request$clone()}}
 }
@@ -35,11 +36,20 @@ InfoRequestBuilder and CatalogRequestBuilder.
 
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Request-add_params"></a>}}
+\if{latex}{\out{\hypertarget{method-Request-add_params}{}}}
+\subsection{Method \code{add_params()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Request$add_params(params)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Request-perform"></a>}}
 \if{latex}{\out{\hypertarget{method-Request-perform}{}}}
 \subsection{Method \code{perform()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Request$perform()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Request$perform(...)}\if{html}{\out{</div>}}
 }
 
 }

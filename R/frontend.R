@@ -1,15 +1,18 @@
+#' @export
 get_query_parameters <- function() {
   return(ArctosR::InfoRequestBuilder$new()$
            all_query_params()$
            perform_request())
 }
 
+#' @export
 get_result_parameters <- function() {
   return(ArctosR::InfoRequestBuilder$new()$
            all_result_params()$
            perform_request())
 }
 
+#' @export
 get_record_count <- function(...) {
   return(ArctosR::CatalogRequestBuilder$new()$
            default_api_key()$
@@ -17,7 +20,8 @@ get_record_count <- function(...) {
            record_count())
 }
 
-get_records <- function(..., columns = NULL, limit = NULL, all_records = FALSE) {
+#' @export
+get_records <- function(..., api_key = NULL, columns = NULL, limit = NULL, all_records = FALSE) {
   builder <- ArctosR::CatalogRequestBuilder$new()
 
   if (!missing(...)) {
@@ -26,8 +30,12 @@ get_records <- function(..., columns = NULL, limit = NULL, all_records = FALSE) 
     stop("Requires at least one query parameter to be defined.")
   }
 
+  if (!is.null(api_key)) {
+    builder <- builder$set_api_key(api_key)
+  }
+
   if (!is.null(columns)) {
-    builder <- builder$set_columns(columns)
+    builder <- builder$set_columns_list(columns)
   }
 
   if (all_records) {
@@ -42,32 +50,42 @@ get_records <- function(..., columns = NULL, limit = NULL, all_records = FALSE) 
   }
 }
 
+#' @export
 response_data <- function(response) {
   return(response$as_data_frame())
 }
 
+#' @export
 response_metadata <- function(response) {
   return(response$get_metadata())
 }
 
-# expand dataframe by default
-# => need to just record which columns need to be expanded
+#' @export
+save_response_rds <- function(response, filename) {
+  saveRDS(response, filename)
+}
 
-# saveRDS the expanded dataframe
+#' @export
+read_response_rds <- function(filename) {
+  readRDS(filename)
+}
 
-save_response_csv <- function(response, path, expanded = FALSE, with_metadata = TRUE) {
-  if (expanded) {
-    stop("unimplemented")
-  } else {
+#' @export
+save_response_csv <- function(response, path, flat = TRUE, with_metadata = TRUE) {
+  if (flat) {
     response$save_flat_csv(path)
+
+    filename <- head(unlist(strsplit(path, "[.]")), n=1)
+    if (with_metadata) {
+      write(jsonlite::toJSON(response_metadata(response), pretty=TRUE),
+            file = sprintf("%s.json", filename))
+    }
+  } else {
+    response$save_expanded_csvs(path)
 
     if (with_metadata) {
       write(jsonlite::toJSON(response_metadata(response), pretty=TRUE),
-            file = sprintf("%s.json", path))
+            file = sprintf("%s/%s_meta.json", path))
     }
   }
-}
-
-save_response_object <- function(response, path) {
-  response$save_object(path)
 }

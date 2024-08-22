@@ -29,6 +29,7 @@ results <- ArctosR::CatalogRequestBuilder$new()$
 \item \href{#method-CatalogRequestBuilder-set_attributes}{\code{CatalogRequestBuilder$set_attributes()}}
 \item \href{#method-CatalogRequestBuilder-set_components}{\code{CatalogRequestBuilder$set_components()}}
 \item \href{#method-CatalogRequestBuilder-set_columns}{\code{CatalogRequestBuilder$set_columns()}}
+\item \href{#method-CatalogRequestBuilder-set_columns_list}{\code{CatalogRequestBuilder$set_columns_list()}}
 \item \href{#method-CatalogRequestBuilder-from_previous_response}{\code{CatalogRequestBuilder$from_previous_response()}}
 \item \href{#method-CatalogRequestBuilder-perform_request}{\code{CatalogRequestBuilder$perform_request()}}
 \item \href{#method-CatalogRequestBuilder-record_count}{\code{CatalogRequestBuilder$record_count()}}
@@ -166,6 +167,26 @@ Sets the columns in the dataframe returned by Arctos.
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-CatalogRequestBuilder-set_columns_list"></a>}}
+\if{latex}{\out{\hypertarget{method-CatalogRequestBuilder-set_columns_list}{}}}
+\subsection{Method \code{set_columns_list()}}{
+Sets the columns in the dataframe returned by Arctos.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{CatalogRequestBuilder$set_columns_list(l)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{cols}}{(\code{list}).}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\link{CatalogRequestBuilder}.
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CatalogRequestBuilder-from_previous_response"></a>}}
 \if{latex}{\out{\hypertarget{method-CatalogRequestBuilder-from_previous_response}{}}}
 \subsection{Method \code{from_previous_response()}}{
@@ -192,7 +213,7 @@ Sets the columns in the dataframe returned by Arctos.
 Send a request for data to Arctos with parameters specified
 by the other methods called on this class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CatalogRequestBuilder$perform_request(response = NULL, status_code = 200)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{CatalogRequestBuilder$perform_request()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{

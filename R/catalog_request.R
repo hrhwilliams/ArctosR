@@ -70,6 +70,15 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
 
     #' @description Sets the columns in the dataframe returned by Arctos.
     #'
+    #' @param cols (`list`).
+    #' @return [CatalogRequestBuilder].
+    set_columns_list = function(l) {
+      private$cols <- l
+      invisible(self)
+    },
+
+    #' @description Sets the columns in the dataframe returned by Arctos.
+    #'
     #' @param response a response object from a previous request
     #' @return [FromResponseRequestBuilder].
     from_previous_response = function(response) {

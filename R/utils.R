@@ -1,5 +1,7 @@
-#' @import curl
-#' @import jsonlite
+#' @importFrom jsonlite fromJSON
+#' @importFrom curl handle_setheaders
+#' @importFrom curl curl_fetch_memory
+#' @importFrom curl curl_escape
 
 ARCTOS_URL <- "https://arctos.database.museum"
 ARCTOS_API_URL <- "component/api/v2"
@@ -10,16 +12,16 @@ WARN_MISSING_API_KEY = "Your API key for Arctos is not currently registered.\nIf
 
 new_arctosr_handle <- function() {
   h <- curl::new_handle() |>
-    curl::handle_setheaders("User-Agent"=ARCTOSR_AGENT_STRING)
+    handle_setheaders("User-Agent"=ARCTOSR_AGENT_STRING)
 }
 
 perform_request <- function(url) {
-  curl::curl_fetch_memory(new_arctosr_handle(), url = url)
+  curl_fetch_memory(new_arctosr_handle(), url = url)
 }
 
 parse_response <- function(raw_response) {
   if (raw_response$type == "application/json;charset=UTF-8") {
-    return(jsonlite::fromJSON(rawToChar(raw_response$content), simplifyDataFrame=T))
+    return(fromJSON(rawToChar(raw_response$content), simplifyDataFrame=T))
   } else {
     stop("Expected response in JSON format")
   }
@@ -38,9 +40,9 @@ encode_list <- function(params, collapse) {
 
   for (i in 1:length(params)) {
     if (!is.null(names(params)) && nchar(names(params)[i]) > 0) {
-      qq[i] <- paste(c(curl::curl_escape(names(params)[i]), curl::curl_escape(params[[i]])), collapse="=")
+      qq[i] <- paste(c(curl_escape(names(params)[i]), curl_escape(params[[i]])), collapse="=")
     } else {
-      qq[i] <- curl::curl_escape(params[[i]])
+      qq[i] <- curl_escape(params[[i]])
     }
   }
 

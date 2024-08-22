@@ -10,6 +10,7 @@ Response returned from Arctos.
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-Response-new}{\code{Response$new()}}
+\item \href{#method-Response-get_metadata}{\code{Response$get_metadata()}}
 \item \href{#method-Response-was_success}{\code{Response$was_success()}}
 \item \href{#method-Response-get_table_id}{\code{Response$get_table_id()}}
 \item \href{#method-Response-get_api_key}{\code{Response$get_api_key()}}
@@ -19,8 +20,8 @@ Response returned from Arctos.
 \item \href{#method-Response-get_record_count}{\code{Response$get_record_count()}}
 \item \href{#method-Response-get_error}{\code{Response$get_error()}}
 \item \href{#method-Response-get_url}{\code{Response$get_url()}}
-\item \href{#method-Response-save_csv}{\code{Response$save_csv()}}
-\item \href{#method-Response-save_dataframe}{\code{Response$save_dataframe()}}
+\item \href{#method-Response-save_flat_csv}{\code{Response$save_flat_csv()}}
+\item \href{#method-Response-save_expanded_csvs}{\code{Response$save_expanded_csvs()}}
 \item \href{#method-Response-save_object}{\code{Response$save_object()}}
 \item \href{#method-Response-as_data_frame}{\code{Response$as_data_frame()}}
 \item \href{#method-Response-expand_col}{\code{Response$expand_col()}}
@@ -33,7 +34,7 @@ Response returned from Arctos.
 \subsection{Method \code{new()}}{
 Creates an Arctos response object from a curl response.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$new(raw_response, url_params)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Response$new(raw_response, url_params, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -48,6 +49,15 @@ Creates an Arctos response object from a curl response.
 \subsection{Returns}{
 \link{Response}.
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Response-get_metadata"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-get_metadata}{}}}
+\subsection{Method \code{get_metadata()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Response$get_metadata()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Response-was_success"></a>}}
@@ -133,21 +143,21 @@ Returns the request URL for debugging purposes.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Response-save_csv"></a>}}
-\if{latex}{\out{\hypertarget{method-Response-save_csv}{}}}
-\subsection{Method \code{save_csv()}}{
+\if{html}{\out{<a id="method-Response-save_flat_csv"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-save_flat_csv}{}}}
+\subsection{Method \code{save_flat_csv()}}{
 Writes the data in the response object to a CSV file.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$save_csv(path)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Response$save_flat_csv(path)}\if{html}{\out{</div>}}
 }
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Response-save_dataframe"></a>}}
-\if{latex}{\out{\hypertarget{method-Response-save_dataframe}{}}}
-\subsection{Method \code{save_dataframe()}}{
+\if{html}{\out{<a id="method-Response-save_expanded_csvs"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-save_expanded_csvs}{}}}
+\subsection{Method \code{save_expanded_csvs()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$save_dataframe(path)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Response$save_expanded_csvs(path)}\if{html}{\out{</div>}}
 }
 
 }
