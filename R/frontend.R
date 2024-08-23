@@ -1,3 +1,5 @@
+#' @importFrom utils head
+
 #' @export
 get_query_parameters <- function() {
   return(ArctosR::InfoRequestBuilder$new()$

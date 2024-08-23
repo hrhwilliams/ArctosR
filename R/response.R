@@ -4,6 +4,7 @@ arctos_env <- new.env(parent = baseenv())
 #' @description Response returned from Arctos.
 #'
 #' @import R6
+#' @importFrom jsonlite fromJSON
 #' @export
 Response <- R6::R6Class("Response",
   public = list(
@@ -77,6 +78,25 @@ Response <- R6::R6Class("Response",
     #' @description Returns the request URL for debugging purposes.
     get_url = function() {
       private$url
+    },
+
+    #' @description
+    #' Append the contents of one response object to this one if possible.
+    append = function(other) {
+      if (!is.null(other$get_error)) {
+        stop("Cannot consolidate responses: other response is invalid.")
+      }
+      if (private$tbl != other$get_table_id()) {
+        stop("Cannot consolidate responses: tables don't match.")
+      }
+      if (colnames(private$data) != colnames(other$as_data_frame())) {
+        stop("Cannot consolidate responses: colnames don't match.")
+      }
+      # one response could have expanded cols and another could not
+      # so unexpand to merge.
+      # tbl being the same should mean recordCount wasn't invalidated
+      private$data <- rbind(private$data, other$as_data_frame())
+      private$timestamp <- c(private$timestamp, other$get_timestamp())
     },
 
     #' @description Writes the data in the response object to a CSV file.
@@ -176,7 +196,7 @@ Response <- R6::R6Class("Response",
       }
 
       private$data[[column]] = lapply(private$data[[column]], function (j) {
-        jsonlite::fromJSON(j, simplifyDataFrame=T)
+        fromJSON(j, simplifyDataFrame=T)
       })
     }
   ),
