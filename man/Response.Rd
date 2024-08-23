@@ -20,6 +20,7 @@ Response returned from Arctos.
 \item \href{#method-Response-get_record_count}{\code{Response$get_record_count()}}
 \item \href{#method-Response-get_error}{\code{Response$get_error()}}
 \item \href{#method-Response-get_url}{\code{Response$get_url()}}
+\item \href{#method-Response-append}{\code{Response$append()}}
 \item \href{#method-Response-save_flat_csv}{\code{Response$save_flat_csv()}}
 \item \href{#method-Response-save_expanded_csvs}{\code{Response$save_expanded_csvs()}}
 \item \href{#method-Response-save_object}{\code{Response$save_object()}}
@@ -139,6 +140,16 @@ Returns any API error returned from Arctos.
 Returns the request URL for debugging purposes.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Response$get_url()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Response-append"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-append}{}}}
+\subsection{Method \code{append()}}{
+Append the contents of one response object to this one if possible.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Response$append(other)}\if{html}{\out{</div>}}
 }
 
 }
