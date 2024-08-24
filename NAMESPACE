@@ -3,6 +3,7 @@
 export(CatalogRequestBuilder)
 export(FromResponseRequestBuilder)
 export(InfoRequestBuilder)
+export(Metadata)
 export(Request)
 export(RequestBuilder)
 export(Response)
