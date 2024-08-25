@@ -20,7 +20,7 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
     #' @return [CatalogRequestBuilder].
     set_limit = function(limit) {
       private$limit <- limit
-      invisible(self)
+      return(invisible(self))
     },
 
     #' @description Sets the query parameters to use to search Arctos.
@@ -29,7 +29,7 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
     #' @return [CatalogRequestBuilder].
     set_query = function(...) {
       private$query <- list(...)
-      invisible(self)
+      return(invisible(self))
     },
 
     #' @description Set parts to query over.
@@ -38,7 +38,7 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
     #' @return [CatalogRequestBuilder].
     set_parts = function(...) {
       private$parts <- list(...)
-      invisible(self)
+      return(invisible(self))
     },
 
     #' @description Set attributes to query over.
@@ -47,7 +47,7 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
     #' @return [CatalogRequestBuilder].
     set_attributes = function(...) {
       private$attributes <- list(...)
-      invisible(self)
+      return(invisible(self))
     },
 
     #' @description Set components to query over.
@@ -56,7 +56,7 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
     #' @return [CatalogRequestBuilder].
     set_components = function(...) {
       private$components <- list(...)
-      invisible(self)
+      return(invisible(self))
     },
 
     #' @description Sets the columns in the dataframe returned by Arctos.
@@ -65,7 +65,7 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
     #' @return [CatalogRequestBuilder].
     set_columns = function(...) {
       private$cols <- list(...)
-      invisible(self)
+      return(invisible(self))
     },
 
     #' @description Sets the columns in the dataframe returned by Arctos.
@@ -74,7 +74,7 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
     #' @return [CatalogRequestBuilder].
     set_columns_list = function(l) {
       private$cols <- l
-      invisible(self)
+      return(invisible(self))
     },
 
     #' @description Sets the columns in the dataframe returned by Arctos.
@@ -89,21 +89,14 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
     #' by the other methods called on this class.
     #'
     #' @return [Response].
-    perform_request = function() {
+    build_request = function() {
       if (is.null(private$query)) {
-        stop("Unable to perform request: No query parameters specified.")
-      }
-
-      if (is.null(private$api_key)) {
-        private$api_key <- PACKAGE_API_KEY
+        stop("Unable to build request: No query parameters specified.")
       }
 
       url_params <- list()
       url_params <- c(url_params, private$query)
 
-      # TODO research how to encode parts queries and attributes queries
-      # url_params <- c(url_params, private$parts) ?
-      # url_params <- c(url_params, private$attributes) ?
       if (!is.null(private$cols)) {
         url_params$cols <- encode_list(private$cols, ",")
       }
@@ -121,17 +114,10 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
         with_endpoint("catalog.cfc")$
         add_param(method = "getCatalogData")$
         add_param(queryformat = "struct")$
-        add_param(api_key = private$api_key)$
         add_param(length = private$limit)$
         add_params(url_params)
 
-      request$perform(query = private$query)
-    },
-
-    record_count = function() {
-      private$limit <- 1
-      response <- self$perform_request()
-      response$get_total_record_count()
+      return(request)
     }
   ),
   private = list(

@@ -57,3 +57,29 @@ encode_win_filename <- function(path) {
   "\\/:*?\"<>|"
   gsub("[\\\\/:*?\"<>|]", "-", path)
 }
+
+file_extension <- function(file_path) {
+  split <- unlist(strsplit(file_path, "[.]"))
+  if (length(split) < 2) {
+    return(NULL)
+  }
+  return(tail(split, n=1))
+}
+
+file_name <- function(file_path) {
+  return(head(unlist(strsplit(file_path, "[.]")), n=1))
+}
+
+get_header <- function(headers, search) {
+  for (header in strsplit(headers, "\r\n", fixed=TRUE)[[1]]) {
+    if (tolower(substr(header, 1, nchar(search))) == tolower(search)) {
+      return(substr(header, nchar(search) + 1, nchar(header)))
+    }
+  }
+
+  return(NULL)
+}
+
+is_class <- function(object, class) {
+  return(class(object)[1] == class)
+}

@@ -106,7 +106,7 @@ InfoRequestBuilder <- R6::R6Class("InfoRequestBuilder",
     #' @description Performs the request.
     #'
     #' @return [data.frame]
-    perform_request = function() {
+    build_request = function() {
       if (private$validate_all_empty()) {
         stop("nothing specified")
       }
@@ -115,15 +115,13 @@ InfoRequestBuilder <- R6::R6Class("InfoRequestBuilder",
         with_endpoint("catalog.cfc")$
         add_param(method = "about")
 
-      if (!is.null(private$api_key)) {
-        request$add_param(api_key = private$api_key)
-      }
-
       if (private$debug_print) {
         print(request$url)
       }
 
-      response <- request$perform()
+      return(request)
+
+      response <- request$perform(private$api_key)
 
       if (!response$was_success()) {
         stop(response$get_error())

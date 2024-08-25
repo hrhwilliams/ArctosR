@@ -2,69 +2,77 @@
 
 #' @export
 get_query_parameters <- function() {
-  return(ArctosR::InfoRequestBuilder$new()$
-           all_query_params()$
-           perform_request())
+  q <- Query$new()
+  q$info_request()$
+    all_query_params()
+  response <- q$perform()
+  return(response$content$QUERY_PARAMS)
 }
 
 #' @export
 get_result_parameters <- function() {
-  return(ArctosR::InfoRequestBuilder$new()$
-           all_result_params()$
-           perform_request())
+  q <- Query$new()
+  q$info_request()$
+    all_result_params()
+  response <- q$perform()
+  return(response$content$RESULTS_PARAMS)
 }
 
 #' @export
-get_record_count <- function(...) {
-  return(ArctosR::CatalogRequestBuilder$new()$
-           default_api_key()$
-           set_query(...)$
-           record_count())
+get_record_count <- function(..., api_key = NULL) {
+  q <- Query$new()
+  q$catalog_request()$
+    set_query(...)$
+    set_limit(1)
+  response <- q$perform(api_key)
+
+  return(response$content$recordsTotal)
 }
 
 #' @export
 get_records <- function(..., api_key = NULL, columns = NULL, limit = NULL, all_records = FALSE) {
-  builder <- ArctosR::CatalogRequestBuilder$new()
+  query <- Query$new()
+  builder <- query$catalog_request()
 
   if (!missing(...)) {
-    builder <- builder$set_query(...)
+    builder$set_query(...)
   } else {
     stop("Requires at least one query parameter to be defined.")
   }
 
-  if (!is.null(api_key)) {
-    builder <- builder$set_api_key(api_key)
+  if (!is.null(columns)) {
+    do.call(builder$set_columns, columns)
+    # builder$set_columns(columns)
   }
 
-  if (!is.null(columns)) {
-    builder <- builder$set_columns_list(columns)
+  if (!is.null(limit)) {
+    builder$set_limit(limit)
   }
+
+  query$perform(api_key)
 
   if (all_records) {
-    # download in a while loop
-    stop("unimplemented")
-  } else {
-    if (!is.null(limit)) {
-      builder <- builder$limit(limit)
+    repeat {
+      query$from_response_request()$
+        request_more(100)
+
+      if(is.null(query$perform())) {
+        break
+      }
     }
-    response <- builder$perform_request()
-    return(response)
   }
+
+  return(query)
 }
 
 #' @export
-response_data <- function(response) {
-  return(response$as_data_frame())
+response_data <- function(query) {
+  return(query$df)
 }
 
 #' @export
-response_metadata <- function(response) {
-  return(response$get_metadata())
-}
-
-#' @export
-save_response_rds <- function(response, filename) {
-  saveRDS(response, filename)
+save_response_rds <- function(query, filename) {
+  saveRDS(query, filename)
 }
 
 #' @export
@@ -73,21 +81,10 @@ read_response_rds <- function(filename) {
 }
 
 #' @export
-save_response_csv <- function(response, path, flat = TRUE, with_metadata = TRUE) {
-  if (flat) {
-    response$save_flat_csv(path)
+save_response_csv <- function(query, filename, expanded = FALSE, with_metadata = TRUE) {
+  query$save_records_csv(filename, expanded = expanded)
 
-    filename <- head(unlist(strsplit(path, "[.]")), n=1)
-    if (with_metadata) {
-      write(jsonlite::toJSON(response_metadata(response), pretty=TRUE),
-            file = sprintf("%s.json", filename))
-    }
-  } else {
-    response$save_expanded_csvs(path)
-
-    if (with_metadata) {
-      write(jsonlite::toJSON(response_metadata(response), pretty=TRUE),
-            file = sprintf("%s/%s_meta.json", path))
-    }
+  if (with_metadata) {
+    query$save_metadata_json(filename)
   }
 }

@@ -21,10 +21,10 @@
 FromResponseRequestBuilder <- R6::R6Class("FromResponseRequestBuilder",
   inherit = RequestBuilder,
   public = list(
-    initialize = function(response) {
-      private$response <- response
-      private$api_key <- response$get_api_key()
-      invisible(self)
+    initialize = function(response, records) {
+      private$table_id <- records$table_id
+      private$start = response$stop_index + 1
+      return(invisible(self))
     },
 
     #' @description Request at most `count` more records from this response's
@@ -34,39 +34,26 @@ FromResponseRequestBuilder <- R6::R6Class("FromResponseRequestBuilder",
     #' @return FromResponseRequestBuilder
     request_more = function(count) {
       private$more <- count
-      invisible(self)
-    },
-
-    add_column = function(col) {
-      invisible(self)
+      return(invisible(self))
     },
 
     #' @description Perform the request.
-    #' @return Response
-    perform_request = function() {
+    #' @return Request
+    build_request = function() {
       request <- ArctosR::Request$new()$
         with_endpoint("catalog.cfc")$
         add_param(method = "getCatalogData")$
         add_param(queryformat = "struct")$
-        add_param(api_key = private$api_key)
-
-      if (private$more > 0) {
-        request <- request$add_param(tbl = private$response$get_table_id())$
-          add_param(start = private$response$get_index())$
-          add_param(length = private$more)
-      }
-
-      if (private$debug_print) {
-        print(request$url)
-      }
-
-      response <- request$perform()
-      response$set_index(response$get_index() + private$response$get_index())
-      response
+        add_param(tbl = private$table_id)$
+        add_param(start = private$start)$
+        add_param(length = private$more)
+      return(request)
     }
   ),
   private = list(
     response = NULL,
-    more = 0
+    start = 1,
+    table_id = NULL,
+    more = 100
   )
 )

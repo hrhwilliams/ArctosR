@@ -3,40 +3,67 @@
 #' InfoRequestBuilder and CatalogRequestBuilder.
 #'
 #' @import R6
+#' @importFrom jsonlite toJSON
 #' @export
 Request <- R6::R6Class("Request",
   public = list(
+    params = NULL,
+    end_point = NULL,
+    timestamp = NULL,
+
     with_endpoint = function(endpoint) {
-      private$end_point <- endpoint
-      invisible(self)
+      self$end_point <- tolower(endpoint)
+      return(invisible(self))
     },
 
     add_param = function(...) {
-      private$url_params <- c(private$url_params, list(...))
-      invisible(self)
+      params <- list(...)
+
+      if (!is.null(params$api_key)) {
+        stop("Set the API key for this request only when calling $perform.")
+      }
+
+      self$params <- c(self$params, params)
+      return(invisible(self))
     },
 
-    add_params = function(params) {
-      private$url_params <- c(private$url_params, params)
-      invisible(self)
+    add_params = function(l) {
+      params <- l
+
+      if (!is.null(params$api_key)) {
+        stop("Set the API key for this request only when calling $perform.")
+      }
+
+      self$params <- c(self$params, params)
+      return(invisible(self))
     },
 
-    perform = function(...) {
-      if (is.null(private$end_point)) {
-        stop("No endpoint given")
+    serialize = function() {
+      stop("Unimplemented.")
+    },
+
+    perform = function(api_key = NULL) {
+      if (is.null(self$end_point)) {
+        stop("No endpoint given.")
+      }
+
+      if (!is.null(api_key)) {
+        self$params$api_key <- api_key
+      } else {
+        self$params$api_key <- PACKAGE_API_KEY
       }
 
       raw_response <- perform_request(self$url)
-      ArctosR::Response$new(raw_response, private$url_params, ...)
+      self$timestamp <- Sys.time()
+      attr(self$timestamp, "tzone") <- "GMT"
+      self$params$api_key <- NULL
+
+      return(ArctosR::Response$new(self, raw_response))
     }
   ),
   active = list(
     url = function() {
-      build_url(private$end_point, private$url_params)
+      return(build_url(self$end_point, self$params))
     }
-  ),
-  private = list(
-    url_params = list(),
-    end_point = NULL
   )
 )
