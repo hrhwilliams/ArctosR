@@ -63,14 +63,21 @@ count <- get_record_count(
 # Request to download data. This is limited to 100 records by default.
 response <- get_records(
   scientific_name="Canis lupus", guid_prefix="MSB:Mamm",
-  columns = c("guid", "parts", "partdetail")
+  columns = list("guid", "parts", "partdetail")
+)
+
+# Request to download all available data.
+response <- get_records(
+  scientific_name="Canis lupus", guid_prefix="MSB:Mamm",
+  columns = list("guid", "parts", "partdetail"),
+  all_records = TRUE
 )
 
 # Grab the dataframe of records from the response and save that as a csv.
 df <- response_data(response)
 
 # Save the response in a flat CSV with an additional metadata file in JSON
-save_response_csv(response, "msb-wolves.csv", flat = TRUE, with_metadata = TRUE)
+save_response_csv(response, "msb-wolves.csv", with_metadata = TRUE)
 
 # Save only the dataframe
 write.csv(x = df, file="msb-wolves-df.csv")
