@@ -46,7 +46,7 @@ results <- ArctosR::InfoRequestBuilder$new()$
 \item \href{#method-InfoRequestBuilder-by_result_category}{\code{InfoRequestBuilder$by_result_category()}}
 \item \href{#method-InfoRequestBuilder-for_query_param}{\code{InfoRequestBuilder$for_query_param()}}
 \item \href{#method-InfoRequestBuilder-for_result_param}{\code{InfoRequestBuilder$for_result_param()}}
-\item \href{#method-InfoRequestBuilder-perform_request}{\code{InfoRequestBuilder$perform_request()}}
+\item \href{#method-InfoRequestBuilder-build_request}{\code{InfoRequestBuilder$build_request()}}
 \item \href{#method-InfoRequestBuilder-clone}{\code{InfoRequestBuilder$clone()}}
 }
 }
@@ -54,8 +54,6 @@ results <- ArctosR::InfoRequestBuilder$new()$
 <details open><summary>Inherited methods</summary>
 <ul>
 <li><span class="pkg-link" data-pkg="ArctosR" data-topic="RequestBuilder" data-id="debug"><a href='../../ArctosR/html/RequestBuilder.html#method-RequestBuilder-debug'><code>ArctosR::RequestBuilder$debug()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="ArctosR" data-topic="RequestBuilder" data-id="default_api_key"><a href='../../ArctosR/html/RequestBuilder.html#method-RequestBuilder-default_api_key'><code>ArctosR::RequestBuilder$default_api_key()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="ArctosR" data-topic="RequestBuilder" data-id="set_api_key"><a href='../../ArctosR/html/RequestBuilder.html#method-RequestBuilder-set_api_key'><code>ArctosR::RequestBuilder$set_api_key()</code></a></span></li>
 </ul>
 </details>
 }}
@@ -151,12 +149,12 @@ Requests a specific result parameter.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-InfoRequestBuilder-perform_request"></a>}}
-\if{latex}{\out{\hypertarget{method-InfoRequestBuilder-perform_request}{}}}
-\subsection{Method \code{perform_request()}}{
+\if{html}{\out{<a id="method-InfoRequestBuilder-build_request"></a>}}
+\if{latex}{\out{\hypertarget{method-InfoRequestBuilder-build_request}{}}}
+\subsection{Method \code{build_request()}}{
 Performs the request.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{InfoRequestBuilder$perform_request()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{InfoRequestBuilder$build_request()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{

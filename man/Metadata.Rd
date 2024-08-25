@@ -9,8 +9,18 @@ Metadata for a specific HTTP response from Arctos.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
+\item \href{#method-Metadata-to_list}{\code{Metadata$to_list()}}
 \item \href{#method-Metadata-clone}{\code{Metadata$clone()}}
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Metadata-to_list"></a>}}
+\if{latex}{\out{\hypertarget{method-Metadata-to_list}{}}}
+\subsection{Method \code{to_list()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Metadata$to_list()}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Metadata-clone"></a>}}

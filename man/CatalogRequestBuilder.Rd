@@ -31,8 +31,7 @@ results <- ArctosR::CatalogRequestBuilder$new()$
 \item \href{#method-CatalogRequestBuilder-set_columns}{\code{CatalogRequestBuilder$set_columns()}}
 \item \href{#method-CatalogRequestBuilder-set_columns_list}{\code{CatalogRequestBuilder$set_columns_list()}}
 \item \href{#method-CatalogRequestBuilder-from_previous_response}{\code{CatalogRequestBuilder$from_previous_response()}}
-\item \href{#method-CatalogRequestBuilder-perform_request}{\code{CatalogRequestBuilder$perform_request()}}
-\item \href{#method-CatalogRequestBuilder-record_count}{\code{CatalogRequestBuilder$record_count()}}
+\item \href{#method-CatalogRequestBuilder-build_request}{\code{CatalogRequestBuilder$build_request()}}
 \item \href{#method-CatalogRequestBuilder-clone}{\code{CatalogRequestBuilder$clone()}}
 }
 }
@@ -40,8 +39,6 @@ results <- ArctosR::CatalogRequestBuilder$new()$
 <details open><summary>Inherited methods</summary>
 <ul>
 <li><span class="pkg-link" data-pkg="ArctosR" data-topic="RequestBuilder" data-id="debug"><a href='../../ArctosR/html/RequestBuilder.html#method-RequestBuilder-debug'><code>ArctosR::RequestBuilder$debug()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="ArctosR" data-topic="RequestBuilder" data-id="default_api_key"><a href='../../ArctosR/html/RequestBuilder.html#method-RequestBuilder-default_api_key'><code>ArctosR::RequestBuilder$default_api_key()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="ArctosR" data-topic="RequestBuilder" data-id="set_api_key"><a href='../../ArctosR/html/RequestBuilder.html#method-RequestBuilder-set_api_key'><code>ArctosR::RequestBuilder$set_api_key()</code></a></span></li>
 </ul>
 </details>
 }}
@@ -207,27 +204,18 @@ Sets the columns in the dataframe returned by Arctos.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CatalogRequestBuilder-perform_request"></a>}}
-\if{latex}{\out{\hypertarget{method-CatalogRequestBuilder-perform_request}{}}}
-\subsection{Method \code{perform_request()}}{
+\if{html}{\out{<a id="method-CatalogRequestBuilder-build_request"></a>}}
+\if{latex}{\out{\hypertarget{method-CatalogRequestBuilder-build_request}{}}}
+\subsection{Method \code{build_request()}}{
 Send a request for data to Arctos with parameters specified
 by the other methods called on this class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CatalogRequestBuilder$perform_request()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{CatalogRequestBuilder$build_request()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
 \link{Response}.
 }
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-CatalogRequestBuilder-record_count"></a>}}
-\if{latex}{\out{\hypertarget{method-CatalogRequestBuilder-record_count}{}}}
-\subsection{Method \code{record_count()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{CatalogRequestBuilder$record_count()}\if{html}{\out{</div>}}
-}
-
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-CatalogRequestBuilder-clone"></a>}}

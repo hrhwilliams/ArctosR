@@ -13,6 +13,7 @@ InfoRequestBuilder and CatalogRequestBuilder.
 \item \href{#method-Request-with_endpoint}{\code{Request$with_endpoint()}}
 \item \href{#method-Request-add_param}{\code{Request$add_param()}}
 \item \href{#method-Request-add_params}{\code{Request$add_params()}}
+\item \href{#method-Request-serialize}{\code{Request$serialize()}}
 \item \href{#method-Request-perform}{\code{Request$perform()}}
 \item \href{#method-Request-clone}{\code{Request$clone()}}
 }
@@ -40,7 +41,16 @@ InfoRequestBuilder and CatalogRequestBuilder.
 \if{latex}{\out{\hypertarget{method-Request-add_params}{}}}
 \subsection{Method \code{add_params()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Request$add_params(params)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Request$add_params(l)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Request-serialize"></a>}}
+\if{latex}{\out{\hypertarget{method-Request-serialize}{}}}
+\subsection{Method \code{serialize()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Request$serialize()}\if{html}{\out{</div>}}
 }
 
 }
@@ -49,7 +59,7 @@ InfoRequestBuilder and CatalogRequestBuilder.
 \if{latex}{\out{\hypertarget{method-Request-perform}{}}}
 \subsection{Method \code{perform()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Request$perform(...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Request$perform(api_key = NULL)}\if{html}{\out{</div>}}
 }
 
 }

@@ -10,22 +10,11 @@ Response returned from Arctos.
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-Response-new}{\code{Response$new()}}
-\item \href{#method-Response-get_metadata}{\code{Response$get_metadata()}}
+\item \href{#method-Response-set_start_index}{\code{Response$set_start_index()}}
 \item \href{#method-Response-was_success}{\code{Response$was_success()}}
-\item \href{#method-Response-get_table_id}{\code{Response$get_table_id()}}
-\item \href{#method-Response-get_api_key}{\code{Response$get_api_key()}}
-\item \href{#method-Response-get_total_record_count}{\code{Response$get_total_record_count()}}
-\item \href{#method-Response-get_index}{\code{Response$get_index()}}
-\item \href{#method-Response-set_index}{\code{Response$set_index()}}
-\item \href{#method-Response-get_record_count}{\code{Response$get_record_count()}}
-\item \href{#method-Response-get_error}{\code{Response$get_error()}}
-\item \href{#method-Response-get_url}{\code{Response$get_url()}}
-\item \href{#method-Response-append}{\code{Response$append()}}
-\item \href{#method-Response-save_flat_csv}{\code{Response$save_flat_csv()}}
-\item \href{#method-Response-save_expanded_csvs}{\code{Response$save_expanded_csvs()}}
-\item \href{#method-Response-save_object}{\code{Response$save_object()}}
-\item \href{#method-Response-as_data_frame}{\code{Response$as_data_frame()}}
-\item \href{#method-Response-expand_col}{\code{Response$expand_col()}}
+\item \href{#method-Response-is_empty}{\code{Response$is_empty()}}
+\item \href{#method-Response-to_list}{\code{Response$to_list()}}
+\item \href{#method-Response-to_records}{\code{Response$to_records()}}
 \item \href{#method-Response-clone}{\code{Response$clone()}}
 }
 }
@@ -33,30 +22,17 @@ Response returned from Arctos.
 \if{html}{\out{<a id="method-Response-new"></a>}}
 \if{latex}{\out{\hypertarget{method-Response-new}{}}}
 \subsection{Method \code{new()}}{
-Creates an Arctos response object from a curl response.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$new(raw_response, url_params, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Response$new(request, raw_response)}\if{html}{\out{</div>}}
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{raw_response}}{(\code{list})}
-
-\item{\code{url_params}}{(\code{list})}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-\link{Response}.
-}
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Response-get_metadata"></a>}}
-\if{latex}{\out{\hypertarget{method-Response-get_metadata}{}}}
-\subsection{Method \code{get_metadata()}}{
+\if{html}{\out{<a id="method-Response-set_start_index"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-set_start_index}{}}}
+\subsection{Method \code{set_start_index()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$get_metadata()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Response$set_start_index(start)}\if{html}{\out{</div>}}
 }
 
 }
@@ -70,156 +46,31 @@ Creates an Arctos response object from a curl response.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Response-get_table_id"></a>}}
-\if{latex}{\out{\hypertarget{method-Response-get_table_id}{}}}
-\subsection{Method \code{get_table_id()}}{
+\if{html}{\out{<a id="method-Response-is_empty"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-is_empty}{}}}
+\subsection{Method \code{is_empty()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$get_table_id()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Response$is_empty()}\if{html}{\out{</div>}}
 }
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Response-get_api_key"></a>}}
-\if{latex}{\out{\hypertarget{method-Response-get_api_key}{}}}
-\subsection{Method \code{get_api_key()}}{
+\if{html}{\out{<a id="method-Response-to_list"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-to_list}{}}}
+\subsection{Method \code{to_list()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$get_api_key()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Response$to_list()}\if{html}{\out{</div>}}
 }
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Response-get_total_record_count"></a>}}
-\if{latex}{\out{\hypertarget{method-Response-get_total_record_count}{}}}
-\subsection{Method \code{get_total_record_count()}}{
+\if{html}{\out{<a id="method-Response-to_records"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-to_records}{}}}
+\subsection{Method \code{to_records()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$get_total_record_count()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Response$to_records(start = 1)}\if{html}{\out{</div>}}
 }
 
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Response-get_index"></a>}}
-\if{latex}{\out{\hypertarget{method-Response-get_index}{}}}
-\subsection{Method \code{get_index()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$get_index()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Response-set_index"></a>}}
-\if{latex}{\out{\hypertarget{method-Response-set_index}{}}}
-\subsection{Method \code{set_index()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$set_index(index)}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Response-get_record_count"></a>}}
-\if{latex}{\out{\hypertarget{method-Response-get_record_count}{}}}
-\subsection{Method \code{get_record_count()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$get_record_count()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Response-get_error"></a>}}
-\if{latex}{\out{\hypertarget{method-Response-get_error}{}}}
-\subsection{Method \code{get_error()}}{
-Returns any API error returned from Arctos.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$get_error()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Response-get_url"></a>}}
-\if{latex}{\out{\hypertarget{method-Response-get_url}{}}}
-\subsection{Method \code{get_url()}}{
-Returns the request URL for debugging purposes.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$get_url()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Response-append"></a>}}
-\if{latex}{\out{\hypertarget{method-Response-append}{}}}
-\subsection{Method \code{append()}}{
-Append the contents of one response object to this one if possible.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$append(other)}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Response-save_flat_csv"></a>}}
-\if{latex}{\out{\hypertarget{method-Response-save_flat_csv}{}}}
-\subsection{Method \code{save_flat_csv()}}{
-Writes the data in the response object to a CSV file.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$save_flat_csv(path)}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Response-save_expanded_csvs"></a>}}
-\if{latex}{\out{\hypertarget{method-Response-save_expanded_csvs}{}}}
-\subsection{Method \code{save_expanded_csvs()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$save_expanded_csvs(path)}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Response-save_object"></a>}}
-\if{latex}{\out{\hypertarget{method-Response-save_object}{}}}
-\subsection{Method \code{save_object()}}{
-Store the entire response object as an .RData file which can
-be later loaded using Response$from_file
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$save_object(path)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{path}}{(\code{string})}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Response-as_data_frame"></a>}}
-\if{latex}{\out{\hypertarget{method-Response-as_data_frame}{}}}
-\subsection{Method \code{as_data_frame()}}{
-Returns data from the response as a dataframe object.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$as_data_frame()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-(\code{data.frame}).
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Response-expand_col"></a>}}
-\if{latex}{\out{\hypertarget{method-Response-expand_col}{}}}
-\subsection{Method \code{expand_col()}}{
-Expand a column of nested JSON tables in the response to a
-list of dataframes. This does not modify the original data.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$expand_col(column)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{col}}{(\code{string})}
-}
-\if{html}{\out{</div>}}
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-Response-clone"></a>}}

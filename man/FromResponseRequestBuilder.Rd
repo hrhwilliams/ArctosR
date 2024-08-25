@@ -29,8 +29,7 @@ response <- ArctosR::CatalogRequestBuilder$new()$
 \itemize{
 \item \href{#method-FromResponseRequestBuilder-new}{\code{FromResponseRequestBuilder$new()}}
 \item \href{#method-FromResponseRequestBuilder-request_more}{\code{FromResponseRequestBuilder$request_more()}}
-\item \href{#method-FromResponseRequestBuilder-add_column}{\code{FromResponseRequestBuilder$add_column()}}
-\item \href{#method-FromResponseRequestBuilder-perform_request}{\code{FromResponseRequestBuilder$perform_request()}}
+\item \href{#method-FromResponseRequestBuilder-build_request}{\code{FromResponseRequestBuilder$build_request()}}
 \item \href{#method-FromResponseRequestBuilder-clone}{\code{FromResponseRequestBuilder$clone()}}
 }
 }
@@ -38,8 +37,6 @@ response <- ArctosR::CatalogRequestBuilder$new()$
 <details open><summary>Inherited methods</summary>
 <ul>
 <li><span class="pkg-link" data-pkg="ArctosR" data-topic="RequestBuilder" data-id="debug"><a href='../../ArctosR/html/RequestBuilder.html#method-RequestBuilder-debug'><code>ArctosR::RequestBuilder$debug()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="ArctosR" data-topic="RequestBuilder" data-id="default_api_key"><a href='../../ArctosR/html/RequestBuilder.html#method-RequestBuilder-default_api_key'><code>ArctosR::RequestBuilder$default_api_key()</code></a></span></li>
-<li><span class="pkg-link" data-pkg="ArctosR" data-topic="RequestBuilder" data-id="set_api_key"><a href='../../ArctosR/html/RequestBuilder.html#method-RequestBuilder-set_api_key'><code>ArctosR::RequestBuilder$set_api_key()</code></a></span></li>
 </ul>
 </details>
 }}
@@ -48,7 +45,7 @@ response <- ArctosR::CatalogRequestBuilder$new()$
 \if{latex}{\out{\hypertarget{method-FromResponseRequestBuilder-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FromResponseRequestBuilder$new(response)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FromResponseRequestBuilder$new(response, records)}\if{html}{\out{</div>}}
 }
 
 }
@@ -74,25 +71,16 @@ FromResponseRequestBuilder
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FromResponseRequestBuilder-add_column"></a>}}
-\if{latex}{\out{\hypertarget{method-FromResponseRequestBuilder-add_column}{}}}
-\subsection{Method \code{add_column()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FromResponseRequestBuilder$add_column(col)}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-FromResponseRequestBuilder-perform_request"></a>}}
-\if{latex}{\out{\hypertarget{method-FromResponseRequestBuilder-perform_request}{}}}
-\subsection{Method \code{perform_request()}}{
+\if{html}{\out{<a id="method-FromResponseRequestBuilder-build_request"></a>}}
+\if{latex}{\out{\hypertarget{method-FromResponseRequestBuilder-build_request}{}}}
+\subsection{Method \code{build_request()}}{
 Perform the request.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{FromResponseRequestBuilder$perform_request()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{FromResponseRequestBuilder$build_request()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
-Response
+Request
 }
 }
 \if{html}{\out{<hr>}}

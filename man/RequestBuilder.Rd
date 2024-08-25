@@ -9,28 +9,9 @@ A builder for a generic Arctos request. Not to be used directly.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-RequestBuilder-set_api_key}{\code{RequestBuilder$set_api_key()}}
 \item \href{#method-RequestBuilder-debug}{\code{RequestBuilder$debug()}}
-\item \href{#method-RequestBuilder-default_api_key}{\code{RequestBuilder$default_api_key()}}
-\item \href{#method-RequestBuilder-perform_request}{\code{RequestBuilder$perform_request()}}
+\item \href{#method-RequestBuilder-build_request}{\code{RequestBuilder$build_request()}}
 \item \href{#method-RequestBuilder-clone}{\code{RequestBuilder$clone()}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-RequestBuilder-set_api_key"></a>}}
-\if{latex}{\out{\hypertarget{method-RequestBuilder-set_api_key}{}}}
-\subsection{Method \code{set_api_key()}}{
-Set the API key for this request
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{RequestBuilder$set_api_key(api_key)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{api_key}}{API key in string format.}
-}
-\if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
@@ -44,21 +25,11 @@ Turn on printing of debug information.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-RequestBuilder-default_api_key"></a>}}
-\if{latex}{\out{\hypertarget{method-RequestBuilder-default_api_key}{}}}
-\subsection{Method \code{default_api_key()}}{
-Use the package's default API key for this request.
+\if{html}{\out{<a id="method-RequestBuilder-build_request"></a>}}
+\if{latex}{\out{\hypertarget{method-RequestBuilder-build_request}{}}}
+\subsection{Method \code{build_request()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{RequestBuilder$default_api_key()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-RequestBuilder-perform_request"></a>}}
-\if{latex}{\out{\hypertarget{method-RequestBuilder-perform_request}{}}}
-\subsection{Method \code{perform_request()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{RequestBuilder$perform_request()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{RequestBuilder$build_request()}\if{html}{\out{</div>}}
 }
 
 }
