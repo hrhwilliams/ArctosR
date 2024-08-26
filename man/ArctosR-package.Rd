@@ -10,6 +10,10 @@ The \code{ArctosR} package provides a set of functions to help users
 perform requests to the Arctos API to download data. It provides a set of
 builder classes for performing complex requests, as well as a set of simple
 functions for automating many common requests and workflows.
+
+The web interface to the Arctos database can be found at
+\link{https://arctos.database.museum/}. For more information about Arctos,
+see \link{https://arctosdb.org/about/}.
 }
 \section{Functions in ArctosR}{
 

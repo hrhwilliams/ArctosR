@@ -6,6 +6,10 @@
 #' builder classes for performing complex requests, as well as a set of simple
 #' functions for automating many common requests and workflows.
 #'
+#' The web interface to the Arctos database can be found at
+#' \link{https://arctos.database.museum/}. For more information about Arctos,
+#' see \link{https://arctosdb.org/about/}.
+#'
 #' @section Functions in ArctosR:
 #' \code{\link{get_query_parameters}}, \code{\link{get_result_parameters}},
 #' \code{\link{get_record_count}}, \code{\link{get_records}},
