@@ -2,6 +2,8 @@
 #' @importFrom curl handle_setheaders
 #' @importFrom curl curl_fetch_memory
 #' @importFrom curl curl_escape
+#' @importFrom utils head
+#' @importFrom utils tail
 
 ARCTOS_URL <- "https://arctos.database.museum"
 ARCTOS_API_URL <- "component/api/v2"

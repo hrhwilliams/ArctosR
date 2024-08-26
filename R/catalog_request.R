@@ -1,13 +1,5 @@
 #' @title CatalogRequestBuilder
 #'
-#' @examples
-#' results <- ArctosR::CatalogRequestBuilder$new()$
-#'   default_api_key()$
-#'   set_query(scientific_name="Canis lupus")$
-#'   set_columns("guid", "parts", "partdetail")$
-#'   set_limit(50)$
-#'   perform_request()
-#'
 #' @import R6
 #' @export
 CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",

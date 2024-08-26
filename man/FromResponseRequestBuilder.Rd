@@ -7,20 +7,6 @@
 Builder for the case where a request is made with the context
 of a previous response.
 }
-\examples{
-response <- ArctosR::CatalogRequestBuilder$new()$
-  default_api_key()$
-  set_query(scientific_name="Canis lupus", guid_prefix="MSB:Mamm")$
-  set_columns("guid", "parts", "partdetail")$
-  set_limit(500)$
-  perform_request()
-
-response <- ArctosR::CatalogRequestBuilder$new()$
-  from_previous_response(response)$
-  request_more(500)$
-  perform_request()
-
-}
 \section{Super class}{
 \code{\link[ArctosR:RequestBuilder]{ArctosR::RequestBuilder}} -> \code{FromResponseRequestBuilder}
 }

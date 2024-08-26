@@ -4,31 +4,6 @@
 #' from Arctos. For a valid request, only one method to specify the type of
 #' request can be called.
 #'
-#' @examples
-#' results <- ArctosR::InfoRequestBuilder$new()$
-#'   all_query_params()$
-#'   perform_request()
-#'
-#' results <- ArctosR::InfoRequestBuilder$new()$
-#'   all_result_params()$
-#'   perform_request()
-#'
-#' results <- ArctosR::InfoRequestBuilder$new()$
-#'   by_query_category("parts")$
-#'   perform_request()
-#'
-#' results <- ArctosR::InfoRequestBuilder$new()$
-#'   by_result_category("core")$
-#'   perform_request()
-#'
-#' results <- ArctosR::InfoRequestBuilder$new()$
-#'   for_query_param("guid")$
-#'   perform_request()
-#'
-#' results <- ArctosR::InfoRequestBuilder$new()$
-#'   for_result_param("guid")$
-#'   perform_request()
-#'
 #' @import R6
 #' @export
 InfoRequestBuilder <- R6::R6Class("InfoRequestBuilder",

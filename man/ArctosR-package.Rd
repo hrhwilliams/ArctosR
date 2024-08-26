@@ -16,9 +16,18 @@ functions for automating many common requests and workflows.
 \code{\link{get_query_parameters}}, \code{\link{get_result_parameters}},
 \code{\link{get_record_count}}, \code{\link{get_records}},
 \code{\link{response_data}}, \code{\link{save_response_rds}},
-\code{\link{read_response_rds}}, \code{\link{save_response_csv}}
+\code{\link{read_response_rds}}, \code{\link{save_response_csv}},
+\code{\link{expand_column}}
 }
 
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/hrhwilliams/arctosr}
+  \item Report bugs at \url{https://github.com/hrhwilliams/arctosr/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Harlan Williams \email{harlanrhwilliams@gmail.com}
 
