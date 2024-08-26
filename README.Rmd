@@ -61,7 +61,8 @@ for further data analysis tasks by researchers.
 With these functions, ArctosR can be integrated into existing data analysis
 pipelines to provide updated records. Each query in ArctosR is also accompanied
 by metadata, allowing for better data documentation and query reproducibility by
-other researchers.
+other researchers. At this stage the project fulfills the goals set out in the
+proposal, the only thing remaining is for it to be submitted to CRAN.
 
 A complete history of commits can be accessed <a href="https://github.com/hrhwilliams/ArctosR/commits/main/" target="_blank">here</a>.
 
