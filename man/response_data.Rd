@@ -13,5 +13,5 @@ response_data(query)
 A data frame
 }
 \description{
-Obtain just the dataframe from a successful query.
+Obtain an R dataframe from a successful query generated through get_records().
 }
