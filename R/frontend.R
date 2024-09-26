@@ -13,7 +13,7 @@
 get_query_parameters <- function() {
   q <- Query$new()
   q$info_request()$
-    all_query_params()
+    build_request()
   response <- q$perform()
   return(response$content$QUERY_PARAMS)
 }
@@ -33,7 +33,7 @@ get_query_parameters <- function() {
 get_result_parameters <- function() {
   q <- Query$new()
   q$info_request()$
-    all_result_params()
+    build_request()
   response <- q$perform()
   return(response$content$RESULTS_PARAMS)
 }
