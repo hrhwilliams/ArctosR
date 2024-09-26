@@ -18,6 +18,7 @@ to increase the record count, or to add columns.
 \item \href{#method-Query-save_metadata_json}{\code{Query$save_metadata_json()}}
 \item \href{#method-Query-save_records_csv}{\code{Query$save_records_csv()}}
 \item \href{#method-Query-expand_col}{\code{Query$expand_col()}}
+\item \href{#method-Query-get_responses}{\code{Query$get_responses()}}
 \item \href{#method-Query-clone}{\code{Query$clone()}}
 }
 }
@@ -90,6 +91,15 @@ to increase the record count, or to add columns.
 \subsection{Method \code{expand_col()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Query$expand_col(column_name)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Query-get_responses"></a>}}
+\if{latex}{\out{\hypertarget{method-Query-get_responses}{}}}
+\subsection{Method \code{get_responses()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Query$get_responses()}\if{html}{\out{</div>}}
 }
 
 }
