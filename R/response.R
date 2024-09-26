@@ -31,7 +31,7 @@ Response <- R6::R6Class("Response",
 
     set_start_index = function(start) {
       self$start_index <- start
-      self$stop_index <- self$stop_index + start
+      self$stop_index <- self$stop_index + start - 1
     },
 
     was_success = function() {

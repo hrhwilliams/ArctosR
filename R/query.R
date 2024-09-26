@@ -100,8 +100,7 @@ Query <- R6::R6Class("Query",
       if (is.null(private$responses)) {
         private$responses <- c(response)
       } else {
-        response$start_index <- private$responses[[length(private$responses)]]$stop_index + 1
-        response$stop_index <- response$start_index + response$stop_index - 1
+        response$set_start_index(private$responses[[length(private$responses)]]$stop_index + 1)
         private$responses <- c(private$responses, response)
       }
     }
