@@ -15,6 +15,7 @@ InfoRequestBuilder and CatalogRequestBuilder.
 \item \href{#method-Request-add_params}{\code{Request$add_params()}}
 \item \href{#method-Request-serialize}{\code{Request$serialize()}}
 \item \href{#method-Request-perform}{\code{Request$perform()}}
+\item \href{#method-Request-from_raw_response}{\code{Request$from_raw_response()}}
 \item \href{#method-Request-clone}{\code{Request$clone()}}
 }
 }
@@ -60,6 +61,15 @@ InfoRequestBuilder and CatalogRequestBuilder.
 \subsection{Method \code{perform()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Request$perform(api_key = NULL)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Request-from_raw_response"></a>}}
+\if{latex}{\out{\hypertarget{method-Request-from_raw_response}{}}}
+\subsection{Method \code{from_raw_response()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Request$from_raw_response(raw_response)}\if{html}{\out{</div>}}
 }
 
 }
