@@ -3,9 +3,9 @@
 
 # ArctosR
 
-<!-- badges: start -->
-
+<!-- badges: start -->https://app.codecov.io/gh/hrhwilliams/ArctosR/branch/main/graphs/badge.svg
 [![R-CMD-check](https://github.com/hrhwilliams/ArctosR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/hrhwilliams/ArctosR/actions/workflows/R-CMD-check.yaml)
+[![codecov.io](https://codecov.io/gh/hrhwilliams/ArctosR/branch/main/graphs/badge.svg)](https://app.codecov.io/gh/hrhwilliams/ArctosR?branch=main)
 <!-- badges: end -->
 
 ## GSoC project description
