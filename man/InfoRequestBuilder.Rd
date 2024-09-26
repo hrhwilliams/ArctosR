@@ -14,12 +14,6 @@ request can be called.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-InfoRequestBuilder-all_query_params}{\code{InfoRequestBuilder$all_query_params()}}
-\item \href{#method-InfoRequestBuilder-all_result_params}{\code{InfoRequestBuilder$all_result_params()}}
-\item \href{#method-InfoRequestBuilder-by_query_category}{\code{InfoRequestBuilder$by_query_category()}}
-\item \href{#method-InfoRequestBuilder-by_result_category}{\code{InfoRequestBuilder$by_result_category()}}
-\item \href{#method-InfoRequestBuilder-for_query_param}{\code{InfoRequestBuilder$for_query_param()}}
-\item \href{#method-InfoRequestBuilder-for_result_param}{\code{InfoRequestBuilder$for_result_param()}}
 \item \href{#method-InfoRequestBuilder-build_request}{\code{InfoRequestBuilder$build_request()}}
 \item \href{#method-InfoRequestBuilder-clone}{\code{InfoRequestBuilder$clone()}}
 }
@@ -32,108 +26,13 @@ request can be called.
 </details>
 }}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-InfoRequestBuilder-all_query_params"></a>}}
-\if{latex}{\out{\hypertarget{method-InfoRequestBuilder-all_query_params}{}}}
-\subsection{Method \code{all_query_params()}}{
-Requests all parameters that can be used as part of a query.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{InfoRequestBuilder$all_query_params()}\if{html}{\out{</div>}}
-}
-
-\subsection{Returns}{
-InfoRequestBuilder
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-InfoRequestBuilder-all_result_params"></a>}}
-\if{latex}{\out{\hypertarget{method-InfoRequestBuilder-all_result_params}{}}}
-\subsection{Method \code{all_result_params()}}{
-Requests all columns that can be returned with a request.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{InfoRequestBuilder$all_result_params()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-InfoRequestBuilder-by_query_category"></a>}}
-\if{latex}{\out{\hypertarget{method-InfoRequestBuilder-by_query_category}{}}}
-\subsection{Method \code{by_query_category()}}{
-Requests all query parameters by category.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{InfoRequestBuilder$by_query_category(category)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{category}}{Name of query category.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-InfoRequestBuilder-by_result_category"></a>}}
-\if{latex}{\out{\hypertarget{method-InfoRequestBuilder-by_result_category}{}}}
-\subsection{Method \code{by_result_category()}}{
-Requests all result parameters by category.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{InfoRequestBuilder$by_result_category(category)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{category}}{Name of result category.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-InfoRequestBuilder-for_query_param"></a>}}
-\if{latex}{\out{\hypertarget{method-InfoRequestBuilder-for_query_param}{}}}
-\subsection{Method \code{for_query_param()}}{
-Requests a specific query parameter.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{InfoRequestBuilder$for_query_param(param)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{param}}{Name of query parameter.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-InfoRequestBuilder-for_result_param"></a>}}
-\if{latex}{\out{\hypertarget{method-InfoRequestBuilder-for_result_param}{}}}
-\subsection{Method \code{for_result_param()}}{
-Requests a specific result parameter.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{InfoRequestBuilder$for_result_param(param)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{param}}{Name of result parameter.}
-}
-\if{html}{\out{</div>}}
-}
-}
-\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-InfoRequestBuilder-build_request"></a>}}
 \if{latex}{\out{\hypertarget{method-InfoRequestBuilder-build_request}{}}}
 \subsection{Method \code{build_request()}}{
-Performs the request.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{InfoRequestBuilder$build_request()}\if{html}{\out{</div>}}
 }
 
-\subsection{Returns}{
-\link{data.frame}
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-InfoRequestBuilder-clone"></a>}}
