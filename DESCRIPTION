@@ -24,5 +24,8 @@ Imports:
     curl (>= 5.0.0),
     jsonlite (>= 1.8.0)
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+VignetteBuilder: knitr

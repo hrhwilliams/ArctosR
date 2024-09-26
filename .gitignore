@@ -8,3 +8,4 @@
 .quarto
 *.json
 *.csv
+inst/doc
