@@ -23,7 +23,7 @@ perform_request <- function(url) {
 
 parse_response <- function(raw_response) {
   if (raw_response$type == "application/json;charset=UTF-8") {
-    return(fromJSON(rawToChar(raw_response$content), simplifyDataFrame=T))
+    return(fromJSON(rawToChar(raw_response$content), simplifyDataFrame=TRUE))
   } else {
     stop("Expected response in JSON format")
   }
