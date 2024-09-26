@@ -18,6 +18,27 @@ Query <- R6::R6Class("Query",
       return(private$current_builder)
     },
 
+    catalog_request_from_raw_response = function(raw_response) {
+      response <- Request$new()$from_raw_response(raw_response)
+
+      if (is.null(private$responses)) {
+        private$responses <- c(response)
+      } else {
+        response$start_index <- (private$responses[[length(private$responses)]]$stop_index + 1)
+        response$stop_index <- response$start_index + response$stop_index - 1
+        private$responses <- c(private$responses, response)
+      }
+
+      if (is.null(private$records)) {
+        private$records <- response$to_records()
+      } else {
+        private$records$append(response$to_records())
+      }
+
+      private$current_builder <- NULL
+      return(response)
+    },
+
     info_request = function() {
       private$current_builder <- ArctosR::InfoRequestBuilder$new()
       return(private$current_builder)

@@ -59,6 +59,10 @@ Request <- R6::R6Class("Request",
       self$params$api_key <- NULL
 
       return(ArctosR::Response$new(self, raw_response))
+    },
+
+    from_raw_response = function(raw_response) {
+      return(ArctosR::Response$new(self, raw_response))
     }
   ),
   active = list(
