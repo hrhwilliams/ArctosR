@@ -188,20 +188,40 @@ query <- get_records(
 ### Viewing data
 
 ```{r eval = FALSE}
-query <- get_records(
-  guid_prefix = "MSB:Mamm", genus = "Canis", species = "lupus")
+query <- get_records(guid_prefix = "MSB:Mamm", genus = "Canis", species = "lupus",
+  columns = list(
+    "guid", "scientific_name", "parts", "collectors", "state_prov", "spec_locality",
+    "dec_lat", "dec_long", "verbatim_date", "parts", "partdetail"))
 
 msb_wolves <- response_data(query)
+View(msb_wolves)
 ```
 
 #### Expanding columns
+
+```{r eval = FALSE}
+expand_column(msb_wolves, "partdetail")
+View(msb_wolves)
+```
 
 ### Saving data
 
 #### Saving as a flat CSV file
 
+```{r eval = FALSE}
+save_response_csv(msb_wolves, "msb_wolves.csv")
+```
+
 #### Saving an expanded CSV
 
+```{r eval = FALSE}
+save_response_csv(msb_wolves, "msb_wolves.csv", expanded = TRUE)
+```
+
 #### Saving as an RDS
+
+```{r eval = FALSE}
+save_response_rds(msb_wolves, "msb_wolves.rds")
+```
 
 #### Saving query metadata
