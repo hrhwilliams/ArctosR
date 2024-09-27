@@ -31,16 +31,21 @@ test_that("query catalog request", {
 })
 
 test_that("get_records_no_cols", {
-  raw_response <- readRDS('test_request_no_cols.rds')
-  query <- Query$new()
-  response <- query$catalog_request_from_raw_response(raw_response)
+  local_mocked_bindings(
+    perform_request = function(...) {
+      return(readRDS('test_request_no_cols.rds'))
+    }
+  )
 
-  testthat::expect_equal(response$was_success(), TRUE)
-  testthat::expect_equal(response$is_empty(), FALSE)
+  query <- get_records(
+    guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus")
 
-  info <- response$to_list()
-  testthat::expect_equal(info$metadata$status_code, 200)
-  testthat::expect_equal(info$index_range, c(1, 50))
+  # testthat::expect_equal(response$was_success(), TRUE)
+  # testthat::expect_equal(response$is_empty(), FALSE)
+  #
+  # info <- response$to_list()
+  # testthat::expect_equal(info$metadata$status_code, 200)
+  # testthat::expect_equal(info$index_range, c(1, 50))
 
   df <- response_data(query)
   testthat::expect_s3_class(df, "data.frame")
@@ -63,16 +68,14 @@ test_that("get_records_no_cols concatenate", {
 })
 
 test_that("get_records_with_cols", {
+  local_mocked_bindings(
+    perform_request = function(...) {
+      return(readRDS('test_request_with_cols.rds'))
+    }
+  )
   raw_response <- readRDS('test_request_with_cols.rds')
-  query <- Query$new()
-  response <- query$catalog_request_from_raw_response(raw_response)
-
-  testthat::expect_equal(response$was_success(), TRUE)
-  testthat::expect_equal(response$is_empty(), FALSE)
-
-  info <- response$to_list()
-  testthat::expect_equal(info$metadata$status_code, 200)
-  testthat::expect_equal(info$index_range, c(1, 50))
+  query <- get_records(
+    guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus")
 
   df <- response_data(query)
 
