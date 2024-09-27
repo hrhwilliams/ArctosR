@@ -81,3 +81,7 @@ get_header <- function(headers, search) {
 
   return(NULL)
 }
+
+is_class <- function(object, class) {
+  return(class(object)[1] == class)
+}
