@@ -54,6 +54,10 @@ Request <- R6::R6Class("Request",
       }
 
       raw_response <- perform_request(self$url)
+      if (is.null(raw_response)) {
+        return(NULL)
+      }
+
       self$timestamp <- Sys.time()
       attr(self$timestamp, "tzone") <- "GMT"
       self$params$api_key <- NULL

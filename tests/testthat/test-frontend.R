@@ -40,28 +40,30 @@ test_that("get_records_no_cols", {
   query <- get_records(
     guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus")
 
-  # testthat::expect_equal(response$was_success(), TRUE)
-  # testthat::expect_equal(response$is_empty(), FALSE)
-  #
-  # info <- response$to_list()
-  # testthat::expect_equal(info$metadata$status_code, 200)
-  # testthat::expect_equal(info$index_range, c(1, 50))
-
   df <- response_data(query)
   testthat::expect_s3_class(df, "data.frame")
+  testthat::expect_equal(nrow(df), 50)
 })
 
 test_that("get_records_no_cols concatenate", {
-  raw_response1 <- readRDS('test_request_no_cols.rds')
-  raw_response2 <- readRDS('test_request_no_cols_part2.rds')
-  query <- Query$new()
-  response1 <- query$catalog_request_from_raw_response(raw_response1)
-  response2 <- query$catalog_request_from_raw_response(raw_response2)
+  i <- 0
+  local_mocked_bindings(
+    perform_request = function(...) {
+      i <<- i + 1
 
-  responses <- query$get_responses()
+      if (i == 1) {
+        return(readRDS('test_request_no_cols.rds'))
+      } else if (i == 2) {
+        return(readRDS('test_request_no_cols_part2.rds'))
+      } else {
+        return(NULL)
+      }
+    }
+  )
 
-  testthat::expect_equal(responses[[1]]$index_range, c(1, 50))
-  testthat::expect_equal(responses[[2]]$index_range, c(51, 100))
+  query <- get_records(
+    guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus",
+    all_records = TRUE)
 
   df <- response_data(query)
   testthat::expect_equal(nrow(df), 100)
@@ -73,12 +75,12 @@ test_that("get_records_with_cols", {
       return(readRDS('test_request_with_cols.rds'))
     }
   )
-  raw_response <- readRDS('test_request_with_cols.rds')
+
   query <- get_records(
     guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus")
 
   df <- response_data(query)
-
   testthat::expect_s3_class(df, "data.frame")
   testthat::expect_equal(sort(colnames(df)), sort(c("collection_object_id", "guid", "parts", "partdetail")))
+  testthat::expect_equal(nrow(df), 50)
 })

@@ -37,6 +37,9 @@ Query <- R6::R6Class("Query",
 
       request <- private$current_builder$build_request()
       response <- request$perform(api_key)
+      if (is.null(response)) {
+        return(NULL)
+      }
 
       if (is_class(private$current_builder, "CatalogRequestBuilder") || is_class(private$current_builder, "FromResponseRequestBuilder")) {
         if (response$is_empty()) {
