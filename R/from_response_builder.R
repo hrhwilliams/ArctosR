@@ -9,7 +9,7 @@ FromResponseRequestBuilder <- R6::R6Class("FromResponseRequestBuilder",
   public = list(
     initialize = function(response, records) {
       private$table_id <- records$table_id
-      private$start = response$stop_index + 1
+      private$start <- response$stop_index + 1
       return(invisible(self))
     },
 

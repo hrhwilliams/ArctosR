@@ -12,7 +12,6 @@ Metadata <- R6::R6Class("Metadata",
     system_timestamp = NULL,
     arctos_timestamp = NULL,
     timezone = "GMT",
-
     to_list = function() {
       return(list(
         url = self$url,
@@ -20,8 +19,8 @@ Metadata <- R6::R6Class("Metadata",
         status_code = self$status_code,
         system_timestamp = self$system_timestamp,
         arctos_timestamp = self$arctos_timestamp,
-        timezone = self$timezone)
-      )
+        timezone = self$timezone
+      ))
     }
   )
 )

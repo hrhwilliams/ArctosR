@@ -10,7 +10,6 @@ RequestBuilder <- R6::R6Class("RequestBuilder",
       private$debug_print <- TRUE
       invisible(self)
     },
-
     build_request = function() {
       stop("Unimplemented for this type")
     }
@@ -19,5 +18,3 @@ RequestBuilder <- R6::R6Class("RequestBuilder",
     debug_print = FALSE
   )
 )
-
-

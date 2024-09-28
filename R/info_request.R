@@ -8,7 +8,7 @@
 #' @export
 InfoRequestBuilder <- R6::R6Class("InfoRequestBuilder",
   inherit = RequestBuilder,
-  public  = list(
+  public = list(
     build_request = function() {
       request <- ArctosR::Request$new()$
         with_endpoint("catalog.cfc")$

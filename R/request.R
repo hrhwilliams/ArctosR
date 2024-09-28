@@ -10,12 +10,10 @@ Request <- R6::R6Class("Request",
     params = NULL,
     end_point = NULL,
     timestamp = NULL,
-
     with_endpoint = function(endpoint) {
       self$end_point <- tolower(endpoint)
       return(invisible(self))
     },
-
     add_param = function(...) {
       params <- list(...)
 
@@ -26,7 +24,6 @@ Request <- R6::R6Class("Request",
       self$params <- c(self$params, params)
       return(invisible(self))
     },
-
     add_params = function(l) {
       params <- l
 
@@ -37,11 +34,9 @@ Request <- R6::R6Class("Request",
       self$params <- c(self$params, params)
       return(invisible(self))
     },
-
     serialize = function() {
       stop("Unimplemented.")
     },
-
     perform = function(api_key = NULL) {
       if (is.null(self$end_point)) {
         stop("No endpoint given.")
@@ -64,7 +59,6 @@ Request <- R6::R6Class("Request",
 
       return(ArctosR::Response$new(self, raw_response))
     },
-
     from_raw_response = function(raw_response) {
       return(ArctosR::Response$new(self, raw_response))
     }

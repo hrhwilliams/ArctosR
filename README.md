@@ -81,7 +81,7 @@ library(ArctosR)
 result_params <- get_result_parameters()
 
 # Print the first six rows and first 3 columns to the console.
-result_params[1:6,1:3]
+result_params[1:6, 1:3]
 #>                     display            obj_name query_cost
 #> 1 GUID (DarwinCore Triplet)                guid          1
 #> 2    Catalog Number Integer    catalognumberint          1
@@ -95,18 +95,18 @@ View(result_params)
 
 # Request just the number of records matching a query.
 count <- get_record_count(
-  scientific_name="Canis lupus", guid_prefix="MSB:Mamm"
+  scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm"
 )
 
 # Request to download data. This is limited to 100 records by default.
 response <- get_records(
-  scientific_name="Canis lupus", guid_prefix="MSB:Mamm",
+  scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
   columns = list("guid", "parts", "partdetail")
 )
 
 # Request to download all available data.
 response <- get_records(
-  scientific_name="Canis lupus", guid_prefix="MSB:Mamm",
+  scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
   columns = list("guid", "parts", "partdetail"),
   all_records = TRUE
 )
@@ -118,5 +118,5 @@ df <- response_data(response)
 save_response_csv(response, "msb-wolves.csv", with_metadata = TRUE)
 
 # Save only the dataframe
-write.csv(x = df, file="msb-wolves-df.csv")
+write.csv(x = df, file = "msb-wolves-df.csv")
 ```

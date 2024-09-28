@@ -9,14 +9,12 @@
 Records <- R6::R6Class("Records",
   public = list(
     df = NULL,
-
     initialize = function(df, tbl) {
       # private$query_params <- query_params
       # private$result_params <- result_params
       private$tbl <- tbl
       self$df <- df
     },
-
     append = function(other) {
       private$unexpand_cols()
       self$df <- rbind(self$df, other$df)
@@ -38,7 +36,6 @@ Records <- R6::R6Class("Records",
       write.csv(self$df, file_path)
       private$reexpand_cols()
     },
-
     save_nested_csvs = function(file_path) {
       if (is.null(self$df)) {
         stop("No data to export.")
@@ -62,8 +59,10 @@ Records <- R6::R6Class("Records",
             if (is.null(df[[col]][[row]])) {
               next
             }
-            recursive_write(df[[col]][[row]], sprintf("%s_%s-%s", encode_win_filename(col_name_path),
-                                                      encode_win_filename(df[[1]][[row]]), col))
+            recursive_write(df[[col]][[row]], sprintf(
+              "%s_%s-%s", encode_win_filename(col_name_path),
+              encode_win_filename(df[[1]][[row]]), col
+            ))
           }
         }
       }
@@ -86,12 +85,11 @@ Records <- R6::R6Class("Records",
       }
 
       if (!(column %in% names(private$expanded_cols))) {
-        private$expanded_cols = c(private$expanded_cols, setNames(list(self$df[[column]]),c(column))
-        )
+        private$expanded_cols <- c(private$expanded_cols, setNames(list(self$df[[column]]), c(column)))
       }
 
-      self$df[[column]] = lapply(self$df[[column]], function (j) {
-        fromJSON(j, simplifyDataFrame=T)
+      self$df[[column]] <- lapply(self$df[[column]], function(j) {
+        fromJSON(j, simplifyDataFrame = T)
       })
     }
   ),
@@ -99,11 +97,9 @@ Records <- R6::R6Class("Records",
     records = function() {
       return(nrow(self$df))
     },
-
     column_names = function() {
       return(colnames(self$df))
     },
-
     table_id = function() {
       return(private$tbl)
     }
@@ -114,13 +110,11 @@ Records <- R6::R6Class("Records",
     timestamp = NULL,
     expanded_cols = NULL,
     tbl = NULL,
-
     unexpand_cols = function() {
       for (column in names(private$expanded_cols)) {
-        self$df[[column]] = private$expanded_cols[[column]]
+        self$df[[column]] <- private$expanded_cols[[column]]
       }
     },
-
     reexpand_cols = function() {
       for (column in names(private$expanded_cols)) {
         self$expand_col(column)

@@ -111,7 +111,7 @@ get_records <- function(..., api_key = NULL, columns = NULL, limit = NULL, all_r
       query$from_response_request()$
         request_more(100)
 
-      if(is.null(query$perform())) {
+      if (is.null(query$perform())) {
         break
       }
     }

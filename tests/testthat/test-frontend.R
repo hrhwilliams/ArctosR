@@ -26,19 +26,22 @@ test_that("query catalog request", {
   testthat::expect_equal(request$params$guid_prefix, "MSB:Mamm")
   testthat::expect_equal(request$params$genus, "Canis")
   testthat::expect_equal(request$params$cols, "guid,scientific_name,relatedcatalogeditems")
-  testthat::expect_equal(request$url,
-    "https://arctos.database.museum/component/api/v2/catalog.cfc?method=getCatalogData&queryformat=struct&length=100&guid_prefix=MSB%3AMamm&genus=Canis&species=lupus&cols=guid%2Cscientific_name%2Crelatedcatalogeditems")
+  testthat::expect_equal(
+    request$url,
+    "https://arctos.database.museum/component/api/v2/catalog.cfc?method=getCatalogData&queryformat=struct&length=100&guid_prefix=MSB%3AMamm&genus=Canis&species=lupus&cols=guid%2Cscientific_name%2Crelatedcatalogeditems"
+  )
 })
 
 test_that("get_records_no_cols", {
   local_mocked_bindings(
     perform_request = function(...) {
-      return(readRDS('test_request_no_cols.rds'))
+      return(readRDS("test_request_no_cols.rds"))
     }
   )
 
   query <- get_records(
-    guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus")
+    guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus"
+  )
 
   df <- response_data(query)
   testthat::expect_s3_class(df, "data.frame")
@@ -52,9 +55,9 @@ test_that("get_records_no_cols concatenate", {
       i <<- i + 1
 
       if (i == 1) {
-        return(readRDS('test_request_no_cols.rds'))
+        return(readRDS("test_request_no_cols.rds"))
       } else if (i == 2) {
-        return(readRDS('test_request_no_cols_part2.rds'))
+        return(readRDS("test_request_no_cols_part2.rds"))
       } else {
         return(NULL)
       }
@@ -63,7 +66,8 @@ test_that("get_records_no_cols concatenate", {
 
   query <- get_records(
     guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus",
-    all_records = TRUE)
+    all_records = TRUE
+  )
 
   df <- response_data(query)
   testthat::expect_equal(nrow(df), 100)
@@ -72,12 +76,13 @@ test_that("get_records_no_cols concatenate", {
 test_that("get_records_with_cols", {
   local_mocked_bindings(
     perform_request = function(...) {
-      return(readRDS('test_request_with_cols.rds'))
+      return(readRDS("test_request_with_cols.rds"))
     }
   )
 
   query <- get_records(
-    guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus")
+    guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus"
+  )
 
   df <- response_data(query)
   testthat::expect_s3_class(df, "data.frame")
