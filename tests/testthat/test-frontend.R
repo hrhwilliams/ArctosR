@@ -77,6 +77,12 @@ test_that("get_records_no_cols", {
   df <- response_data(query)
   testthat::expect_s3_class(df, "data.frame")
   testthat::expect_equal(nrow(df), 50)
+
+  response <- query$get_responses()[[1]]$to_list()
+  testthat::expect_true(query$get_responses()[[1]]$was_success())
+  testthat::expect_equal(query$get_responses()[[1]]$index_range, c(1, 50))
+  testthat::expect_equal(response$index_range, c(1, 50))
+  testthat::expect_equal(response$metadata$status_code, 200)
 })
 
 test_that("get_records missing query", {
@@ -144,4 +150,19 @@ test_that("expand_cols", {
   testthat::expect_s3_class(df$partdetail[[1]], "data.frame")
   testthat::expect_equal(sort(colnames(df)), sort(c("collection_object_id", "guid", "parts", "partdetail")))
   testthat::expect_equal(nrow(df), 50)
+})
+
+test_that("expand_cols fail", {
+  local_mocked_bindings(
+    perform_request = function(...) {
+      return(readRDS("test_request_with_cols.rds"))
+    }
+  )
+
+  query <- get_records(
+    guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus",
+    columns = list("guid", "parts", "partdetail")
+  )
+
+  testthat::expect_condition(expand_column(query, "no col"))
 })
