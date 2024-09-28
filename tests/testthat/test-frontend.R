@@ -1,6 +1,6 @@
 library(ArctosR)
 
-test_that("query info request", {
+test_that("query info build request", {
   q <- Query$new()
   request <- q$info_request()$
     build_request()
@@ -8,6 +8,22 @@ test_that("query info request", {
   testthat::expect_equal(request$end_point, "catalog.cfc")
   testthat::expect_equal(length(request$params), 1)
   testthat::expect_equal(request$params$method, "about")
+})
+
+test_that("query info perform request", {
+  local_mocked_bindings(
+    perform_request = function(...) {
+      return(readRDS("params_response.rds"))
+    }
+  )
+
+  query_params <- get_query_parameters()
+  result_params <- get_result_parameters()
+
+  testthat::expect_s3_class(query_params, "data.frame")
+  testthat::expect_s3_class(result_params, "data.frame")
+  testthat::expect_gt(nrow(query_params), 0)
+  testthat::expect_gt(nrow(result_params), 0)
 })
 
 test_that("query catalog request", {
@@ -32,6 +48,20 @@ test_that("query catalog request", {
   )
 })
 
+test_that("get_record_count", {
+  local_mocked_bindings(
+    perform_request = function(...) {
+      return(readRDS("test_request_no_cols.rds"))
+    }
+  )
+
+  records <- get_record_count(
+    guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus"
+  )
+
+  testthat::expect_equal(records, 1694)
+})
+
 test_that("get_records_no_cols", {
   local_mocked_bindings(
     perform_request = function(...) {
@@ -40,12 +70,17 @@ test_that("get_records_no_cols", {
   )
 
   query <- get_records(
-    guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus"
+    guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus",
+    limit = 50
   )
 
   df <- response_data(query)
   testthat::expect_s3_class(df, "data.frame")
   testthat::expect_equal(nrow(df), 50)
+})
+
+test_that("get_records missing query", {
+  testthat::expect_condition(get_records())
 })
 
 test_that("get_records_no_cols concatenate", {
@@ -81,7 +116,8 @@ test_that("get_records_with_cols", {
   )
 
   query <- get_records(
-    guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus"
+    guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus",
+    columns = list("guid", "parts", "partdetail")
   )
 
   df <- response_data(query)
