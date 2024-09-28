@@ -52,7 +52,7 @@ Records <- R6::R6Class("Records",
         col_types <- sapply(df, class)
         list_cols <- which(col_types == "list")
         exclude <- names(df) %in% names(list_cols)
-        write.csv(df[!exclude], sprintf("%s.csv", encode_win_filename(col_name_path)))
+        write_csv(df[!exclude], sprintf("%s.csv", encode_win_filename(col_name_path)))
 
         for (col in names(list_cols)) {
           for (row in 1:nrow(df)) {

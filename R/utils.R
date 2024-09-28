@@ -85,3 +85,7 @@ get_header <- function(headers, search) {
 is_class <- function(object, class) {
   return(class(object)[1] == class)
 }
+
+write_csv <- function(...) {
+  utils::write.csv(...)
+}
