@@ -1,4 +1,5 @@
 library(ArctosR)
+library(utils)
 
 test_that("query info build request", {
   q <- Query$new()
@@ -165,4 +166,30 @@ test_that("expand_cols fail", {
   )
 
   testthat::expect_condition(expand_column(query, "no col"))
+})
+
+test_that("re-expand cols after write", {
+  local_mocked_bindings(
+    perform_request = function(...) {
+      return(readRDS("test_request_with_cols.rds"))
+    }
+  )
+
+  query <- get_records(
+    guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus",
+    columns = list("guid", "parts", "partdetail")
+  )
+
+  expand_column(query, "partdetail")
+  df <- response_data(query)
+  testthat::expect_s3_class(df$partdetail[[1]], "data.frame")
+
+
+  with_mocked_bindings(
+    save_response_csv(query, "test"),
+    write_csv = function(...) {}
+  )
+
+  df <- response_data(query)
+  testthat::expect_s3_class(df$partdetail[[1]], "data.frame")
 })
