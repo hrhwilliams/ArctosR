@@ -94,7 +94,7 @@ test_that("get_records_no_cols concatenate", {
       } else if (i == 2) {
         return(readRDS("test_request_no_cols_part2.rds"))
       } else {
-        return(NULL)
+        return(readRDS("test_request_no_cols_part3.rds"))
       }
     }
   )
@@ -122,6 +122,26 @@ test_that("get_records_with_cols", {
 
   df <- response_data(query)
   testthat::expect_s3_class(df, "data.frame")
+  testthat::expect_equal(sort(colnames(df)), sort(c("collection_object_id", "guid", "parts", "partdetail")))
+  testthat::expect_equal(nrow(df), 50)
+})
+
+test_that("expand_cols", {
+  local_mocked_bindings(
+    perform_request = function(...) {
+      return(readRDS("test_request_with_cols.rds"))
+    }
+  )
+
+  query <- get_records(
+    guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus",
+    columns = list("guid", "parts", "partdetail")
+  )
+
+  expand_column(query, "partdetail")
+  df <- response_data(query)
+
+  testthat::expect_s3_class(df$partdetail[[1]], "data.frame")
   testthat::expect_equal(sort(colnames(df)), sort(c("collection_object_id", "guid", "parts", "partdetail")))
   testthat::expect_equal(nrow(df), 50)
 })

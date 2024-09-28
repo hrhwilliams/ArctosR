@@ -16,12 +16,6 @@ Query <- R6::R6Class("Query",
         new(private$responses[[length(private$responses)]], private$records)
       return(private$current_builder)
     },
-    catalog_request_from_raw_response = function(raw_response) {
-      response <- Request$new()$from_raw_response(raw_response)
-      private$concatenate_response(response)
-      private$current_builder <- NULL
-      return(response)
-    },
     info_request = function() {
       private$current_builder <- ArctosR::InfoRequestBuilder$new()
       return(private$current_builder)
@@ -33,18 +27,24 @@ Query <- R6::R6Class("Query",
 
       request <- private$current_builder$build_request()
       response <- request$perform(api_key)
+
       if (is.null(response)) {
+        stop("No response")
         return(NULL)
+      } else if (response$metadata$status_code != 200) {
+        stop(response$metadata$status_code)
       }
 
       if (is_class(private$current_builder, "CatalogRequestBuilder") || is_class(private$current_builder, "FromResponseRequestBuilder")) {
+        private$concatenate_response(response)
+
+        # check if response had no records
         if (response$is_empty()) {
           return(NULL)
         }
 
-        private$concatenate_response(response)
-
         private$current_builder <- NULL
+
         return(response)
       } else if (is_class(private$current_builder, "InfoRequestBuilder")) {
         return(response)
