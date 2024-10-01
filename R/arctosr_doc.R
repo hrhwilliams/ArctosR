@@ -10,6 +10,10 @@
 #' Arctos is community and an online collection management information system.
 #' Arctos is a consortium of museums and organizations that collaborate to serve
 #' data on over 5 million records from natural and cultural history collections.
+#' Arctos integrates access to information from diverse disciplines:
+#' anthropology, botany, entomology, ethnology, herpetology, geology,
+#' ichthyology, mammalogy, mineralogy, ornithology, paleontology,
+#' parasitology as well as archival and cultural collections.
 #' The web interface to the Arctos database can be found at
 #' https://arctos.database.museum/. For more information about Arctos,
 #' see https://arctosdb.org/about/, and
