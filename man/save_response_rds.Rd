@@ -2,19 +2,19 @@
 % Please edit documentation in R/frontend.R
 \name{save_response_rds}
 \alias{save_response_rds}
-\title{save_response_rds}
+\title{Write query records as an RDS file}
 \usage{
 save_response_rds(query, filename)
 }
 \arguments{
 \item{query}{The query object to be saved.}
 
-\item{filename}{Name of the file to be saved.}
+\item{filename}{(character) Name of the file to be saved.}
 }
 \value{
 Nothing.
 }
 \description{
-Save the query object as an RDS file which stores the entire state of the
+Save the query object as an RDS file, which stores the entire state of the
 query and can be loaded at a later time.
 }

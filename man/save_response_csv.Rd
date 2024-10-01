@@ -9,17 +9,23 @@ save_response_csv(query, filename, expanded = FALSE, with_metadata = TRUE)
 \arguments{
 \item{query}{The query object to be saved}
 
-\item{filename}{Name of the file to be saved.}
+\item{filename}{(character) Name of the file to be saved.}
 
-\item{expanded}{Some columns from Arctos are themselves tables, so to accurately
-represent the structure of the data, these inner tables can be saved as separate
-CSVs that are named according to which record they belong. Setting this option
-to TRUE will create a folder of CSVs representing hierarchical data.}
+\item{expanded}{(logical) Setting this option to TRUE will create a folder
+of CSVs representing hierarchical data. See details.}
 
 \item{with_metadata}{Whether to save the metadata of the response as a JSON
 file along side the CSV or folder of CSVs.}
 }
+\value{
+Nothing.
+}
 \description{
 Save the records inside the query object as a CSV file, optionally alongside
 metadata relating to the requests made to download the data.
+}
+\details{
+Some columns from Arctos are themselves tables, so to accurately represent
+the structure of the data, these inner tables can be saved as separate
+CSVs that are named according to which record they belong.
 }

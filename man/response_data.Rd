@@ -2,16 +2,16 @@
 % Please edit documentation in R/frontend.R
 \name{response_data}
 \alias{response_data}
-\title{response_data}
+\title{Get query records as a data frame}
 \usage{
 response_data(query)
 }
 \arguments{
-\item{query}{The query object to extract the dataframe from.}
+\item{query}{The query object to extract the data frame from.}
 }
 \value{
-A data frame
+A data frame with the information requested in the query.
 }
 \description{
-Obtain just the dataframe from a successful query.
+Obtain the data frame with the records from a successful query.
 }

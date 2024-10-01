@@ -2,16 +2,17 @@
 % Please edit documentation in R/frontend.R
 \name{get_result_parameters}
 \alias{get_result_parameters}
-\title{get_result_parameters}
+\title{Get parameters to define valid results in queries}
 \usage{
 get_result_parameters()
 }
 \value{
 Data frame listing valid result columns and associated
-description and category
+description and category. The returned columns are: \code{display}, \code{obj_name},
+\code{query_cost}, \code{category}, \code{description}, \code{default_order}. The names in
+\code{obj_name} are passed to \code{\link{get_records}} in the \code{columns}
+parameter as a \code{list}.
 }
 \description{
-Request a data frame containing a list of all valid result columns to request
-from Arctos. The returned columns are: \verb{display, obj_name, query_cost, category, description, default_order}. The names in obj_name are passed to
-\code{\link{get_records}} in the \code{columns} parameter as a \code{list}.
+Request information about all valid result columns to request from Arctos.
 }

@@ -12,7 +12,6 @@ to increase the record count, or to add columns.
 \itemize{
 \item \href{#method-Query-catalog_request}{\code{Query$catalog_request()}}
 \item \href{#method-Query-from_response_request}{\code{Query$from_response_request()}}
-\item \href{#method-Query-catalog_request_from_raw_response}{\code{Query$catalog_request_from_raw_response()}}
 \item \href{#method-Query-info_request}{\code{Query$info_request()}}
 \item \href{#method-Query-perform}{\code{Query$perform()}}
 \item \href{#method-Query-save_metadata_json}{\code{Query$save_metadata_json()}}
@@ -37,15 +36,6 @@ to increase the record count, or to add columns.
 \subsection{Method \code{from_response_request()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Query$from_response_request()}\if{html}{\out{</div>}}
-}
-
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-Query-catalog_request_from_raw_response"></a>}}
-\if{latex}{\out{\hypertarget{method-Query-catalog_request_from_raw_response}{}}}
-\subsection{Method \code{catalog_request_from_raw_response()}}{
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Query$catalog_request_from_raw_response(raw_response)}\if{html}{\out{</div>}}
 }
 
 }

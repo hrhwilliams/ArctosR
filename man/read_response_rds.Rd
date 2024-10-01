@@ -2,16 +2,16 @@
 % Please edit documentation in R/frontend.R
 \name{read_response_rds}
 \alias{read_response_rds}
-\title{read_response_rds}
+\title{Read query records previously saved as an RDS file}
 \usage{
 read_response_rds(filename)
 }
 \arguments{
-\item{filename}{The file to load in.}
+\item{filename}{(character) The name of the file to load in.}
 }
 \value{
 A query object
 }
 \description{
-Load in a query object saved to an RDS file
+Load in a query object saved to an RDS file.
 }

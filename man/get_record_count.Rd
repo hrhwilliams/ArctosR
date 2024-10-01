@@ -2,7 +2,7 @@
 % Please edit documentation in R/frontend.R
 \name{get_record_count}
 \alias{get_record_count}
-\title{get_record_count}
+\title{Count number of records in a query}
 \usage{
 get_record_count(..., api_key = NULL)
 }
@@ -10,8 +10,8 @@ get_record_count(..., api_key = NULL)
 \item{...}{Query parameters and their values to pass to Arctos to search.
 For example, `scientific_name = "Canis lupus"``}
 
-\item{api_key}{The API key to use for this request. If NULL, the package's
-default API key is used.}
+\item{api_key}{(character) The API key to use for this request.
+The default, \code{NULL}, uses the package's default API key.}
 }
 \value{
 The number of records matching the given query, as an integer.

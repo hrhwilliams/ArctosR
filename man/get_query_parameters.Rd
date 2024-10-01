@@ -2,16 +2,16 @@
 % Please edit documentation in R/frontend.R
 \name{get_query_parameters}
 \alias{get_query_parameters}
-\title{get_query_parameters}
+\title{Get parameters to perform queries}
 \usage{
 get_query_parameters()
 }
 \value{
-Data frame listing valid query parameters and associated
-description and category
+Data frame listing valid query parameters and associated description and
+category. The returned columns are: \code{display}, \code{obj_name}, \code{category},
+\code{subcategory}, \code{description}. All entries in \code{obj_name} are valid parameters
+to pass to \code{\link{get_records}} as keys.
 }
 \description{
-Request a data frame containing a list of all valid query parameters for
-querying Arctos. The returned columns are: \verb{display, obj_name, category, subcategory, description}. All entries in obj_name are valid parameters to
-pass to \code{\link{get_records}} as keys.
+Request information about all valid query parameters for querying Arctos.
 }
