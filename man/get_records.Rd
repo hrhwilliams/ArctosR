@@ -2,33 +2,35 @@
 % Please edit documentation in R/frontend.R
 \name{get_records}
 \alias{get_records}
-\title{get_records}
+\title{Get records from Arctos based on a query}
 \usage{
-get_records(..., api_key = NULL, columns = NULL, limit = NULL, all_records = FALSE)
+get_records(..., api_key = NULL, columns = NULL, limit = NULL,
+            all_records = FALSE)
 }
 \arguments{
 \item{...}{Query parameters and their values to pass to Arctos to search.
 For example, \code{scientific_name = "Canis lupus"}}
 
-\item{api_key}{The API key to use for this request. If NULL, the package's
-default API key is used.}
+\item{api_key}{(character) The API key to use for this request.
+The default, \code{NULL}, uses the package's default API key.}
 
 \item{columns}{A list of columns to be returned in the table of records
 to be downloaded from Arctos.}
 
-\item{limit}{The maximum number of records to download at one time. Default
+\item{limit}{(numeric) The maximum number of records to download at once. Default
 is 100.}
 
-\item{all_records}{If true, continue to request more records from Arctos
-until all records matching the query have been downloaded.}
+\item{all_records}{(logical) If true, the request is performed multiple times
+to obtain data from Arctos until all records matching the query have been
+downloaded.}
 }
 \value{
-A query object consisting of metadata for each request sent to
-Arctos to fulfil the user's query, and a data frame of records.
+A query object consisting of metadata for each request sent to Arctos to
+fulfill the user's query, and a data frame of records.
 }
 \description{
-Make a request to Arctos to return a table with the columns specified in the
-list passed as \code{columns} of all records matching a query.
+Make a request to Arctos to return data based on a query. The columns
+(fields) returned are specified in the list defined in \code{columns}.
 A list of possible query keys can be obtained from the output of
 \code{\link{get_query_parameters}}.
 }

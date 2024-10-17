@@ -12,7 +12,9 @@ Date: 2024-08-22
 Description: The ArctosR package provides a set of functions to help users
     perform requests to the Arctos API to download data. It provides a set of
     builder classes for performing complex requests, as well as a set of simple
-    functions for automating many common requests and workflows.
+    functions for automating many common requests and workflows. More
+    information about Arctos can be found in 
+    Cicero et al. (2024) <doi:10.1371/journal.pone.0296478>.
 URL: https://github.com/hrhwilliams/arctosr
 BugReports: https://github.com/hrhwilliams/arctosr/issues
 License: GPL-3

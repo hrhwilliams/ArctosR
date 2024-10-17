@@ -2,19 +2,19 @@
 % Please edit documentation in R/frontend.R
 \name{expand_column}
 \alias{expand_column}
-\title{expand_column}
+\title{Expand information of columns in JSON format}
 \usage{
 expand_column(query, column_name)
 }
 \arguments{
-\item{query}{The query object whose records contain a column to be expanded.}
+\item{query}{The query object with a JSON formatted column to be expanded.}
 
-\item{column_name}{The name of the column to be expanded.}
+\item{column_name}{(character) The name of the column to be expanded.}
 }
 \value{
 Nothing.
 }
 \description{
-Expand a column in the records if the data in that column is a JSON formatted
-table.
+Expand all information contained in a JSON formatted column in a query
+object. Information is presented as nested data frames if needed.
 }
