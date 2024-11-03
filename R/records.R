@@ -33,7 +33,7 @@ Records <- R6::R6Class("Records",
       }
 
       private$unexpand_cols()
-      write.csv(self$df, file_path)
+      write_csv(self$df, file_path)
       private$reexpand_cols()
     },
     save_nested_csvs = function(file_path) {
