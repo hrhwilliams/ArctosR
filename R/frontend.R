@@ -121,16 +121,17 @@ get_records <- function(..., api_key = NULL, columns = NULL, limit = NULL,
     # builder$set_columns(columns)
   }
 
-  if (!is.null(limit)) {
-    builder$set_limit(limit)
+  if (is.null(limit)) {
+    limit <- 250
   }
 
+  builder$set_limit(limit)
   query$perform(api_key)
 
   if (all_records) {
     repeat {
       query$from_response_request()$
-        request_more(100)
+        request_more(limit)
 
       if (is.null(query$perform())) {
         break
