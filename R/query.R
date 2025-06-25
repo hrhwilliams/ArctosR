@@ -73,7 +73,7 @@ Query <- R6::R6Class("Query",
       private$records$expand_col(column_name)
     },
     get_responses = function() {
-      return(private$responses)
+      private$responses
     }
   ),
   active = list(
