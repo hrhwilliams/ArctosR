@@ -68,7 +68,7 @@ Response returned from Arctos.
 \if{latex}{\out{\hypertarget{method-Response-to_records}{}}}
 \subsection{Method \code{to_records()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$to_records(start = 1)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Response$to_records(start = 0)}\if{html}{\out{</div>}}
 }
 
 }

@@ -38,7 +38,7 @@ FromResponseRequestBuilder <- R6::R6Class("FromResponseRequestBuilder",
   ),
   private = list(
     response = NULL,
-    start = 1,
+    start = 0,
     table_id = NULL,
     more = 100
   )

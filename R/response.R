@@ -9,7 +9,7 @@ Response <- R6::R6Class("Response",
     metadata = NULL,
     response_type = NULL,
     content = NULL,
-    start_index = 1,
+    start_index = 0,
     stop_index = 1,
     initialize = function(request, raw_response) {
       self$request <- request
@@ -29,7 +29,7 @@ Response <- R6::R6Class("Response",
     },
     set_start_index = function(start) {
       self$start_index <- start
-      self$stop_index <- self$stop_index + start - 1
+      self$stop_index <- self$stop_index + start
     },
     was_success = function() {
       return(self$metadata$status_code == 200)
@@ -43,7 +43,7 @@ Response <- R6::R6Class("Response",
         index_range = self$index_range
       ))
     },
-    to_records = function(start = 1) {
+    to_records = function(start = 0) {
       # grab records from content
       df <- as.data.frame(self$content$DATA)
       records <- ArctosR::Records$new(df, self$content$tbl)
