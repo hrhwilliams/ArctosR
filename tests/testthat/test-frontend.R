@@ -81,8 +81,8 @@ test_that("get_records_no_cols", {
 
   response <- query$get_responses()[[1]]$to_list()
   testthat::expect_true(query$get_responses()[[1]]$was_success())
-  testthat::expect_equal(query$get_responses()[[1]]$index_range, c(1, 50))
-  testthat::expect_equal(response$index_range, c(1, 50))
+  testthat::expect_equal(query$get_responses()[[1]]$index_range, c(0, 49))
+  testthat::expect_equal(response$index_range, c(0, 49))
   testthat::expect_equal(response$metadata$status_code, 200)
 })
 
