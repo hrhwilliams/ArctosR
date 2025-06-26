@@ -122,7 +122,7 @@ get_records <- function(..., api_key = NULL, columns = NULL, limit = NULL,
   }
 
   if (is.null(limit)) {
-    limit <- 250
+    limit <- 100
   }
 
   builder$set_limit(limit)
