@@ -14,24 +14,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-attr_type_factory <- function() {
-  i = 0
-
-  function(a) {
-    i <<- i + 1
-    sprintf("attribute_type_%d=%s", i, a)
-  }
-}
-
-attr_value_factory <- function() {
-  i = 0
-
-  function(a) {
-    i <<- i + 1
-    sprintf("attribute_value_%d=%s", i, a)
-  }
-}
-
 #' @title CatalogRequestBuilder
 #'
 #' @import R6
