@@ -127,8 +127,7 @@ get_record_count <- function(..., api_key = NULL) {
 #' # Request to download all available data
 #' response <- get_records(
 #'   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
-#'   columns = list("guid", "parts", "partdetail"),
-#'   all_records = TRUE
+#'   columns = list("guid", "parts", "partdetail")
 #' )
 #'
 #' @param ... Query parameters and their values to pass to Arctos to search.
@@ -139,6 +138,7 @@ get_record_count <- function(..., api_key = NULL) {
 #' to be downloaded from Arctos.
 #' @param limit (numeric) The maximum number of records to download at once. Default
 #' is 100.
+#' @param filter_by An optional list of record attributes to filter results by.
 #' @param all_records (logical) If true, the request is performed multiple times
 #' to obtain data from Arctos until all records matching the query have been
 #' downloaded.
@@ -149,7 +149,7 @@ get_record_count <- function(..., api_key = NULL) {
 #'
 #' @export
 get_records <- function(..., api_key = NULL, columns = NULL, limit = NULL,
-                        all_records = FALSE) {
+                        filter_by = NULL, all_records = FALSE) {
   query <- Query$new()
   builder <- query$catalog_request()
 
@@ -162,6 +162,10 @@ get_records <- function(..., api_key = NULL, columns = NULL, limit = NULL,
   if (!is.null(columns)) {
     do.call(builder$set_columns, columns)
     # builder$set_columns(columns)
+  }
+
+  if (!is.null(filter_by)) {
+    do.call(builder$set_filter, filter_by)
   }
 
   if (is.null(limit)) {
@@ -201,8 +205,7 @@ get_records <- function(..., api_key = NULL, columns = NULL, limit = NULL,
 #' # Request to download all available data
 #' response <- get_records(
 #'   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
-#'   columns = list("guid", "parts", "partdetail"),
-#'   all_records = TRUE
+#'   columns = list("guid", "parts", "partdetail")
 #' )
 #'
 #' # The partdetail column is a JSON list of parts and their attributes
@@ -234,8 +237,7 @@ expand_column <- function(query, column_name) {
 #' # Request to download all available data
 #' response <- get_records(
 #'   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
-#'   columns = list("guid", "parts", "partdetail"),
-#'   all_records = TRUE
+#'   columns = list("guid", "parts", "partdetail")
 #' )
 #'
 #' # Grab the dataframe of records from the response
@@ -267,8 +269,7 @@ response_data <- function(query) {
 #' # Request to download all available data
 #' response <- get_records(
 #'   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
-#'   columns = list("guid", "parts", "partdetail"),
-#'   all_records = TRUE
+#'   columns = list("guid", "parts", "partdetail")
 #' )
 #'
 #' # Save the data in a .RDS file
@@ -299,8 +300,7 @@ save_response_rds <- function(query, filename) {
 #' # Request to download all available data
 #' response <- get_records(
 #'   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
-#'   columns = list("guid", "parts", "partdetail"),
-#'   all_records = TRUE
+#'   columns = list("guid", "parts", "partdetail")
 #' )
 #'
 #' # Save the data in a .RDS file
@@ -335,8 +335,7 @@ read_response_rds <- function(filename) {
 #' # Request to download all available data
 #' response <- get_records(
 #'   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
-#'   columns = list("guid", "parts", "partdetail"),
-#'   all_records = TRUE
+#'   columns = list("guid", "parts", "partdetail")
 #' )
 #'
 #' # Save the response in a flat CSV with an additional metadata file in JSON
