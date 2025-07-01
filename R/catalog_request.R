@@ -40,6 +40,15 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
       return(invisible(self))
     },
 
+    #' @description Sets the result parameters to use to filter out results.
+    #'
+    #' @param query (`list`).
+    #' @return [CatalogRequestBuilder].
+    set_filter = function(...) {
+      private$filter_by <- list(...)
+      return(invisible(self))
+    },
+
     #' @description Set parts to query over.
     #'
     #' @param parts (`list`).
@@ -117,6 +126,11 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
       if (!is.null(private$components)) {
         url_params$cols <- encode_list(private$components, ",")
       }
+      if (!is.null(private$filter_by)) {
+        # for each key, replace with attribute_type_1=key and
+        # attribute_value_1=value
+        # increment counter
+      }
 
       request <- ArctosR::Request$new()$
         with_endpoint("catalog.cfc")$
@@ -133,6 +147,7 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
     request_url = NULL,
     limit = 100,
     query = NULL,
+    filter_by = NULL,
     parts = NULL,
     attributes = NULL,
     components = NULL,

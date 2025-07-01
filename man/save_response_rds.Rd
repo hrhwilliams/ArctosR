@@ -24,8 +24,7 @@ library(ArctosR)
 # Request to download all available data
 response <- get_records(
   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
-  columns = list("guid", "parts", "partdetail"),
-  all_records = TRUE
+  columns = list("guid", "parts", "partdetail")
 )
 
 # Save the data in a .RDS file

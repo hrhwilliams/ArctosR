@@ -16,6 +16,7 @@ CatalogRequestBuilder
 \itemize{
 \item \href{#method-CatalogRequestBuilder-set_limit}{\code{CatalogRequestBuilder$set_limit()}}
 \item \href{#method-CatalogRequestBuilder-set_query}{\code{CatalogRequestBuilder$set_query()}}
+\item \href{#method-CatalogRequestBuilder-set_filter}{\code{CatalogRequestBuilder$set_filter()}}
 \item \href{#method-CatalogRequestBuilder-set_parts}{\code{CatalogRequestBuilder$set_parts()}}
 \item \href{#method-CatalogRequestBuilder-set_attributes}{\code{CatalogRequestBuilder$set_attributes()}}
 \item \href{#method-CatalogRequestBuilder-set_components}{\code{CatalogRequestBuilder$set_components()}}
@@ -61,6 +62,26 @@ from Arctos.
 Sets the query parameters to use to search Arctos.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{CatalogRequestBuilder$set_query(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{query}}{(\code{list}).}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+\link{CatalogRequestBuilder}.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-CatalogRequestBuilder-set_filter"></a>}}
+\if{latex}{\out{\hypertarget{method-CatalogRequestBuilder-set_filter}{}}}
+\subsection{Method \code{set_filter()}}{
+Sets the result parameters to use to filter out results.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{CatalogRequestBuilder$set_filter(...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

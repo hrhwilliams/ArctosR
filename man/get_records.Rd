@@ -20,6 +20,8 @@ to be downloaded from Arctos.}
 \item{limit}{(numeric) The maximum number of records to download at once. Default
 is 100.}
 
+\item{filter_by}{An optional list of record attributes to filter results by.}
+
 \item{all_records}{(logical) If true, the request is performed multiple times
 to obtain data from Arctos until all records matching the query have been
 downloaded.}
@@ -40,8 +42,7 @@ library(ArctosR)
 # Request to download all available data
 response <- get_records(
   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
-  columns = list("guid", "parts", "partdetail"),
-  all_records = TRUE
+  columns = list("guid", "parts", "partdetail")
 )
 
 }
