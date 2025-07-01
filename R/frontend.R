@@ -293,7 +293,7 @@ save_response_rds <- function(query, filename) {
 #'
 #' @usage read_response_rds(filename)
 #'
-#' #' @examples
+#' @examples
 #' library(ArctosR)
 #'
 #' # Request to download all available data
