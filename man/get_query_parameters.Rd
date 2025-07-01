@@ -15,3 +15,9 @@ to pass to \code{\link{get_records}} as keys.
 \description{
 Request information about all valid query parameters for querying Arctos.
 }
+\examples{
+library(ArctosR)
+
+q <- get_query_parameters()
+
+}

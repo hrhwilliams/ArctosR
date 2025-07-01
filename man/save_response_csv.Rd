@@ -29,3 +29,17 @@ Some columns from Arctos are themselves tables, so to accurately represent
 the structure of the data, these inner tables can be saved as separate
 CSVs that are named according to which record they belong.
 }
+\examples{
+library(ArctosR)
+
+# Request to download all available data
+response <- get_records(
+  scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
+  columns = list("guid", "parts", "partdetail"),
+  all_records = TRUE
+)
+
+# Save the response in a flat CSV with an additional metadata file in JSON
+save_response_csv(response, "msb-wolves.csv", with_metadata = TRUE)
+
+}

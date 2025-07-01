@@ -18,3 +18,17 @@ Nothing.
 Save the query object as an RDS file, which stores the entire state of the
 query and can be loaded at a later time.
 }
+\examples{
+library(ArctosR)
+
+# Request to download all available data
+response <- get_records(
+  scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
+  columns = list("guid", "parts", "partdetail"),
+  all_records = TRUE
+)
+
+# Save the data in a .RDS file
+save_response_rds(response, "wolves.RDS")
+
+}

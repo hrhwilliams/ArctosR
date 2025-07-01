@@ -15,3 +15,17 @@ A data frame with the information requested in the query.
 \description{
 Obtain the data frame with the records from a successful query.
 }
+\examples{
+library(ArctosR)
+
+# Request to download all available data
+response <- get_records(
+  scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
+  columns = list("guid", "parts", "partdetail"),
+  all_records = TRUE
+)
+
+# Grab the dataframe of records from the response
+df <- response_data(response)
+
+}

@@ -16,3 +16,9 @@ parameter as a \code{list}.
 \description{
 Request information about all valid result columns to request from Arctos.
 }
+\examples{
+library(ArctosR)
+
+r <- get_result_parameters()
+
+}
