@@ -14,6 +14,24 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+attr_type_factory <- function() {
+  i = 0
+
+  function(a) {
+    i <<- i + 1
+    sprintf("attribute_type_%d=%s", i, a)
+  }
+}
+
+attr_value_factory <- function() {
+  i = 0
+
+  function(a) {
+    i <<- i + 1
+    sprintf("attribute_value_%d=%s", i, a)
+  }
+}
+
 #' @title CatalogRequestBuilder
 #'
 #' @import R6
@@ -113,6 +131,8 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
 
       url_params <- list()
       url_params <- c(url_params, private$query)
+      types_list <- list()
+      values_list <- list()
 
       if (!is.null(private$cols)) {
         url_params$cols <- encode_list(private$cols, ",")
@@ -127,9 +147,13 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
         url_params$cols <- encode_list(private$components, ",")
       }
       if (!is.null(private$filter_by)) {
-        # for each key, replace with attribute_type_1=key and
-        # attribute_value_1=value
-        # increment counter
+        i <- 1
+
+        for (t in names(private$filter_by)) {
+          types_list[[sprintf("attribute_type_%d", i)]] <- t
+          values_list[[sprintf("attribute_value_%d", i)]] <- private$filter_by[[t]]
+          i <- i + 1
+        }
       }
 
       request <- ArctosR::Request$new()$
@@ -137,7 +161,9 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
         add_param(method = "getCatalogData")$
         add_param(queryformat = "struct")$
         add_param(length = private$limit)$
-        add_params(url_params)
+        add_params(url_params)$
+        add_params(types_list)$
+        add_params(values_list)
 
       return(request)
     }

@@ -65,6 +65,29 @@ test_that("query catalog request", {
   )
 })
 
+test_that("query catalog request with record filters", {
+  q <- Query$new()
+  request <- q$catalog_request()$
+    set_query(guid_prefix = "MSB:Mamm", genus = "Canis", species = "lupus")$
+    set_limit(100)$
+    set_columns("guid", "scientific_name", "relatedcatalogeditems")$
+    set_filter(sex="=male", weight=">100")$
+    build_request()
+
+  testthat::expect_equal(request$end_point, "catalog.cfc")
+  testthat::expect_equal(length(request$params), 11)
+  testthat::expect_equal(request$params$method, "getCatalogData")
+  testthat::expect_equal(request$params$queryformat, "struct")
+  testthat::expect_equal(request$params$length, 100)
+  testthat::expect_equal(request$params$guid_prefix, "MSB:Mamm")
+  testthat::expect_equal(request$params$genus, "Canis")
+  testthat::expect_equal(request$params$cols, "guid,scientific_name,relatedcatalogeditems")
+  testthat::expect_equal(
+    request$url,
+    "https://arctos.database.museum/component/api/v2/catalog.cfc?method=getCatalogData&queryformat=struct&length=100&guid_prefix=MSB%3AMamm&genus=Canis&species=lupus&cols=guid%2Cscientific_name%2Crelatedcatalogeditems&attribute_type_1=sex&attribute_type_2=weight&attribute_value_1=%3Dmale&attribute_value_2=%3E100"
+  )
+})
+
 test_that("get_record_count", {
   local_mocked_bindings(
     perform_request = function(...) {
