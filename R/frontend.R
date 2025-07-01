@@ -22,9 +22,11 @@
 #' @usage get_query_parameters()
 #'
 #' @examples
+#' \dontrun{
 #' library(ArctosR)
 #'
 #' q <- get_query_parameters()
+#' }
 #'
 #' @returns
 #' Data frame listing valid query parameters and associated description and
@@ -51,9 +53,11 @@ get_query_parameters <- function() {
 #' @usage get_result_parameters()
 #'
 #' @examples
+#' \dontrun{
 #' library(ArctosR)
 #'
 #' r <- get_result_parameters()
+#' }
 #'
 #' @returns
 #' Data frame listing valid result columns and associated
@@ -83,11 +87,13 @@ get_result_parameters <- function() {
 #' @usage get_record_count(..., api_key = NULL)
 #'
 #' @examples
+#' \dontrun{
 #' library(ArctosR)
 #'
 #' count <- get_record_count(
 #'   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm"
 #' )
+#' }
 #'
 #' @param ... Query parameters and their values to pass to Arctos to search.
 #' For example, `scientific_name = "Canis lupus"``
@@ -119,9 +125,10 @@ get_record_count <- function(..., api_key = NULL) {
 #'
 #' @usage
 #' get_records(..., api_key = NULL, columns = NULL, limit = NULL,
-#'             all_records = FALSE)
+#'             filter_by = NULL, all_records = FALSE)
 #'
 #' @examples
+#' \dontrun{
 #' library(ArctosR)
 #'
 #' # Request to download all available data
@@ -129,6 +136,7 @@ get_record_count <- function(..., api_key = NULL) {
 #'   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
 #'   columns = list("guid", "parts", "partdetail")
 #' )
+#' }
 #'
 #' @param ... Query parameters and their values to pass to Arctos to search.
 #' For example, `scientific_name = "Canis lupus"`
@@ -200,6 +208,7 @@ get_records <- function(..., api_key = NULL, columns = NULL, limit = NULL,
 #' @usage expand_column(query, column_name)
 #'
 #' @examples
+#' \dontrun{
 #' library(ArctosR)
 #'
 #' # Request to download all available data
@@ -211,6 +220,7 @@ get_records <- function(..., api_key = NULL, columns = NULL, limit = NULL,
 #' # The partdetail column is a JSON list of parts and their attributes
 #' # This will convert the column to dataframes:
 #' expand_column(response, "partdetail")
+#' }
 #'
 #' @param query The query object with a JSON formatted column to be expanded.
 #' @param column_name (character) The name of the column to be expanded.
@@ -232,6 +242,7 @@ expand_column <- function(query, column_name) {
 #' @usage response_data(query)
 #'
 #' @examples
+#' \dontrun{
 #' library(ArctosR)
 #'
 #' # Request to download all available data
@@ -242,6 +253,7 @@ expand_column <- function(query, column_name) {
 #'
 #' # Grab the dataframe of records from the response
 #' df <- response_data(response)
+#' }
 #'
 #' @param query The query object to extract the data frame from.
 #'
@@ -264,6 +276,7 @@ response_data <- function(query) {
 #' @usage save_response_rds(query, filename)
 #'
 #' @examples
+#' \dontrun{
 #' library(ArctosR)
 #'
 #' # Request to download all available data
@@ -274,6 +287,7 @@ response_data <- function(query) {
 #'
 #' # Save the data in a .RDS file
 #' save_response_rds(response, "wolves.RDS")
+#' }
 #'
 #' @param query The query object to be saved.
 #' @param filename (character) Name of the file to be saved.
@@ -295,6 +309,7 @@ save_response_rds <- function(query, filename) {
 #' @usage read_response_rds(filename)
 #'
 #' @examples
+#' \dontrun{
 #' library(ArctosR)
 #'
 #' # Request to download all available data
@@ -308,6 +323,7 @@ save_response_rds <- function(query, filename) {
 #'
 #' # Load the data from the .RDS just saved
 #' read_response_rds("wolves.RDS")
+#' }
 #'
 #' @param filename (character) The name of the file to load in.
 #'
@@ -330,6 +346,7 @@ read_response_rds <- function(filename) {
 #' save_response_csv(query, filename, expanded = FALSE, with_metadata = TRUE)
 #'
 #' @examples
+#' \dontrun{
 #' library(ArctosR)
 #'
 #' # Request to download all available data
@@ -340,6 +357,7 @@ read_response_rds <- function(filename) {
 #'
 #' # Save the response in a flat CSV with an additional metadata file in JSON
 #' save_response_csv(response, "msb-wolves.csv", with_metadata = TRUE)
+#' }
 #'
 #' @param query The query object to be saved
 #' @param filename (character) Name of the file to be saved.

@@ -5,7 +5,7 @@
 \title{Get records from Arctos based on a query}
 \usage{
 get_records(..., api_key = NULL, columns = NULL, limit = NULL,
-            all_records = FALSE)
+            filter_by = NULL, all_records = FALSE)
 }
 \arguments{
 \item{...}{Query parameters and their values to pass to Arctos to search.
@@ -37,6 +37,7 @@ A list of possible query keys can be obtained from the output of
 \code{\link{get_query_parameters}}.
 }
 \examples{
+\dontrun{
 library(ArctosR)
 
 # Request to download all available data
@@ -44,5 +45,6 @@ response <- get_records(
   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
   columns = list("guid", "parts", "partdetail")
 )
+}
 
 }

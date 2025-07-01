@@ -16,8 +16,10 @@ to pass to \code{\link{get_records}} as keys.
 Request information about all valid query parameters for querying Arctos.
 }
 \examples{
+\dontrun{
 library(ArctosR)
 
 q <- get_query_parameters()
+}
 
 }

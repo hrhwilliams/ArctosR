@@ -19,6 +19,7 @@ Save the query object as an RDS file, which stores the entire state of the
 query and can be loaded at a later time.
 }
 \examples{
+\dontrun{
 library(ArctosR)
 
 # Request to download all available data
@@ -29,5 +30,6 @@ response <- get_records(
 
 # Save the data in a .RDS file
 save_response_rds(response, "wolves.RDS")
+}
 
 }
