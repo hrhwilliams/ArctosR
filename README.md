@@ -63,6 +63,17 @@ A complete history of commits can be accessed
 
 ## Installation
 
+### CRAN
+
+ArctosR can be installed from [CRAN](https://cran.r-project.org/) by
+running the command in R:
+
+``` r
+install.packages("ArctosR")
+```
+
+### GitHub
+
 You can install the development version of ArctosR from
 [GitHub](https://github.com/) with:
 
