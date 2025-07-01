@@ -22,8 +22,9 @@
 #' @usage get_query_parameters()
 #'
 #' @examples
+#' library(ArctosR)
+#'
 #' q <- get_query_parameters()
-#' View(q)
 #'
 #' @returns
 #' Data frame listing valid query parameters and associated description and
@@ -50,8 +51,9 @@ get_query_parameters <- function() {
 #' @usage get_result_parameters()
 #'
 #' @examples
+#' library(ArctosR)
+#'
 #' r <- get_result_parameters()
-#' View(r)
 #'
 #' @returns
 #' Data frame listing valid result columns and associated
@@ -81,6 +83,8 @@ get_result_parameters <- function() {
 #' @usage get_record_count(..., api_key = NULL)
 #'
 #' @examples
+#' library(ArctosR)
+#'
 #' count <- get_record_count(
 #'   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm"
 #' )
@@ -118,7 +122,9 @@ get_record_count <- function(..., api_key = NULL) {
 #'             all_records = FALSE)
 #'
 #' @examples
-#' # Request to download all available data.
+#' library(ArctosR)
+#'
+#' # Request to download all available data
 #' response <- get_records(
 #'   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
 #'   columns = list("guid", "parts", "partdetail"),
@@ -190,13 +196,16 @@ get_records <- function(..., api_key = NULL, columns = NULL, limit = NULL,
 #' @usage expand_column(query, column_name)
 #'
 #' @examples
+#' library(ArctosR)
+#'
+#' # Request to download all available data
 #' response <- get_records(
 #'   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
 #'   columns = list("guid", "parts", "partdetail"),
 #'   all_records = TRUE
 #' )
 #'
-#' # The partdetail column is a JSON list of parts and their attributes.
+#' # The partdetail column is a JSON list of parts and their attributes
 #' # This will convert the column to dataframes:
 #' expand_column(response, "partdetail")
 #'
@@ -220,14 +229,16 @@ expand_column <- function(query, column_name) {
 #' @usage response_data(query)
 #'
 #' @examples
-#' # Request to download all available data.
+#' library(ArctosR)
+#'
+#' # Request to download all available data
 #' response <- get_records(
 #'   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
 #'   columns = list("guid", "parts", "partdetail"),
 #'   all_records = TRUE
 #' )
 #'
-#' # Grab the dataframe of records from the response.
+#' # Grab the dataframe of records from the response
 #' df <- response_data(response)
 #'
 #' @param query The query object to extract the data frame from.
@@ -251,7 +262,9 @@ response_data <- function(query) {
 #' @usage save_response_rds(query, filename)
 #'
 #' @examples
-#' # Request to download all available data.
+#' library(ArctosR)
+#'
+#' # Request to download all available data
 #' response <- get_records(
 #'   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
 #'   columns = list("guid", "parts", "partdetail"),
@@ -280,6 +293,22 @@ save_response_rds <- function(query, filename) {
 #'
 #' @usage read_response_rds(filename)
 #'
+#' #' @examples
+#' library(ArctosR)
+#'
+#' # Request to download all available data
+#' response <- get_records(
+#'   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
+#'   columns = list("guid", "parts", "partdetail"),
+#'   all_records = TRUE
+#' )
+#'
+#' # Save the data in a .RDS file
+#' save_response_rds(response, "wolves.RDS")
+#'
+#' # Load the data from the .RDS just saved
+#' read_response_rds("wolves.RDS")
+#'
 #' @param filename (character) The name of the file to load in.
 #'
 #' @returns A query object
@@ -301,7 +330,9 @@ read_response_rds <- function(filename) {
 #' save_response_csv(query, filename, expanded = FALSE, with_metadata = TRUE)
 #'
 #' @examples
-#' # Request to download all available data.
+#' library(ArctosR)
+#'
+#' # Request to download all available data
 #' response <- get_records(
 #'   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
 #'   columns = list("guid", "parts", "partdetail"),
