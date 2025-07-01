@@ -1,9 +1,29 @@
+# ArctosR
+# Copyright (C) 2024-2025  Harlan Williams
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 #' @title Get parameters to perform queries
 #'
 #' @description
 #' Request information about all valid query parameters for querying Arctos.
 #'
 #' @usage get_query_parameters()
+#'
+#' @examples
+#' q <- get_query_parameters()
+#' View(q)
 #'
 #' @returns
 #' Data frame listing valid query parameters and associated description and
@@ -28,6 +48,10 @@ get_query_parameters <- function() {
 #' Request information about all valid result columns to request from Arctos.
 #'
 #' @usage get_result_parameters()
+#'
+#' @examples
+#' r <- get_result_parameters()
+#' View(r)
 #'
 #' @returns
 #' Data frame listing valid result columns and associated
@@ -55,6 +79,11 @@ get_result_parameters <- function() {
 #' \code{\link{get_query_parameters}}.
 #'
 #' @usage get_record_count(..., api_key = NULL)
+#'
+#' @examples
+#' count <- get_record_count(
+#'   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm"
+#' )
 #'
 #' @param ... Query parameters and their values to pass to Arctos to search.
 #' For example, `scientific_name = "Canis lupus"``
@@ -87,6 +116,14 @@ get_record_count <- function(..., api_key = NULL) {
 #' @usage
 #' get_records(..., api_key = NULL, columns = NULL, limit = NULL,
 #'             all_records = FALSE)
+#'
+#' @examples
+#' # Request to download all available data.
+#' response <- get_records(
+#'   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
+#'   columns = list("guid", "parts", "partdetail"),
+#'   all_records = TRUE
+#' )
 #'
 #' @param ... Query parameters and their values to pass to Arctos to search.
 #' For example, `scientific_name = "Canis lupus"`
@@ -152,6 +189,17 @@ get_records <- function(..., api_key = NULL, columns = NULL, limit = NULL,
 #'
 #' @usage expand_column(query, column_name)
 #'
+#' @examples
+#' response <- get_records(
+#'   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
+#'   columns = list("guid", "parts", "partdetail"),
+#'   all_records = TRUE
+#' )
+#'
+#' # The partdetail column is a JSON list of parts and their attributes.
+#' # This will convert the column to dataframes:
+#' expand_column(response, "partdetail")
+#'
 #' @param query The query object with a JSON formatted column to be expanded.
 #' @param column_name (character) The name of the column to be expanded.
 #'
@@ -170,6 +218,17 @@ expand_column <- function(query, column_name) {
 #' Obtain the data frame with the records from a successful query.
 #'
 #' @usage response_data(query)
+#'
+#' @examples
+#' # Request to download all available data.
+#' response <- get_records(
+#'   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
+#'   columns = list("guid", "parts", "partdetail"),
+#'   all_records = TRUE
+#' )
+#'
+#' # Grab the dataframe of records from the response.
+#' df <- response_data(response)
 #'
 #' @param query The query object to extract the data frame from.
 #'
@@ -190,6 +249,17 @@ response_data <- function(query) {
 #' query and can be loaded at a later time.
 #'
 #' @usage save_response_rds(query, filename)
+#'
+#' @examples
+#' # Request to download all available data.
+#' response <- get_records(
+#'   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
+#'   columns = list("guid", "parts", "partdetail"),
+#'   all_records = TRUE
+#' )
+#'
+#' # Save the data in a .RDS file
+#' save_response_rds(response, "wolves.RDS")
 #'
 #' @param query The query object to be saved.
 #' @param filename (character) Name of the file to be saved.
@@ -229,6 +299,17 @@ read_response_rds <- function(filename) {
 #'
 #' @usage
 #' save_response_csv(query, filename, expanded = FALSE, with_metadata = TRUE)
+#'
+#' @examples
+#' # Request to download all available data.
+#' response <- get_records(
+#'   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
+#'   columns = list("guid", "parts", "partdetail"),
+#'   all_records = TRUE
+#' )
+#'
+#' # Save the response in a flat CSV with an additional metadata file in JSON
+#' save_response_csv(response, "msb-wolves.csv", with_metadata = TRUE)
 #'
 #' @param query The query object to be saved
 #' @param filename (character) Name of the file to be saved.
