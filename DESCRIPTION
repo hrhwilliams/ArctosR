@@ -17,6 +17,7 @@ Description: The ArctosR package provides a set of functions to help users
     Cicero et al. (2024) <doi:10.1371/journal.pone.0296478>.
 URL: https://github.com/hrhwilliams/arctosr
 BugReports: https://github.com/hrhwilliams/arctosr/issues
+Depends: R (>= 4.1.0)
 License: GPL-3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
