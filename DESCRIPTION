@@ -2,13 +2,13 @@ Package: ArctosR
 Title: An Interface to the Arctos Database
 Version: 0.1.0
 Authors@R: c(
-    person("Harlan", "Williams", email = "harlanrhwilliams@gmail.com", role = c("aut", "cre")),
+    person("Harlan", "Williams", email = "harlanrhwilliams@gmail.com", role = c("aut", "cre", "cph")),
     person("Marlon E.", "Cobos", email = "manubio13@gmail.com", role = "aut"),
     person("Jocelyn P.", "Colella", email = "colella@ku.edu", role = "aut"),
     person("Michelle S.", "Koo", email = "mkoo@berkeley.edu", role = "aut"),
     person("Vijay", "Barve", email = "vijay.barve@gmail.com", role = "aut"))
 Maintainer: Harlan Williams <harlanrhwilliams@gmail.com>
-Date: 2024-08-22
+Date: 2025-6-30
 Description: The ArctosR package provides a set of functions to help users
     perform requests to the Arctos API to download data. It provides a set of
     builder classes for performing complex requests, as well as a set of simple
