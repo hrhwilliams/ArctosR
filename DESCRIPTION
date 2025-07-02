@@ -1,20 +1,20 @@
 Package: ArctosR
-Title: An Interface to the Arctos Database
+Title: An Interface to the 'Arctos' Database
 Version: 0.1.0
 Authors@R: c(
-    person("Harlan", "Williams", email = "harlanrhwilliams@gmail.com", role = c("aut", "cre", "cph")),
+    person("Harlan", "Williams", email = "harlanrhwilliams@gmail.com", role = c("aut", "cre")),
     person("Marlon E.", "Cobos", email = "manubio13@gmail.com", role = "aut"),
     person("Jocelyn P.", "Colella", email = "colella@ku.edu", role = "aut"),
     person("Michelle S.", "Koo", email = "mkoo@berkeley.edu", role = "aut"),
     person("Vijay", "Barve", email = "vijay.barve@gmail.com", role = "aut"))
 Maintainer: Harlan Williams <harlanrhwilliams@gmail.com>
 Date: 2025-6-30
-Description: The ArctosR package provides a set of functions to help users
-    perform requests to the Arctos API to download data. It provides a set of
-    builder classes for performing complex requests, as well as a set of simple
-    functions for automating many common requests and workflows. More
-    information about Arctos can be found in 
-    Cicero et al. (2024) <doi:10.1371/journal.pone.0296478>.
+Description: Performs requests to the 'Arctos' API to download data. Provides a
+    set of builder classes for performing complex requests, as well as a set of
+    simple functions for automating many common requests and workflows. More
+    information about 'Arctos' can be found in 
+    Cicero et al. (2024) <doi:10.1371/journal.pone.0296478> or on their website
+    <https://arctosdb.org/>.
 URL: https://github.com/hrhwilliams/arctosr
 BugReports: https://github.com/hrhwilliams/arctosr/issues
 Depends: R (>= 4.1.0)
