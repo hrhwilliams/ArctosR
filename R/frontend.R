@@ -275,6 +275,10 @@ response_data <- function(query) {
 #' # Save the data in a .RDS file
 #' save_response_rds(response, "wolves.RDS")
 #'
+#' \dontshow{
+#' unlink("wolves.RDS")
+#' }
+#'
 #' @param query The query object to be saved.
 #' @param filename (character) Name of the file to be saved.
 #'
@@ -309,6 +313,10 @@ save_response_rds <- function(query, filename) {
 #' # Load the data from the .RDS just saved
 #' read_response_rds("wolves.RDS")
 #'
+#' \dontshow{
+#' unlink("wolves.RDS")
+#' }
+#'
 #' @param filename (character) The name of the file to load in.
 #'
 #' @returns A query object
@@ -340,6 +348,11 @@ read_response_rds <- function(filename) {
 #'
 #' # Save the response in a flat CSV with an additional metadata file in JSON
 #' save_response_csv(response, "msb-wolves.csv", with_metadata = TRUE)
+#'
+#' \dontshow{
+#' unlink("msb-wolves.csv")
+#' unlink("msb-wolves.csv.json")
+#' }
 #'
 #' @param query The query object to be saved
 #' @param filename (character) Name of the file to be saved.

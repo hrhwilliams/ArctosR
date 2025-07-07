@@ -41,4 +41,9 @@ response <- get_records(
 # Save the response in a flat CSV with an additional metadata file in JSON
 save_response_csv(response, "msb-wolves.csv", with_metadata = TRUE)
 
+\dontshow{
+unlink("msb-wolves.csv")
+unlink("msb-wolves.csv.json")
+}
+
 }

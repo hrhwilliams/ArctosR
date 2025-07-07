@@ -72,7 +72,7 @@ the `get_query_parameters` function, which returns a dataframe of all
 query parameters used by Arctos. The names in the `obj_name` column are what are
 used as parameters to the `get_records` function.
 
-```{r eval = FALSE}
+```{r}
 # run the function and store results in an object
 query_params <- get_query_parameters()
 
@@ -90,7 +90,7 @@ query_params[1:6,1:3]
 For this basic query, we can use `guid_prefix`, whose description can be found
 by listing the row of the query parameter dataframe:
 
-```{r eval = FALSE}
+```{r}
 # checking row 37 in the dataframe
 query_params[37,1:5]
 #>       display    obj_name   category subcategory
@@ -103,7 +103,7 @@ query_params[37,1:5]
 We will also use `genus` and `species` whose description can be found at rows
 28 and 21, respectively:
 
-```{r eval = FALSE}
+```{r}
 query_params[28,1:5]
 #>    display obj_name       category subcategory
 #> 28   Genus    genus identification  curatorial 
@@ -121,7 +121,7 @@ Now that we have a set of parameters to use, we can pass them to the `get_record
 function and send our request to Arctos. This will return a **query**, which
 bundles our search parameters with the returned data from Arctos.
 
-```{r eval = FALSE}
+```{r}
 query <- get_records(guid_prefix = "MSB:Mamm", genus = "Canis", 
                      species = "lupus")
 ```
@@ -135,7 +135,7 @@ example of how to do it.
 By default, the columns returned by Arctos are all of those with the category
 core. These columns can be listed as follows:
 
-```{r eval = FALSE}
+```{r}
 result_params <- get_result_parameters()
 result_params[result_params$category == 'core',1:2]
 #>                      display                      obj_name
@@ -153,7 +153,7 @@ result_params[result_params$category == 'core',1:2]
 Additional columns can be requested by passing a vector of result parameters to
 the `get_records` function in the `columns` parameter like so:
 
-```{r eval = FALSE}
+```{r}
 # making a list of additional columns to get (see get_query_parameters())
 add_cols <- list("guid", "scientific_name", "relatedcatalogeditems", "collectors",
                  "state_prov", "spec_locality", "dec_lat", "dec_long", 
@@ -173,7 +173,7 @@ be requested just like any other result parameter. The information in these
 complex columns is obtained in JSON format, but can be expanded into dataframes 
 of their own with the function `expand_column`.
 
-```{r eval = FALSE}
+```{r}
 # defining the columns to be obtained
 some_cols <- list("guid", "parts", "partdetail")
 
@@ -208,10 +208,10 @@ Arctos.
 
 ### Get and view data
 
-```{r eval = FALSE}
+```{r}
 # a list of columns to download with the query
 my_cols <- list("guid", "scientific_name", "parts", "collectors", "state_prov", 
-                "spec_locality", "dec_lat", "dec_long", "verbatim_date", "parts",
+                "spec_locality", "dec_lat", "dec_long", "verbatim_date",
                 "partdetail")
 
 # download records
@@ -220,9 +220,6 @@ query <- get_records(guid_prefix = "MSB:Mamm", genus = "Canis",
 
 # getting only the dataframe of data
 msb_wolves <- response_data(query)
-
-# check the dataframe in RStudio
-View(msb_wolves)
 ```
 
 #### Expanding columns
@@ -230,12 +227,9 @@ View(msb_wolves)
 The column `partdetail` contains nested dataframes associated to each record. To
 explore these data fully, we can process the information and view it as a table.
 
-```{r eval = FALSE}
+```{r}
 # process the information in partdetail into sub-dataframes
-expand_column(msb_wolves, "partdetail")
-
-# check the information by clicking on a line in the column partdetail
-View(msb_wolves)
+expand_column(query, "partdetail")
 ```
 
 ### Saving data
@@ -246,19 +240,23 @@ for examples of how to do it.
 #### Saving as a flat CSV file
 
 ```{r eval = FALSE}
-save_response_csv(msb_wolves, "msb_wolves.csv")
+save_response_csv(query, "msb_wolves.csv")
 ```
 
 #### Saving an expanded CSV
 
 ```{r eval = FALSE}
-save_response_csv(msb_wolves, "msb_wolves.csv", expanded = TRUE)
+save_response_csv(query, "msb_wolves.csv", expanded = TRUE)
 ```
 
 #### Saving as an RDS
 
 ```{r eval = FALSE}
-save_response_rds(msb_wolves, "msb_wolves.rds")
+save_response_rds(query, "msb_wolves.rds")
 ```
 
 #### Saving query metadata
+
+```{r eval = FALSE}
+save_response_csv(query, "msb_wolves2.csv", with_metadata = TRUE)
+```

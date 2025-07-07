@@ -30,4 +30,8 @@ save_response_rds(response, "wolves.RDS")
 # Load the data from the .RDS just saved
 read_response_rds("wolves.RDS")
 
+\dontshow{
+unlink("wolves.RDS")
+}
+
 }

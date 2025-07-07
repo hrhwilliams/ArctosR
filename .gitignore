@@ -9,3 +9,5 @@
 *.json
 *.csv
 inst/doc
+/doc/
+/Meta/

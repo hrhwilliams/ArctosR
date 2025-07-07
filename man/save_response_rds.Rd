@@ -30,4 +30,8 @@ response <- get_records(
 # Save the data in a .RDS file
 save_response_rds(response, "wolves.RDS")
 
+\dontshow{
+unlink("wolves.RDS")
+}
+
 }
