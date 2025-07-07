@@ -208,6 +208,7 @@ test_that("expand_cols fail", {
 })
 
 test_that("re-expand cols after write", {
+  old_wd <- getwd()
   local_mocked_bindings(
     perform_request = function(...) {
       return(readRDS("test_request_with_cols.rds"))
@@ -225,10 +226,29 @@ test_that("re-expand cols after write", {
 
 
   with_mocked_bindings(
-    save_response_csv(query, "test"),
+    save_response_csv(query, "save_csv_test", expanded=TRUE),
     write_csv = function(...) {}
   )
 
   df <- response_data(query)
   testthat::expect_s3_class(df$partdetail[[1]], "data.frame")
+  testthat::expect_equal(getwd(), old_wd)
+  unlink("save_csv_test", recursive = TRUE)
+})
+
+test_that("saving csv doesn't modify user working directory", {
+  old_wd <- getwd()
+
+  query <- get_records(
+    guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus",
+    columns = list("guid", "parts", "partdetail")
+  )
+
+  with_mocked_bindings(
+    save_response_csv(query, "save_csv_test", expanded=TRUE),
+    write_csv = function(...) {}
+  )
+
+  testthat::expect_equal(getwd(), old_wd)
+  unlink("save_csv_test", recursive = TRUE)
 })

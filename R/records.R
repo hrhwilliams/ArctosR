@@ -61,6 +61,9 @@ Records <- R6::R6Class("Records",
         stop("Directory already exists")
       }
 
+      old_wd <- getwd()
+      on.exit(setwd(old_wd))
+
       dir.create(file_path)
       setwd(file_path)
 
@@ -84,7 +87,6 @@ Records <- R6::R6Class("Records",
       }
 
       recursive_write(self$df, file_path)
-      setwd("..")
     },
 
     #' @description Expand a column of nested JSON tables in the response to a

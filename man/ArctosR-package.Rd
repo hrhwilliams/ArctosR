@@ -44,7 +44,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Harlan Williams \email{harlanrhwilliams@gmail.com} [copyright holder]
+\strong{Maintainer}: Harlan Williams \email{harlanrhwilliams@gmail.com}
 
 Authors:
 \itemize{

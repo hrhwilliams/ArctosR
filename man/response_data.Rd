@@ -16,7 +16,6 @@ A data frame with the information requested in the query.
 Obtain the data frame with the records from a successful query.
 }
 \examples{
-\dontrun{
 library(ArctosR)
 
 # Request to download all available data
@@ -27,6 +26,5 @@ response <- get_records(
 
 # Grab the dataframe of records from the response
 df <- response_data(response)
-}
 
 }

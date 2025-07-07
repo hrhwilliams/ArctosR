@@ -17,10 +17,8 @@ parameter as a \code{list}.
 Request information about all valid result columns to request from Arctos.
 }
 \examples{
-\dontrun{
 library(ArctosR)
 
 r <- get_result_parameters()
-}
 
 }
