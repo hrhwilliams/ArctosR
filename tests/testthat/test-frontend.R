@@ -241,5 +241,9 @@ test_that("re-expand cols after write", {
   testthat::expect_s3_class(df$partdetail[[1]], "data.frame")
 
   # test that save_response_csv resets user's working directory
-  testthat::expect_equal(gsub("\\\\", "/", tmp), getwd())
+  if (Sys.info()[['sysname']] == "Darwin") {
+    testthat::expect_equal(gsub("\\\\", "/", tmp), sprintf("/private/%s", getwd()))
+  } else {
+    testthat::expect_equal(gsub("\\\\", "/", tmp), getwd())
+  }
 })
