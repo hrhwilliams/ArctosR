@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 
 [![R-CMD-check](https://github.com/hrhwilliams/ArctosR/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/hrhwilliams/ArctosR/actions/workflows/R-CMD-check.yaml)
 [![codecov.io](https://codecov.io/gh/hrhwilliams/ArctosR/branch/main/graphs/badge.svg)](https://app.codecov.io/gh/hrhwilliams/ArctosR?branch=main)
-[![shields.io](https://img.shields.io/cran/v/ArctosR)](https://cran.r-project.org/web/packages/ArctosR/index.html)
+[![shields.io](https://img.shields.io/cran/v/ArctosR)](https://CRAN.R-project.org/package=ArctosR)
 <!-- badges: end -->
 
 ## GSoC project description
@@ -124,10 +124,4 @@ response <- get_records(
 
 # Grab the dataframe of records from the response and save that as a csv.
 df <- response_data(response)
-
-# Save the response in a flat CSV with an additional metadata file in JSON
-save_response_csv(response, "msb-wolves.csv", with_metadata = TRUE)
-
-# Save only the dataframe
-write.csv(x = df, file = "msb-wolves-df.csv")
 ```
