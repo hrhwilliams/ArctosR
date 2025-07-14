@@ -224,8 +224,6 @@ test_that("re-expand cols after write", {
   df <- response_data(query)
   testthat::expect_s3_class(df$partdetail[[1]], "data.frame")
 
-
-
   old_wd <- getwd()
   on.exit(setwd(old_wd))
   tmp <- tempfile()
