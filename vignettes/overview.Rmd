@@ -72,7 +72,7 @@ the `get_query_parameters` function, which returns a dataframe of all
 query parameters used by Arctos. The names in the `obj_name` column are what are
 used as parameters to the `get_records` function.
 
-```{r}
+```{r eval = FALSE}
 # run the function and store results in an object
 query_params <- get_query_parameters()
 
@@ -90,7 +90,7 @@ query_params[1:6,1:3]
 For this basic query, we can use `guid_prefix`, whose description can be found
 by listing the row of the query parameter dataframe:
 
-```{r}
+```{r eval = FALSE}
 # checking row 37 in the dataframe
 query_params[37,1:5]
 #>       display    obj_name   category subcategory
@@ -103,7 +103,7 @@ query_params[37,1:5]
 We will also use `genus` and `species` whose description can be found at rows
 28 and 21, respectively:
 
-```{r}
+```{r eval = FALSE}
 query_params[28,1:5]
 #>    display obj_name       category subcategory
 #> 28   Genus    genus identification  curatorial 
@@ -121,7 +121,7 @@ Now that we have a set of parameters to use, we can pass them to the `get_record
 function and send our request to Arctos. This will return a **query**, which
 bundles our search parameters with the returned data from Arctos.
 
-```{r}
+```{r eval = FALSE}
 query <- get_records(guid_prefix = "MSB:Mamm", genus = "Canis", 
                      species = "lupus")
 ```
@@ -135,7 +135,7 @@ example of how to do it.
 By default, the columns returned by Arctos are all of those with the category
 core. These columns can be listed as follows:
 
-```{r}
+```{r eval = FALSE}
 result_params <- get_result_parameters()
 result_params[result_params$category == 'core',1:2]
 #>                      display                      obj_name
@@ -153,7 +153,7 @@ result_params[result_params$category == 'core',1:2]
 Additional columns can be requested by passing a vector of result parameters to
 the `get_records` function in the `columns` parameter like so:
 
-```{r}
+```{r eval = FALSE}
 # making a list of additional columns to get (see get_query_parameters())
 add_cols <- list("guid", "scientific_name", "relatedcatalogeditems", "collectors",
                  "state_prov", "spec_locality", "dec_lat", "dec_long", 
@@ -173,7 +173,7 @@ be requested just like any other result parameter. The information in these
 complex columns is obtained in JSON format, but can be expanded into dataframes 
 of their own with the function `expand_column`.
 
-```{r}
+```{r eval = FALSE}
 # defining the columns to be obtained
 some_cols <- list("guid", "parts", "partdetail")
 
@@ -208,7 +208,7 @@ Arctos.
 
 ### Get and view data
 
-```{r}
+```{r eval = FALSE}
 # a list of columns to download with the query
 my_cols <- list("guid", "scientific_name", "parts", "collectors", "state_prov", 
                 "spec_locality", "dec_lat", "dec_long", "verbatim_date",
@@ -227,7 +227,7 @@ msb_wolves <- response_data(query)
 The column `partdetail` contains nested dataframes associated to each record. To
 explore these data fully, we can process the information and view it as a table.
 
-```{r}
+```{r eval = FALSE}
 # process the information in partdetail into sub-dataframes
 expand_column(query, "partdetail")
 ```
