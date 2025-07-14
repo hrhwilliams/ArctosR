@@ -310,7 +310,7 @@ get_last_response_url <- function(query) {
 #'
 #' # The partdetail column is a JSON list of parts and their attributes
 #' # This will convert the column to dataframes:
-#' expand_column(response, "partdetail")
+#' expand_column(query, "partdetail")
 #'
 #' @param query The query object with a JSON formatted column to be expanded.
 #' @param column_name (character) The name of the column to be expanded.
@@ -340,8 +340,8 @@ expand_column <- function(query, column_name) {
 #'   columns = list("guid", "parts", "partdetail")
 #' )
 #'
-#' # Grab the dataframe of records from the response
-#' df <- response_data(response)
+#' # Grab the dataframe of records from the query
+#' df <- response_data(query)
 #'
 #' @param query The query object to extract the data frame from.
 #'
@@ -373,7 +373,7 @@ response_data <- function(query) {
 #' )
 #'
 #' # Save the data in a .RDS file
-#' save_response_rds(response, "wolves.RDS")
+#' save_response_rds(query, "wolves.RDS")
 #'
 #' \dontshow{
 #' unlink("wolves.RDS")
@@ -408,7 +408,7 @@ save_response_rds <- function(query, filename) {
 #' )
 #'
 #' # Save the data in a .RDS file
-#' save_response_rds(response, "wolves.RDS")
+#' save_response_rds(query, "wolves.RDS")
 #'
 #' # Load the data from the .RDS just saved
 #' read_response_rds("wolves.RDS")
@@ -447,7 +447,7 @@ read_response_rds <- function(filename) {
 #' )
 #'
 #' # Save the response in a flat CSV with an additional metadata file in JSON
-#' save_response_csv(response, "msb-wolves.csv", with_metadata = TRUE)
+#' save_response_csv(query, "msb-wolves.csv", with_metadata = TRUE)
 #'
 #' \dontshow{
 #' unlink("msb-wolves.csv")

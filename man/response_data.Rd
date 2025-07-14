@@ -24,7 +24,7 @@ query <- get_records(
   columns = list("guid", "parts", "partdetail")
 )
 
-# Grab the dataframe of records from the response
-df <- response_data(response)
+# Grab the dataframe of records from the query
+df <- response_data(query)
 
 }

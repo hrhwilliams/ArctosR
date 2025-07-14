@@ -28,7 +28,7 @@ query <- get_records(
 )
 
 # Save the data in a .RDS file
-save_response_rds(response, "wolves.RDS")
+save_response_rds(query, "wolves.RDS")
 
 \dontshow{
 unlink("wolves.RDS")

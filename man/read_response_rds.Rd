@@ -25,7 +25,7 @@ query <- get_records(
 )
 
 # Save the data in a .RDS file
-save_response_rds(response, "wolves.RDS")
+save_response_rds(query, "wolves.RDS")
 
 # Load the data from the .RDS just saved
 read_response_rds("wolves.RDS")

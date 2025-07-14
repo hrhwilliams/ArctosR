@@ -29,6 +29,6 @@ query <- get_records(
 
 # The partdetail column is a JSON list of parts and their attributes
 # This will convert the column to dataframes:
-expand_column(response, "partdetail")
+expand_column(query, "partdetail")
 
 }
