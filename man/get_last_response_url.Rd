@@ -4,7 +4,7 @@
 \alias{get_last_response_url}
 \title{Get the last URL used by a request in a query object}
 \usage{
-get_error_response(query)
+get_last_response_url(query)
 }
 \arguments{
 \item{query}{A query object to return the URL for}

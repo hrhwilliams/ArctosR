@@ -19,7 +19,7 @@ Load in a query object saved to an RDS file.
 library(ArctosR)
 
 # Request to download all available data
-response <- get_records(
+query <- get_records(
   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
   columns = list("guid", "parts", "partdetail")
 )
