@@ -41,7 +41,9 @@ Response <- R6::R6Class("Response",
       )
 
       self$response_type <- raw_response$type
-      self$content <- parse_response(raw_response)
+      if (response_is_json(raw_response)) {
+        self$content <- parse_response(raw_response)
+      }
     },
     set_start_index = function(start) {
       self$start_index <- start
@@ -52,6 +54,9 @@ Response <- R6::R6Class("Response",
     },
     is_empty = function() {
       return(length(self$content$DATA) == 0)
+    },
+    has_json_content = function() {
+      return(!is.null(self$content))
     },
     to_list = function() {
       return(list(

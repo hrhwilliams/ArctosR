@@ -47,8 +47,9 @@ Query <- R6::R6Class("Query",
       if (is.null(response)) {
         stop("No response")
         return(NULL)
-      } else if (response$metadata$status_code != 200) {
-        stop(response$metadata$status_code)
+      } else if (!response$was_success()) {
+        private$concatenate_response(response)
+        return(response)
       }
 
       if (is_class(private$current_builder, "CatalogRequestBuilder") || is_class(private$current_builder, "FromResponseRequestBuilder")) {
@@ -89,12 +90,15 @@ Query <- R6::R6Class("Query",
       private$records$expand_col(column_name)
     },
     get_responses = function() {
-      private$responses
+      return(private$responses)
     }
   ),
   active = list(
     df = function() {
       return(private$records$df)
+    },
+    last_response = function() {
+      return(private$responses[[length(private$responses)]])
     }
   ),
   private = list(

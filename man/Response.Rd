@@ -13,6 +13,7 @@ Response returned from Arctos.
 \item \href{#method-Response-set_start_index}{\code{Response$set_start_index()}}
 \item \href{#method-Response-was_success}{\code{Response$was_success()}}
 \item \href{#method-Response-is_empty}{\code{Response$is_empty()}}
+\item \href{#method-Response-has_json_content}{\code{Response$has_json_content()}}
 \item \href{#method-Response-to_list}{\code{Response$to_list()}}
 \item \href{#method-Response-to_records}{\code{Response$to_records()}}
 \item \href{#method-Response-clone}{\code{Response$clone()}}
@@ -51,6 +52,15 @@ Response returned from Arctos.
 \subsection{Method \code{is_empty()}}{
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{Response$is_empty()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-Response-has_json_content"></a>}}
+\if{latex}{\out{\hypertarget{method-Response-has_json_content}{}}}
+\subsection{Method \code{has_json_content()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{Response$has_json_content()}\if{html}{\out{</div>}}
 }
 
 }

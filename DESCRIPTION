@@ -1,6 +1,6 @@
 Package: ArctosR
 Title: An Interface to the 'Arctos' Database
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: c(
     person("Harlan", "Williams", email = "harlanrhwilliams@gmail.com", role = c("aut", "cre")),
     person("Marlon E.", "Cobos", email = "manubio13@gmail.com", role = "aut"),
