@@ -21,17 +21,20 @@ query and can be loaded at a later time.
 \examples{
 library(ArctosR)
 
-# Request to download all available data
-query <- get_records(
-  scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
-  columns = list("guid", "parts", "partdetail")
-)
+if (interactive()) {
+  # Request to download all available data
+  query <- get_records(
+    scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
+    columns = list("guid", "parts", "partdetail")
+  )
 
-# Save the data in a .RDS file
-save_response_rds(query, "wolves.RDS")
+  # Save the data in a .RDS file
+  save_response_rds(query, "wolves.RDS")
 
-\dontshow{
-unlink("wolves.RDS")
+
+  \dontshow{
+  unlink("wolves.RDS")
+  }
 }
 
 }

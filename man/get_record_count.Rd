@@ -24,8 +24,10 @@ A list of possible query keys can be obtained from the output of
 \examples{
 library(ArctosR)
 
-count <- get_record_count(
-  scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm"
-)
+if (interactive()) {
+  count <- get_record_count(
+    scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm"
+  )
+}
 
 }

@@ -19,6 +19,8 @@ Request information about all valid result columns to request from Arctos.
 \examples{
 library(ArctosR)
 
-r <- get_result_parameters()
+if (interactive()) {
+  r <- get_result_parameters()
+}
 
 }

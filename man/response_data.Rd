@@ -18,13 +18,15 @@ Obtain the data frame with the records from a successful query.
 \examples{
 library(ArctosR)
 
-# Request to download all available data
-query <- get_records(
-  scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
-  columns = list("guid", "parts", "partdetail")
-)
+if (interactive()) {
+  # Request to download all available data
+  query <- get_records(
+    scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
+    columns = list("guid", "parts", "partdetail")
+  )
 
-# Grab the dataframe of records from the query
-df <- response_data(query)
+  # Grab the dataframe of records from the query
+  df <- response_data(query)
+}
 
 }

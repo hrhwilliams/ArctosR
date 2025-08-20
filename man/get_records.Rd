@@ -39,10 +39,12 @@ A list of possible query keys can be obtained from the output of
 \examples{
 library(ArctosR)
 
-# Request to download all available data
-query <- get_records(
-  scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
-  columns = list("guid", "parts", "partdetail")
-)
+if (interactive()) {
+  # Request to download all available data
+  query <- get_records(
+    scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
+    columns = list("guid", "parts", "partdetail")
+  )
+}
 
 }

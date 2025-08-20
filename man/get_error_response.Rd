@@ -21,12 +21,14 @@ purposes.
 \examples{
 library(ArctosR)
 
-# query with an invalid column name 'paarts'
-query <- get_records(
-  scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
-  columns = list("guid", "paarts", "partdetail")
-)
+if (interactive()) {
+  # query with an invalid column name 'paarts'
+  query <- get_records(
+    scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
+    columns = list("guid", "paarts", "partdetail")
+  )
 
-get_error_response(query)
+  get_error_response(query)
+}
 
 }

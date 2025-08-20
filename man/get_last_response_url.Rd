@@ -18,11 +18,13 @@ Returns the last URL used by a request in a query object
 \examples{
 library(ArctosR)
 
-query <- get_records(
-  scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
-  columns = list("guid", "parts", "partdetail")
-)
+if (interactive()) {
+  query <- get_records(
+    scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
+    columns = list("guid", "parts", "partdetail")
+  )
 
-get_last_response_url(query)
+  get_last_response_url(query)
+}
 
 }

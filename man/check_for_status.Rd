@@ -18,12 +18,14 @@ Checks if a response failed as part of a query.
 \examples{
 library(ArctosR)
 
-# query with an invalid column name 'paarts'
-query <- get_records(
-  scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
-  columns = list("guid", "paarts", "partdetail")
-)
+if (interactive()) {
+  # query with an invalid column name 'paarts'
+  query <- get_records(
+    scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
+    columns = list("guid", "paarts", "partdetail")
+  )
 
-check_for_status(query)
+  check_for_status(query)
+}
 
 }

@@ -18,6 +18,8 @@ Request information about all valid query parameters for querying Arctos.
 \examples{
 library(ArctosR)
 
-q <- get_query_parameters()
+if (interactive()) {
+  q <- get_query_parameters()
+}
 
 }
