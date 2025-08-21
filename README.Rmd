@@ -14,9 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# ech <img align="right" src="man/figures/arctosr-bear-hex.png" alt="logo" width="160"> 
-
-# ArctosR
+# ArctosR <img align="right" src="man/figures/arctosr-bear-hex.png" alt="logo" width="160"> 
 
 <!-- badges: start -->
 
