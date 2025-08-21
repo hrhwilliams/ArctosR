@@ -9,9 +9,12 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "100%",
+  dpi = 400
 )
 ```
+
+# ech <img align="right" src="man/figures/arctosr-bear-hex.png" alt="logo" width="160"> 
 
 # ArctosR
 

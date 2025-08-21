@@ -1,6 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+# ech <img align="right" src="man/figures/arctosr-bear-hex.png" alt="logo" width="160">
+
 # ArctosR
 
 <!-- badges: start -->
