@@ -138,6 +138,13 @@ get_record_count <- function(..., api_key = NULL) {
 #'   )
 #' }
 #'
+#' if (interactive()) {
+#'   # Request to download data about rodents examined for Orthohantavirus
+#'   orthohantavirus_MSB <- get_records(guid_prefix="MSB:Mamm", taxon_name=Rodentia,
+#'                                      filter_by=list("detected"="Orthohantavirus")
+#'   )
+#' }
+#'
 #' @param ... Query parameters and their values to pass to Arctos to search.
 #' For example, `scientific_name = "Canis lupus"`
 #' @param api_key (character) The API key to use for this request.

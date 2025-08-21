@@ -222,6 +222,19 @@ query <- get_records(guid_prefix = "MSB:Mamm", genus = "Canis",
 msb_wolves <- response_data(query)
 ```
 
+#### Filter by
+
+You can filter records by the presence or absence of certain data. For example,
+to find rodents in the MSB:Mamm collection who have Orthohantavirus, you can
+use the `filter_by` argument to `get_records`. `filter_by` takes a list of
+record attributes and attribute values. In this example, the record attribute
+is `"detected"`, and the attribute value is `"Orthohantavirus"`.
+
+```{r eval = FALSE}
+orthohantavirus_MSB <- get_records(guid_prefix="MSB:Mamm", taxon_name=Rodentia,
+                                   filter_by=list("detected"="Orthohantavirus"))
+```
+
 #### Expanding columns
 
 The column `partdetail` contains nested dataframes associated to each record. To

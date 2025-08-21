@@ -47,4 +47,11 @@ if (interactive()) {
   )
 }
 
+if (interactive()) {
+  # Request to download data about rodents examined for Orthohantavirus
+  orthohantavirus_MSB <- get_records(guid_prefix="MSB:Mamm", taxon_name=Rodentia,
+                                     filter_by=list("detected"="Orthohantavirus")
+  )
+}
+
 }
