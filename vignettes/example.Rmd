@@ -1,0 +1,118 @@
+---
+title: "Example usage"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Example usage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+In this example, we query Arctos for all specimens of genus Microtus which were
+collected in Mongolia and are currently held in the Museum of Southwestern
+Biology's mammal collection. To begin, make sure to load the library:
+
+```{r setup}
+# install.packages("ArctosR")
+
+library(ArctosR)
+```
+
+First, we can view a list of all parameters we can ask Arctos to return by
+calling:
+
+```{r eval=FALSE}
+# Request a list of all result parameters. These are the names that can show up
+# as columns in a dataframe returned by ArctosR.
+result_params <- get_result_parameters()
+
+# Explore all parameters.
+View(result_params)
+```
+
+Each parameter has a category. If we are only interested in certain categories
+of result parameter, we can filter the data.frame returned by
+`get_result_parameters()` like so:
+
+```{r eval=FALSE}
+# Check only core and record parameters.
+result_params[result_params$category %in% c("core", "record"), 1:3]
+```
+
+Next, we find the number of specimens matching the query we wanted to perform by
+calling:
+
+```{r eval=FALSE}
+# Request just the number of records matching a query.
+count <- get_record_count(country = "Mongolia", genus = "Microtus",
+                          guid_prefix = "MSB:Mamm")
+```
+
+It is helpful to call this first to make sure that we aren't asking for too many
+items from Arctos. Next, to download data, we specify our query, and then use
+the columns parameter to list all of the result parameters we want from our
+query. Finally, we specify we want to download all records. This is necessary
+because Arctos paginates results, returning only 100 at one time. Setting
+`all_records=TRUE` lets `get_records` repeatedly query Arctos until it receives
+all records from the search.
+
+```{r eval=FALSE}
+# Request to download all available data matching a query (specific columns). 
+microtus <- get_records(country = "Mongolia", genus = "Microtus",
+                        guid_prefix = "MSB:Mamm",
+                        columns = list("guid", "scientific_name", "dec_long", 
+                                       "dec_lat", "verbatim_date", "parts", 
+                                       "partdetail"),
+                        all_records = TRUE)
+```
+
+In Arctos, some table entries, such as `partdetail` are themselves tables. We
+can expand these tables into data.frames using:
+
+```{r eval=FALSE}
+# Expand a column that contains complex information in JSON format
+expand_column(query = microtus, column_name = "partdetail")
+```
+
+The object returned from `get_records` contains both data and metadata about
+the request which is useful for making further requests based on the data
+returned from the first request. To get the data.frame of the response, use
+`response_data` and pass in the response:
+
+```{r eval=FALSE}
+# Grab the dataframe of records from the response.
+microtus_df <- response_data(microtus)
+```
+
+Now, we write a custom function to check the `partdetail` entries of each specimen
+for whether or not nematodes were present in the specimen.
+
+```{r eval=FALSE}
+# Filter the data to keep only Microtus records in which nematodes were found
+## Whole-word match for 'nematode' or 'nematodes'
+pattern <- "\\bnematodes?\\b"
+
+## A small function to check within data.frames in partdetail 
+has_nematode <- function(df) {
+  if (!is.data.frame(df) || is.null(df[["part_name"]])) {
+    return(FALSE)
+  } else {
+    return(any(grepl(pattern, df[["part_name"]], ignore.case = TRUE, perl = TRUE)))
+  }
+}
+
+## TRUE/FALSE mask for mic_df rows (whether they had nematodes or not)
+mask <- vapply(microtus_df$partdetail, has_nematode, logical(1))
+
+## Subset of microtus_df with matches
+microtus_df_nematode <- microtus_df[mask, 1:5, drop = FALSE]
+
+nrow(microtus_df)  # Number of Microtus from Mongolia 
+nrow(microtus_df_nematode)  # Number of Microtus from Mongolia that had nematodes
+```
