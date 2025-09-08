@@ -98,7 +98,16 @@ Query <- R6::R6Class("Query",
       return(private$records$df)
     },
     last_response = function() {
-      return(private$responses[[length(private$responses)]])
+      if (is.null(private$responses)) {
+        stop("No responses")
+      }
+
+      r <- private$responses[[length(private$responses)]]
+
+      if (is.null(r)) {
+        stop("No responses")
+      }
+      return(r)
     }
   ),
   private = list(

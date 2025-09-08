@@ -41,10 +41,6 @@ get_query_parameters <- function() {
     build_request()
   response <- q$perform()
 
-  if (!check_for_status(response)) {
-    stop(get_error_response(query))
-  }
-
   return(response$content$QUERY_PARAMS)
 }
 
@@ -77,10 +73,6 @@ get_result_parameters <- function() {
   q$info_request()$
     build_request()
   response <- q$perform()
-
-  if (!check_for_status(query)) {
-    stop(get_error_response(query))
-  }
 
   return(response$content$RESULTS_PARAMS)
 }
@@ -256,7 +248,13 @@ get_records <- function(..., api_key = NULL, columns = NULL, limit = NULL,
 #'
 #' @export
 check_for_status <- function(query) {
-  return(query$last_response$was_success())
+  r <- query$last_response
+
+  if (is.null(r)) {
+    stop("No response")
+  }
+
+  return(r$was_success())
 }
 
 

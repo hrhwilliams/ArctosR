@@ -92,6 +92,9 @@ test_that("get_record_count", {
   local_mocked_bindings(
     perform_request = function(...) {
       return(readRDS("test_request_no_cols.rds"))
+    },
+    check_for_status = function(...) {
+      return(TRUE)
     }
   )
 
@@ -106,6 +109,9 @@ test_that("get_records_no_cols", {
   local_mocked_bindings(
     perform_request = function(...) {
       return(readRDS("test_request_no_cols.rds"))
+    },
+    check_for_status = function(...) {
+      return(TRUE)
     }
   )
 
@@ -142,6 +148,9 @@ test_that("get_records_no_cols concatenate", {
       } else {
         return(readRDS("test_request_no_cols_part3.rds"))
       }
+    },
+    check_for_status = function(...) {
+      return(TRUE)
     }
   )
 
@@ -158,6 +167,9 @@ test_that("get_records_with_cols", {
   local_mocked_bindings(
     perform_request = function(...) {
       return(readRDS("test_request_with_cols.rds"))
+    },
+    check_for_status = function(...) {
+      return(TRUE)
     }
   )
 
@@ -176,6 +188,9 @@ test_that("expand_cols", {
   local_mocked_bindings(
     perform_request = function(...) {
       return(readRDS("test_request_with_cols.rds"))
+    },
+    check_for_status = function(...) {
+      return(TRUE)
     }
   )
 
@@ -196,6 +211,9 @@ test_that("expand_cols fail", {
   local_mocked_bindings(
     perform_request = function(...) {
       return(readRDS("test_request_with_cols.rds"))
+    },
+    check_for_status = function(...) {
+      return(TRUE)
     }
   )
 
@@ -212,6 +230,9 @@ test_that("re-expand cols after write", {
   local_mocked_bindings(
     perform_request = function(...) {
       return(readRDS("test_request_with_cols.rds"))
+    },
+    check_for_status = function(...) {
+      return(TRUE)
     }
   )
 
