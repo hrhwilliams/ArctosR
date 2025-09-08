@@ -60,8 +60,6 @@ Request <- R6::R6Class("Request",
 
       if (!is.null(api_key)) {
         self$params$api_key <- api_key
-      } else {
-        self$params$api_key <- PACKAGE_API_KEY
       }
 
       raw_response <- perform_request(self$url)
