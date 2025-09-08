@@ -106,13 +106,13 @@ get_result_parameters <- function() {
 #'
 #' @export
 get_record_count <- function(..., api_key = NULL) {
-  q <- Query$new()
-  q$catalog_request()$
+  query <- Query$new()
+  query$catalog_request()$
     set_query(...)$
     set_limit(1)
-  response <- q$perform(api_key)
+  response <- query$perform(api_key)
 
-  if (!check_for_status(response)) {
+  if (!check_for_status(query)) {
     stop(get_error_response(query))
   }
 
