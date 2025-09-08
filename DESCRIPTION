@@ -1,6 +1,6 @@
 Package: ArctosR
 Title: An Interface to the 'Arctos' Database
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(
     person("Harlan R.", "Williams", email = "harlanrhwilliams@gmail.com", role = c("aut", "cre")),
     person("Marlon E.", "Cobos", email = "manubio13@gmail.com", role = "aut"),
@@ -8,7 +8,7 @@ Authors@R: c(
     person("Michelle S.", "Koo", email = "mkoo@berkeley.edu", role = "aut"),
     person("Vijay", "Barve", email = "vijay.barve@gmail.com", role = "aut"))
 Maintainer: Harlan R. Williams <harlanrhwilliams@gmail.com>
-Date: 2025-6-30
+Date: 2025-8-8
 Description: Performs requests to the 'Arctos' API to download data. Provides a
     set of builder classes for performing complex requests, as well as a set of
     simple functions for automating many common requests and workflows. More
@@ -21,7 +21,7 @@ Depends: R (>= 4.1.0)
 License: GPL-3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.3
 Imports: 
     R6 (>= 2.5.1),
     curl (>= 5.0.0),
