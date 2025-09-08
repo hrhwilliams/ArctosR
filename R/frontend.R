@@ -40,6 +40,7 @@ get_query_parameters <- function() {
   q$info_request()$
     build_request()
   response <- q$perform()
+
   return(response$content$QUERY_PARAMS)
 }
 
@@ -72,6 +73,7 @@ get_result_parameters <- function() {
   q$info_request()$
     build_request()
   response <- q$perform()
+
   return(response$content$RESULTS_PARAMS)
 }
 
@@ -104,11 +106,15 @@ get_result_parameters <- function() {
 #'
 #' @export
 get_record_count <- function(..., api_key = NULL) {
-  q <- Query$new()
-  q$catalog_request()$
+  query <- Query$new()
+  query$catalog_request()$
     set_query(...)$
     set_limit(1)
-  response <- q$perform(api_key)
+  response <- query$perform(api_key)
+
+  if (!check_for_status(query)) {
+    stop(get_error_response(query))
+  }
 
   return(response$content$recordsTotal)
 }
@@ -190,6 +196,10 @@ get_records <- function(..., api_key = NULL, columns = NULL, limit = NULL,
   builder$set_limit(limit)
   query$perform(api_key)
 
+  if (!check_for_status(query)) {
+    stop(get_error_response(query))
+  }
+
   if (all_records) {
     repeat {
       query$from_response_request()$
@@ -197,6 +207,10 @@ get_records <- function(..., api_key = NULL, columns = NULL, limit = NULL,
 
       if (is.null(query$perform())) {
         break
+      }
+
+      if (!check_for_status(query)) {
+        stop(get_error_response(query))
       }
     }
   }
@@ -266,7 +280,13 @@ get_relationships <- function(guid) {
 #'
 #' @export
 check_for_status <- function(query) {
-  return(query$last_response$was_success())
+  r <- query$last_response
+
+  if (is.null(r)) {
+    stop("No response")
+  }
+
+  return(r$was_success())
 }
 
 

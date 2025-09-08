@@ -17,6 +17,8 @@
 library(ArctosR)
 library(utils)
 
+API_KEY <- "TEST"
+
 test_that("query info build request", {
   q <- Query$new()
   request <- q$info_request()$
@@ -92,11 +94,15 @@ test_that("get_record_count", {
   local_mocked_bindings(
     perform_request = function(...) {
       return(readRDS("test_request_no_cols.rds"))
+    },
+    check_for_status = function(...) {
+      return(TRUE)
     }
   )
 
   records <- get_record_count(
-    guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus"
+    guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus",
+    api_key = API_KEY
   )
 
   testthat::expect_equal(records, 1694)
@@ -106,11 +112,15 @@ test_that("get_records_no_cols", {
   local_mocked_bindings(
     perform_request = function(...) {
       return(readRDS("test_request_no_cols.rds"))
+    },
+    check_for_status = function(...) {
+      return(TRUE)
     }
   )
 
   query <- get_records(
     guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus",
+    api_key = API_KEY,
     limit = 50
   )
 
@@ -142,12 +152,15 @@ test_that("get_records_no_cols concatenate", {
       } else {
         return(readRDS("test_request_no_cols_part3.rds"))
       }
+    },
+    check_for_status = function(...) {
+      return(TRUE)
     }
   )
 
   query <- get_records(
     guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus",
-    all_records = TRUE
+    all_records = TRUE, api_key = API_KEY
   )
 
   df <- response_data(query)
@@ -158,12 +171,15 @@ test_that("get_records_with_cols", {
   local_mocked_bindings(
     perform_request = function(...) {
       return(readRDS("test_request_with_cols.rds"))
+    },
+    check_for_status = function(...) {
+      return(TRUE)
     }
   )
 
   query <- get_records(
     guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus",
-    columns = list("guid", "parts", "partdetail")
+    columns = list("guid", "parts", "partdetail"), api_key = API_KEY
   )
 
   df <- response_data(query)
@@ -176,12 +192,15 @@ test_that("expand_cols", {
   local_mocked_bindings(
     perform_request = function(...) {
       return(readRDS("test_request_with_cols.rds"))
+    },
+    check_for_status = function(...) {
+      return(TRUE)
     }
   )
 
   query <- get_records(
     guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus",
-    columns = list("guid", "parts", "partdetail")
+    columns = list("guid", "parts", "partdetail"), api_key = API_KEY
   )
 
   expand_column(query, "partdetail")
@@ -196,12 +215,15 @@ test_that("expand_cols fail", {
   local_mocked_bindings(
     perform_request = function(...) {
       return(readRDS("test_request_with_cols.rds"))
+    },
+    check_for_status = function(...) {
+      return(TRUE)
     }
   )
 
   query <- get_records(
     guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus",
-    columns = list("guid", "parts", "partdetail")
+    columns = list("guid", "parts", "partdetail"), api_key = API_KEY
   )
 
   testthat::expect_condition(expand_column(query, "no col"))
@@ -212,12 +234,15 @@ test_that("re-expand cols after write", {
   local_mocked_bindings(
     perform_request = function(...) {
       return(readRDS("test_request_with_cols.rds"))
+    },
+    check_for_status = function(...) {
+      return(TRUE)
     }
   )
 
   query <- get_records(
     guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus",
-    columns = list("guid", "parts", "partdetail")
+    columns = list("guid", "parts", "partdetail"), api_key = API_KEY
   )
 
   expand_column(query, "partdetail")

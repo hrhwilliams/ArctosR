@@ -51,7 +51,8 @@ calling:
 ```{r eval=FALSE}
 # Request just the number of records matching a query.
 count <- get_record_count(country = "Mongolia", genus = "Microtus",
-                          guid_prefix = "MSB:Mamm")
+                          guid_prefix = "MSB:Mamm",
+                          api_key=YOUR_API_KEY)
 ```
 
 It is helpful to call this first to make sure that we aren't asking for too many
@@ -69,7 +70,8 @@ microtus <- get_records(country = "Mongolia", genus = "Microtus",
                         columns = list("guid", "scientific_name", "dec_long", 
                                        "dec_lat", "verbatim_date", "parts", 
                                        "partdetail"),
-                        all_records = TRUE)
+                        all_records = TRUE,
+                        api_key=YOUR_API_KEY)
 ```
 
 In Arctos, some table entries, such as `partdetail` are themselves tables. We
