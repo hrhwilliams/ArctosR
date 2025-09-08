@@ -20,6 +20,11 @@ formats. This vignette provides an overview of the basic usage of this package.
 
 ## Basics
 
+### API key
+
+In order to use most of the functions in ArctosR, you will have to request an
+API key from Arctos. See [https://handbook.arctosdb.org/documentation/api.html](https://handbook.arctosdb.org/documentation/api.html) for instructions on how to do this.
+
 ### Types of data in Arctos
 
 Arctos contains specimen records and diverse types of data associated with them
@@ -123,7 +128,7 @@ bundles our search parameters with the returned data from Arctos.
 
 ```{r eval = FALSE}
 query <- get_records(guid_prefix = "MSB:Mamm", genus = "Canis", 
-                     species = "lupus")
+                     species = "lupus", api_key=YOUR_API_KEY)
 ```
 
 This simple search returned the default (core) columns provided by Arctos. There 
@@ -161,7 +166,8 @@ add_cols <- list("guid", "scientific_name", "relatedcatalogeditems", "collectors
 
 # getting records with additional columns
 query <- get_records(guid_prefix = "MSB:Mamm", genus = "Canis", 
-                     species = "lupus", columns = add_cols)
+                     species = "lupus", columns = add_cols,
+                     api_key=YOUR_API_KEY)
 ```
 
 #### Requesting columns that are tables
@@ -179,7 +185,8 @@ some_cols <- list("guid", "parts", "partdetail")
 
 # performing the query
 query <- get_records(guid_prefix = "MSB:Mamm", genus = "Canis", 
-                     species = "lupus", columns = some_cols)
+                     species = "lupus", columns = some_cols,
+                     api_key=YOUR_API_KEY)
 ```
 
 See an example of expanding the columns in the section 
@@ -197,7 +204,8 @@ get_record_count(guid_prefix = "MSB:Mamm", genus = "Canis", species = "lupus")
 #> [1] 1694
 
 query <- get_records(guid_prefix = "MSB:Mamm", genus = "Canis", 
-                     species = "lupus", all_records = TRUE)
+                     species = "lupus", all_records = TRUE,
+                     api_key=YOUR_API_KEY)
 ```
 
 ## Downloading and using data from Arctos
@@ -216,7 +224,8 @@ my_cols <- list("guid", "scientific_name", "parts", "collectors", "state_prov",
 
 # download records
 query <- get_records(guid_prefix = "MSB:Mamm", genus = "Canis", 
-                     species = "lupus", columns = my_cols)
+                     species = "lupus", columns = my_cols,
+                     api_key=YOUR_API_KEY)
 
 # getting only the dataframe of data
 msb_wolves <- response_data(query)
@@ -232,7 +241,8 @@ is `"detected"`, and the attribute value is `"Orthohantavirus"`.
 
 ```{r eval = FALSE}
 orthohantavirus_MSB <- get_records(guid_prefix="MSB:Mamm", taxon_name=Rodentia,
-                                   filter_by=list("detected"="Orthohantavirus"))
+                                   filter_by=list("detected"="Orthohantavirus"),
+                                   api_key=YOUR_API_KEY)
 ```
 
 #### Expanding columns
