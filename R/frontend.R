@@ -206,6 +206,38 @@ get_records <- function(..., api_key = NULL, columns = NULL, limit = NULL,
 
 
 
+#' @title Get the relationships (e.g. "host of") a cataloged item has
+#'
+#' @description A cataloged item in Arctos can be related to any other number of
+#' items by relationships defined in the code table `ctid_references`. This
+#' function will return all items related by any such relationship in the table
+#' in a data frame.
+#'
+#' @usage get_relationships(guid)
+#'
+#' @examples
+#' library(ArctosR)
+#'
+#' if (interactive()) {
+#'   r <- get_relationships("MSB:Mamm:140026")
+#' }
+#'
+#' @param guid The Arctos GUID of the item to query relationships over
+#'
+#' @returns a data frame of all related items. This contains URLs
+#'
+#' @export
+get_relationships <- function(guid) {
+  query <- Query$new()
+  builder <- query$catalog_request()
+  builder$set_query(guid=guid)
+  builder$set_columns("relatedcatalogeditems")
+  result <- query$perform()
+  return(response_data(query))
+}
+
+
+
 #' @title Check if the query object ends with a successful response
 #'
 #' @description
