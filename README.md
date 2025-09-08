@@ -62,7 +62,7 @@ for it to be submitted to CRAN.
 A complete history of commits can be accessed
 <a href="https://github.com/hrhwilliams/ArctosR/commits/main/" target="_blank">here</a>.
 
-## Installation
+## Installation and Usage
 
 ### CRAN
 
@@ -83,10 +83,20 @@ install.packages("remotes")
 remotes::install_github("hrhwilliams/ArctosR")
 ```
 
+### API key
+
+To use most of ArctosR, you will need to request an API key from Arctos.
+See <https://handbook.arctosdb.org/documentation/api.html>.
+
 ## Example
 
 ``` r
 library(ArctosR)
+
+# You will have to request an API key from Arctos to get records, and pass it
+# to the `get_record_count` and `get_records` functions through the `api_key`
+# parameter.
+YOUR_API_KEY <- "11111111-2222-3333-4444444444444444"
 
 # Request a list of all result parameters. These are the names that can show up
 # as columns in a dataframe returned by ArctosR.
@@ -94,35 +104,30 @@ result_params <- get_result_parameters()
 
 # Print the first six rows and first 3 columns to the console.
 result_params[1:6, 1:3]
-#>                     display            obj_name query_cost
-#> 1 GUID (DarwinCore Triplet)                guid          1
-#> 2    Catalog Number Integer    catalognumberint          1
-#> 3               Identifiers         identifiers          1
-#> 4        Simple Identifiers othercatalognumbers          1
-#> 5                 Accession         accn_number          1
-#> 6                     Media               media          1
 
 # If using RStudio, view the entire dataframe of result parameters.
 View(result_params)
 
 # Request just the number of records matching a query.
 count <- get_record_count(
-  scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm"
+  scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm", api_key=YOUR_API_KEY
 )
 
 # Request to download data. This is limited to 100 records by default.
-response <- get_records(
+query <- get_records(
   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
-  columns = list("guid", "parts", "partdetail")
+  columns = list("guid", "parts", "partdetail"),
+  api_key=YOUR_API_KEY
 )
 
 # Request to download all available data.
-response <- get_records(
+query <- get_records(
   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
   columns = list("guid", "parts", "partdetail"),
+  api_key=YOUR_API_KEY,
   all_records = TRUE
 )
 
 # Grab the dataframe of records from the response and save that as a csv.
-df <- response_data(response)
+df <- response_data(query)
 ```
