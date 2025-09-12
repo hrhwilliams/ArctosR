@@ -14,9 +14,12 @@ knitr::opts_chunk$set(
 )
 ```
 
-In this example, we query Arctos for all specimens of genus Microtus which were
-collected in Mongolia and are currently held in the Museum of Southwestern
-Biology's mammal collection. To begin, make sure to load the library:
+In this example, we query Arctos for all specimens of genus *Microtus* 
+collected in Mongolia, currently held in the collection of mammals of the Museum 
+of Southwestern Biology. After that we filter the downloaded data to find 
+the specimens that were found to have nematods.
+
+To begin, make sure to load the library:
 
 ```{r setup}
 # install.packages("ArctosR")
@@ -58,9 +61,9 @@ count <- get_record_count(country = "Mongolia", genus = "Microtus",
 It is helpful to call this first to make sure that we aren't asking for too many
 items from Arctos. Next, to download data, we specify our query, and then use
 the columns parameter to list all of the result parameters we want from our
-query. Finally, we specify we want to download all records. This is necessary
-because Arctos paginates results, returning only 100 at one time. Setting
-`all_records=TRUE` lets `get_records` repeatedly query Arctos until it receives
+query. Finally, we specify that we want to download all records. This is necessary
+because Arctos paginates results, returning only 100 at a time. Setting
+`all_records = TRUE` lets `get_records` repeatedly query Arctos until it receives
 all records from the search.
 
 ```{r eval=FALSE}
