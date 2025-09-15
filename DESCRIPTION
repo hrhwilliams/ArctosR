@@ -8,7 +8,7 @@ Authors@R: c(
     person("Michelle S.", "Koo", email = "mkoo@berkeley.edu", role = "aut"),
     person("Vijay", "Barve", email = "vijay.barve@gmail.com", role = "aut"))
 Maintainer: Harlan R. Williams <harlanrhwilliams@gmail.com>
-Date: 2025-8-8
+Date: 2025-9-15
 Description: Performs requests to the 'Arctos' API to download data. Provides a
     set of builder classes for performing complex requests, as well as a set of
     simple functions for automating many common requests and workflows. More
