@@ -12,3 +12,4 @@
 * Package no longer has a package-level API key. Users will need to request
   their own API key from 'Arctos'
 * Improve error reporting on functions
+* Add get_relationships function
