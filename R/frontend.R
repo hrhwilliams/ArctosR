@@ -252,6 +252,37 @@ get_relationships <- function(guid) {
 
 
 
+#' @title Get the first URL in a completed query
+#'
+#' @description Returns the first URL used by a completed query which can be
+#' shared. The API key is automatically stripped from the URL for security.
+#'
+#' @usage get_request_url(query)
+#'
+#' @examples
+#' library(ArctosR)
+#'
+#' if (interactive()) {
+#'   q <- get_records(guid_prefix="MSB:Mamm")
+#'   url <- get_request_url(q)
+#' }
+#'
+#' @param query A completed query returned from `get_records`
+#'
+#' @returns A URL as a string
+#'
+#' @export
+get_request_url <- function(query) {
+  responses <- query$get_responses()
+
+  if (!is.null(responses) && length(responses) > 0) {
+    return(responses[[1]]$metadata$url)
+  } else {
+    stop("Query has no requests")
+  }
+}
+
+
 #' @title Check if the query object ends with a successful response
 #'
 #' @description
