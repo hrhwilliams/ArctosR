@@ -15,9 +15,11 @@ knitr::opts_chunk$set(
 ```
 
 In this example, we query Arctos for all specimens of genus *Microtus* 
-collected in Mongolia, currently held in the collection of mammals of the Museum 
-of Southwestern Biology. After that we filter the downloaded data to find 
-the specimens that were found to have nematods.
+collected in Mongolia currently held in the collection of mammals of the Museum 
+of Southwestern Biology which have been examined for parasites. After that, we
+filter the downloaded data to find the specimens that were found to have
+nematodes and use this filter to plot the spatial distribution of specimens
+found with and without nematodes.
 
 To begin, make sure to load the library:
 
@@ -29,7 +31,17 @@ library(ArctosR)
 
 ## Exploring Arctos options
 
-First, we can view a list of all parameters we can ask Arctos to return by
+First, we can view all parameters we can use to search by on Arctos:
+
+```{r eval=FALSE}
+# Request a list of all query parameters.
+query_params <- get_query_parameters()
+
+# Explore all parameters.
+View(query_params)
+```
+
+Next, we can view a list of all parameters we can ask Arctos to return by
 calling:
 
 ```{r eval=FALSE}
@@ -52,13 +64,21 @@ result_params[result_params$category %in% c("core", "record"), 1:3]
 
 ## Requesting data
 
-Next, we find the number of specimens matching the query we wanted to perform by
-calling:
+Next, we find the number of specimens matching the query we wanted to perform.
+The first three arguments give values to some query parameters we queried
+before with the `get_query_parameters` function.
+
+We use the `filter_by` parameter to filter for specimens which only have the
+attribute 'examined for' with the value 'parasite' which indicates that the
+specimen has undergone some screening for parasites. Attributes are additional
+data about a record such as quantitative information or a record of additional
+processing done to the record.
 
 ```{r eval=FALSE}
 # Request just the number of records matching a query.
 count <- get_record_count(country = "Mongolia", genus = "Microtus",
                           guid_prefix = "MSB:Mamm",
+                          filter_by=list("examined for"="parasite"),
                           api_key=YOUR_API_KEY)
 ```
 
@@ -77,9 +97,9 @@ microtus <- get_records(country = "Mongolia", genus = "Microtus",
                         columns = list("guid", "scientific_name", "dec_long", 
                                        "dec_lat", "verbatim_date", "parts", 
                                        "partdetail"),
+                        filter_by=list("examined for"="parasite"),
                         all_records = TRUE,
-                        api_key=YOUR_API_KEY,
-                        filter_by=list("examined for"="parasite"))
+                        api_key=YOUR_API_KEY)
 ```
 
 In Arctos, some table entries, such as `partdetail` are themselves tables. We
