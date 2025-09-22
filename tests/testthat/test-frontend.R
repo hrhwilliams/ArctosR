@@ -266,3 +266,24 @@ test_that("re-expand cols after write", {
   # test that save_response_csv resets user's working directory
   testthat::expect_equal(basename(getwd()), basename(tmp))
 })
+
+test_that("get_url after get_records", {
+  local_mocked_bindings(
+    perform_request = function(...) {
+      return(readRDS("test_request_no_cols.rds"))
+    },
+    check_for_status = function(...) {
+      return(TRUE)
+    }
+  )
+
+  query <- get_records(
+    guid_prefix = "MSB:Mamm", species = "Canis", genus = "lupus",
+    api_key = API_KEY
+  )
+
+  testthat::expect_equal(
+    get_request_url(query),
+    "https://arctos.database.museum/component/api/v2/catalog.cfc?method=getCatalogData&queryformat=struct&length=100&guid_prefix=MSB%3AMamm&species=Canis&genus=lupus"
+  )
+})
