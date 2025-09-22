@@ -27,6 +27,8 @@ To begin, make sure to load the library:
 library(ArctosR)
 ```
 
+## Exploring Arctos options
+
 First, we can view a list of all parameters we can ask Arctos to return by
 calling:
 
@@ -47,6 +49,8 @@ of result parameter, we can filter the data.frame returned by
 # Check only core and record parameters.
 result_params[result_params$category %in% c("core", "record"), 1:3]
 ```
+
+## Requesting data
 
 Next, we find the number of specimens matching the query we wanted to perform by
 calling:
@@ -99,6 +103,8 @@ microtus_df <- response_data(microtus)
 microtus_df <- microtus_df[microtus_df$dec_lat != "" & microtus_df$dec_long != "", ]
 ```
 
+## Filtering by attributes
+
 Now, we write a custom function to check the `partdetail` entries of each specimen
 for whether or not nematodes were present in the specimen.
 
@@ -123,9 +129,14 @@ microtus_df$nematode <- sapply(microtus_df$partdetail, has_nematode)
 microtus_df_nematode <- microtus_df[microtus_df$nematode == TRUE, ]
 microtus_df_no_nematode <- microtus_df[microtus_df$nematode == FALSE, ]
 
-nrow(microtus_df)  # Number of Microtus from Mongolia 
-nrow(microtus_df_nematode)  # Number of Microtus from Mongolia that had nematodes
-nrow(microtus_df_no_nematode) # Number of Microtus from Mongolia that did not have nematodes
+## Number of Microtus from Mongolia 
+nrow(microtus_df)
+
+## Number of Microtus from Mongolia that had nematodes
+nrow(microtus_df_nematode)
+
+## Number of Microtus from Mongolia that did not have nematodes
+nrow(microtus_df_no_nematode)
 ```
 
 ## Plotting spatial data
@@ -142,8 +153,10 @@ First, we can simply create a plot of all specimens by latitude and longitude
 overlayed over Mongolia.
 
 ```{r eval=FALSE}
-# adapted from
-# https://www.r-bloggers.com/2012/07/map-biodiversity-records-with-rgbif-maps-and-ggplot2-packages-in-r/
+# Initial plot of Microtus sampled in Mongolia
+
+## adapted from
+## https://www.r-bloggers.com/2012/07/map-biodiversity-records-with-rgbif-maps-and-ggplot2-packages-in-r/
 
 library(maps)
 library(ggplot2)
@@ -151,24 +164,31 @@ library(ggplot2)
 mongolia <- ggplot2::map_data("world", region="Mongolia")
 
 ggplot(mongolia, aes(long, lat)) +
-  geom_polygon(aes(group = group), fill = "white", color = "gray20", size = .2) +
-  geom_jitter(data = microtus_df, aes(x = as.numeric(dec_long), y = as.numeric(dec_lat)),
+  geom_polygon(aes(group = group), fill = "white", color = "gray20",
+               size = .2) +
+  geom_jitter(data = microtus_df,
+              aes(x = as.numeric(dec_long), y = as.numeric(dec_lat)),
               alpha = .5, size = 2, color = "red")
 ```
 
-![image](figures/mongolia1.png)
+![](figures/mongolia1.png)
 
-Now this is what really highlights ArctosR's strengths. We can plot Microtus
-with and Microtus without detected nematodes using the filter we established
-earlier.
+Now this is what really highlights ArctosR's strengths: we can use the
+additional data that Arctos provides to plot Microtus with and Microtus without
+detected nematodes using the filter we established earlier.
 
 ```{r eval=FALSE}
+# Plot of Microtus sampled in Mongolia filtered by nematode detected/not detected
+
 ggplot(mongolia, aes(long, lat)) +
-  geom_polygon(aes(group = group), fill = "white", color = "gray20", size = .2) +
-  geom_jitter(data = microtus_df_no_nematode, aes(x = as.numeric(dec_long), y = as.numeric(dec_lat)),
+  geom_polygon(aes(group = group), fill = "white", color = "gray20",
+               size = .2) +
+  geom_jitter(data = microtus_df_no_nematode,
+              aes(x = as.numeric(dec_long), y = as.numeric(dec_lat)),
               alpha = .5, size = 2, color = "black") +
-  geom_jitter(data = microtus_df_nematode, aes(x = as.numeric(dec_long), y = as.numeric(dec_lat)),
+  geom_jitter(data = microtus_df_nematode,
+              aes(x = as.numeric(dec_long), y = as.numeric(dec_lat)),
               alpha = .5, size = 2, color = "red", shape="triangle")
 ```
 
-![image](figures/mongolia2.png)
+![](figures/mongolia2.png)
