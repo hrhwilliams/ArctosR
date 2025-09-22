@@ -23,7 +23,7 @@
 
 ARCTOS_URL <- "https://arctos.database.museum"
 ARCTOS_API_URL <- "component/api/v2"
-ARCTOSR_AGENT_STRING <- "ArctosR/0.1.2"
+ARCTOSR_AGENT_STRING <- "ArctosR/0.1.3"
 PACKAGE_API_KEY <- NULL # default package API key has been discontinued
 
 WARN_MISSING_API_KEY <- "Your API key for Arctos is not currently registered.\nIf you have an API key from Arctos, please set it with the `set_api_key` function."

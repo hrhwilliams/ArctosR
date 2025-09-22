@@ -13,3 +13,9 @@
   their own API key from 'Arctos'
 * Improve error reporting on functions
 * Add get_relationships function
+
+# ArctosR 0.1.3
+
+* Fix get_records subsequent requests not using user's API key
+* Add get_request_url to get the first URL used by a query
+* Update vignette to demonstrate spatial data plotting
