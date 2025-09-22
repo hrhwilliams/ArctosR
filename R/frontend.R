@@ -205,7 +205,7 @@ get_records <- function(..., api_key = NULL, columns = NULL, limit = NULL,
       query$from_response_request()$
         request_more(limit)
 
-      if (is.null(query$perform())) {
+      if (is.null(query$perform(api_key=api_key))) {
         break
       }
 
@@ -355,7 +355,7 @@ check_for_status <- function(query) {
 get_error_response <- function(query) {
   if (!check_for_status(query)) {
     last_response <- query$last_response
-    return(last_response$content$Message)
+    return(sprintf("%s:\n%s", last_response$content$Message, last_response$metadata$url))
   } else {
     return("No error")
   }
