@@ -178,6 +178,9 @@ overlayed over Mongolia.
 ## adapted from
 ## https://www.r-bloggers.com/2012/07/map-biodiversity-records-with-rgbif-maps-and-ggplot2-packages-in-r/
 
+# install.packages("maps")
+# install.packages("ggplot2")
+
 library(maps)
 library(ggplot2)
 
