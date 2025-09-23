@@ -169,14 +169,17 @@ library(maps)
 library(ggplot2)
 ```
 
-First, we can simply create a plot of all specimens by latitude and longitude
-overlayed over Mongolia.
+First, we can simply create a plot of the distribution of all specimens over 
+Mongolia.
 
 ```{r eval=FALSE}
 # Initial plot of Microtus sampled in Mongolia
 
 ## adapted from
 ## https://www.r-bloggers.com/2012/07/map-biodiversity-records-with-rgbif-maps-and-ggplot2-packages-in-r/
+
+# install.packages("maps")
+# install.packages("ggplot2")
 
 library(maps)
 library(ggplot2)
@@ -193,9 +196,9 @@ ggplot(mongolia, aes(long, lat)) +
 
 ![](figures/mongolia1.png)
 
-Now this is what really highlights ArctosR's strengths: we can use the
-additional data that Arctos provides to plot Microtus with and Microtus without
-detected nematodes using the filter we established earlier.
+Now this is what really highlights ArctosR's strengths; we can use the
+additional data that Arctos provides to plot *Microtus* with and *Microtus* 
+without detected nematodes using the filter we established earlier.
 
 ```{r eval=FALSE}
 # Plot of Microtus sampled in Mongolia filtered by nematode detected/not detected
