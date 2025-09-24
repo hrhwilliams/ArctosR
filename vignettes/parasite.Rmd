@@ -1,8 +1,8 @@
 ---
-title: "Example usage"
+title: "Parasite search and mapping"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Example usage}
+  %\VignetteIndexEntry{Parasite search and mapping}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

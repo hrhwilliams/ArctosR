@@ -1,0 +1,16 @@
+---
+title: "Species search and mapping"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Species search and mapping}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+

@@ -1,0 +1,42 @@
+---
+title: "Frozen tissue search"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Frozen tissue search}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+# install.packages("ArctosR")
+
+library(ArctosR)
+```
+
+```{r eval=FALSE}
+count <- get_record_count(guid_prefix="MSB:Mamm", genus="Microtus",
+                          country="Mongolia", part_search="tissue",
+                          part_attribute="preservation",
+                          part_attribute_value="=frozen", api_key=YOUR_API_KEY)
+```
+
+
+```{r eval=FALSE}
+microtus <- get_records(guid_prefix="MSB:Mamm", genus="Microtus",
+                        country="Mongolia", part_search="tissue",
+                        part_attribute="preservation",
+                        part_attribute_value="=frozen", api_key=YOUR_API_KEY)
+
+microtus_df <- response_data(microtus)
+```
+
+
+
+
