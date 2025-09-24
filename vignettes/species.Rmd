@@ -14,13 +14,100 @@ knitr::opts_chunk$set(
 )
 ```
 
+In this example, we perform a simple species search through Arctos and use the
+data from that query to create a plot with ggplot2. We search for all Tamias
+alpinus collected in California and stored in the Museum of Vertebrate
+Zoology's collection. In our search we request longitude and latitude data, and
+use that to plot points where specimens were collected over the state of
+California.
+
+To begin, make sure to load the library:
+
 ```{r setup}
 # install.packages("ArctosR")
 
 library(ArctosR)
 ```
 
+## Exploring Arctos options
+
+First, we can view all parameters we can use to search by on Arctos:
+
+```{r eval=FALSE}
+# Request a list of all query parameters.
+query_params <- get_query_parameters()
+
+# Explore all parameters.
+View(query_params)
+```
+
+The query parameters we are interested in using are: `guid_prefix`, `genus`,
+`species`, and `state_prov`.
+
+Next, we can view a list of all parameters we can ask Arctos to return by
+calling:
+
+```{r eval=FALSE}
+# Request a list of all result parameters. These are the names that can show up
+# as columns in a dataframe returned by ArctosR.
+result_params <- get_result_parameters()
+
+# Explore all parameters.
+View(result_params)
+```
+
+The parameters we are interested in returning are: `dec_lat` and `dec_long`.
+
+## Requesting data
+
+Next we can first ask for a count of how many records we expect our search to
+return. If this count is not too large we can proceed to request all records.
+From the response we can get a data.frame using the `response_data` function.
+
 ```{r eval=FALSE}
 count <- get_record_count(guid_prefix="MVZ:Mamm", genus="Tamias",
-                          state="California", api_key=YOUR_API_KEY)
+                          species="alpinus", state_prov="California",
+                          api_key=YOUR_API_KEY)
+
+alpinus <- get_records(guid_prefix="MVZ:Mamm", genus="Tamias",
+                          species="alpinus", state_prov="California",
+                          columns=list("dec_lat", "dec_long"),
+                          all_records=TRUE, api_key=YOUR_API_KEY)
+
+alpinus_df <- response_data(alpinus)
+
+# Filter out records which are missing latitude and longitude information
+alpinus_df <- alpinus_df[alpinus_df$dec_lat != "" & alpinus_df$dec_long != "", ]
 ```
+
+## Plotting data
+
+Now we use the `dec_lat` and `dec_long` fields from our data.frame to create
+our plot:
+
+```{r eval=FALSE}
+# Plot of Tamias alpinus sampled in California and currently stored in the
+# Museum of Vertebrate Zoology's collection
+
+## adapted from
+## https://www.r-bloggers.com/2012/07/map-biodiversity-records-with-rgbif-maps-and-ggplot2-packages-in-r/
+
+# install.packages("maps")
+# install.packages("ggplot2")
+
+library(maps)
+library(ggplot2)
+
+california <- map_data("state", region="California")
+
+ggplot(california, aes(long, lat)) +
+  geom_polygon(aes(group = group), fill = "white", color = "gray20",
+               linewidth = .2) +
+  geom_jitter(data = alpinus_df,
+              aes(x = as.numeric(dec_long), y = as.numeric(dec_lat)),
+              alpha = .5, size = 1.5, color = "red")
+```
+
+The result of which is:
+
+![](figures/california.png){width=98%}

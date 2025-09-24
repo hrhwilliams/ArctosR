@@ -41,6 +41,9 @@ query_params <- get_query_parameters()
 View(query_params)
 ```
 
+The query parameters we are interested in using are: `guid_prefix`, `genus`,
+`country`.
+
 Next, we can view a list of all parameters we can ask Arctos to return by
 calling:
 
@@ -52,6 +55,9 @@ result_params <- get_result_parameters()
 # Explore all parameters.
 View(result_params)
 ```
+
+The parameters we are interested in returning are: `guid`, `scientific_name`,
+`dec_long`, `dec_lat`, `verbatim_date`, `parts`, `partdetail`
 
 Each parameter has a category. If we are only interested in certain categories
 of result parameter, we can filter the data.frame returned by
@@ -162,15 +168,8 @@ nrow(microtus_df_no_nematode)
 ## Plotting spatial data
 
 We can plot the spatial distribution of specimens with and without detected
-nematodes using the `ggplot2` and `maps` packages.
-
-```{r eval=FALSE}
-library(maps)
-library(ggplot2)
-```
-
-First, we can simply create a plot of the distribution of all specimens over 
-Mongolia.
+nematodes using the `ggplot2` and `maps` packages. First, we can simply create a
+plot of the distribution of all specimens overMongolia.
 
 ```{r eval=FALSE}
 # Initial plot of Microtus sampled in Mongolia
@@ -184,17 +183,17 @@ Mongolia.
 library(maps)
 library(ggplot2)
 
-mongolia <- ggplot2::map_data("world", region="Mongolia")
+mongolia <- map_data("world", region="Mongolia")
 
 ggplot(mongolia, aes(long, lat)) +
   geom_polygon(aes(group = group), fill = "white", color = "gray20",
-               size = .2) +
+               linewidth = .2) +
   geom_jitter(data = microtus_df,
               aes(x = as.numeric(dec_long), y = as.numeric(dec_lat)),
               alpha = .5, size = 2, color = "red")
 ```
 
-![](figures/mongolia1.png)
+![](figures/mongolia1.png){width=98%}
 
 Now this is what really highlights ArctosR's strengths; we can use the
 additional data that Arctos provides to plot *Microtus* with and *Microtus* 
@@ -205,7 +204,7 @@ without detected nematodes using the filter we established earlier.
 
 ggplot(mongolia, aes(long, lat)) +
   geom_polygon(aes(group = group), fill = "white", color = "gray20",
-               size = .2) +
+               linewidth = .2) +
   geom_jitter(data = microtus_df_no_nematode,
               aes(x = as.numeric(dec_long), y = as.numeric(dec_lat)),
               alpha = .5, size = 2, color = "black") +
@@ -214,4 +213,4 @@ ggplot(mongolia, aes(long, lat)) +
               alpha = .5, size = 2, color = "red", shape="triangle")
 ```
 
-![](figures/mongolia2.png)
+![](figures/mongolia2.png){width=98%}
