@@ -14,3 +14,13 @@ knitr::opts_chunk$set(
 )
 ```
 
+```{r setup}
+# install.packages("ArctosR")
+
+library(ArctosR)
+```
+
+```{r eval=FALSE}
+count <- get_record_count(guid_prefix="MVZ:Mamm", genus="Tamias",
+                          state="California", api_key=YOUR_API_KEY)
+```
