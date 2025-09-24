@@ -57,7 +57,7 @@ View(result_params)
 ```
 
 The parameters we are interested in returning are: `guid`, `scientific_name`,
-`dec_long`, `dec_lat`, `verbatim_date`, `parts`, `partdetail`
+`dec_long`, `dec_lat`, `verbatim_date`, `parts`, `partdetail`.
 
 Each parameter has a category. If we are only interested in certain categories
 of result parameter, we can filter the data.frame returned by

@@ -14,29 +14,71 @@ knitr::opts_chunk$set(
 )
 ```
 
+In this example we query Arctos for specimens that have frozen tissue, which
+could be used for detecting viruses. We query for Microtus sampled in Mongolia
+and currently in the Museum of Southwestern Biology's collection.
+
+To begin, make sure to load the library:
+
 ```{r setup}
 # install.packages("ArctosR")
 
 library(ArctosR)
 ```
 
+## Exploring Arctos options
+
+First, we can view all parameters we can use to search by on Arctos:
+
+```{r eval=FALSE}
+# Request a list of all query parameters.
+query_params <- get_query_parameters()
+
+# Explore all parameters.
+View(query_params)
+```
+
+The query parameters we are interested in using are: `guid_prefix`, `genus`,
+`country`, `part_search`, `part_attribute`, and `part_attribute_value`.
+
+Next, we can view a list of all parameters we can ask Arctos to return by
+calling:
+
+```{r eval=FALSE}
+# Request a list of all result parameters. These are the names that can show up
+# as columns in a dataframe returned by ArctosR.
+result_params <- get_result_parameters()
+
+# Explore all parameters.
+View(result_params)
+```
+
+The parameters we are interested in returning are: `guid`.
+
+## Requesting data
+
+Next we can first ask for a count of how many records we expect our search to
+return. If this count is not too large we can proceed to request all records.
+From the response we can get a data.frame using the `response_data` function.
+
 ```{r eval=FALSE}
 count <- get_record_count(guid_prefix="MSB:Mamm", genus="Microtus",
                           country="Mongolia", part_search="tissue",
                           part_attribute="preservation",
-                          part_attribute_value="=frozen", api_key=YOUR_API_KEY)
-```
+                          part_attribute_value="=frozen",
+                          api_key=YOUR_API_KEY)
 
-
-```{r eval=FALSE}
 microtus <- get_records(guid_prefix="MSB:Mamm", genus="Microtus",
                         country="Mongolia", part_search="tissue",
                         part_attribute="preservation",
-                        part_attribute_value="=frozen", api_key=YOUR_API_KEY)
-
-microtus_df <- response_data(microtus)
+                        part_attribute_value="=frozen",
+                        columns=list("guid"),
+                        api_key=YOUR_API_KEY)
 ```
 
+Then we can request a data.frame giving us a list of all Microtus which have
+frozen preserved tissue.
 
-
-
+```{r eval=FALSE}
+microtus_df <- response_data(microtus)
+```
