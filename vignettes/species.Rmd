@@ -65,14 +65,15 @@ return. If this count is not too large we can proceed to request all records.
 From the response we can get a data.frame using the `response_data` function.
 
 ```{r eval=FALSE}
-count <- get_record_count(guid_prefix="MVZ:Mamm", genus="Tamias",
-                          species="alpinus", state_prov="California",
+count <- get_record_count(guid_prefix="MVZ:Mamm", 
+                          scientific_name="Tamias alpinus",
+                          state_prov="California",
                           api_key=YOUR_API_KEY)
 
-alpinus <- get_records(guid_prefix="MVZ:Mamm", genus="Tamias",
-                          species="alpinus", state_prov="California",
-                          columns=list("dec_lat", "dec_long"),
-                          all_records=TRUE, api_key=YOUR_API_KEY)
+alpinus <- get_records(guid_prefix="MVZ:Mamm", scientific_name="Tamias alpinus",
+                       state_prov="California",
+                       columns=list("dec_lat", "dec_long"),
+                       all_records=TRUE, api_key=YOUR_API_KEY)
 
 alpinus_df <- response_data(alpinus)
 
