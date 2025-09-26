@@ -73,7 +73,7 @@ library(ArctosR)
 ArctosR provides a single function, `get_records`, to search for records in the
 Arctos database. In order to start building a search, we have to find
 out the possible *query parameters* we can use to search. These can be found with
-the `get_query_parameters` function, which returns a dataframe of all
+the `get_query_parameters` function, which returns a data frame of all
 query parameters used by Arctos. The names in the `obj_name` column are what are
 used as parameters to the `get_records` function.
 
@@ -81,7 +81,7 @@ used as parameters to the `get_records` function.
 # run the function and store results in an object
 query_params <- get_query_parameters()
 
-# checking the dataframe obtained (showing only 6 rows and 3 columns)
+# checking the data frame obtained (showing only 6 rows and 3 columns)
 query_params[1:6,1:3]
 #>             display                obj_name category
 #> 1     Verbatim Date           verbatim_date    event
@@ -93,10 +93,10 @@ query_params[1:6,1:3]
 ```
 
 For this basic query, we can use `guid_prefix`, whose description can be found
-by listing the row of the query parameter dataframe:
+by listing the row of the query parameter data frame:
 
 ```{r eval = FALSE}
-# checking row 37 in the dataframe
+# checking row 37 in the data frame
 query_params[37,1:5]
 #>       display    obj_name   category subcategory
 #> 37 Collection guid_prefix identifier       basic
@@ -105,8 +105,7 @@ query_params[37,1:5]
 #>    forms.
 ```
 
-We will also use `genus` and `species` whose description can be found at rows
-28 and 21, respectively:
+We will also use `scientific_name`:
 
 ```{r eval = FALSE}
 query_params[28,1:5]
@@ -127,8 +126,8 @@ function and send our request to Arctos. This will return a **query**, which
 bundles our search parameters with the returned data from Arctos.
 
 ```{r eval = FALSE}
-query <- get_records(guid_prefix = "MSB:Mamm", genus = "Canis", 
-                     species = "lupus", api_key=YOUR_API_KEY)
+query <- get_records(guid_prefix = "MSB:Mamm", scientific_name = "Canis lupus", 
+                     api_key=YOUR_API_KEY)
 ```
 
 This simple search returned the default (core) columns provided by Arctos. There 
@@ -165,9 +164,8 @@ add_cols <- list("guid", "scientific_name", "relatedcatalogeditems", "collectors
                  "verbatim_date", "examined_for", "detected", "not_detected")
 
 # getting records with additional columns
-query <- get_records(guid_prefix = "MSB:Mamm", genus = "Canis", 
-                     species = "lupus", columns = add_cols,
-                     api_key=YOUR_API_KEY)
+query <- get_records(guid_prefix = "MSB:Mamm", scientific_name = "Canis lupus", 
+                     columns = add_cols, api_key=YOUR_API_KEY)
 ```
 
 #### Requesting columns that are tables
@@ -176,7 +174,7 @@ Certain result parameters (columns) in Arctos are entire tables associated to
 a single specimen record. For instance, `partdetail`, which links to the 
 attributes of each part listed in `parts` associated with a specimen. These can 
 be requested just like any other result parameter. The information in these 
-complex columns is obtained in JSON format, but can be expanded into dataframes 
+complex columns is obtained in JSON format, but can be expanded into data frames 
 of their own with the function `expand_column`.
 
 ```{r eval = FALSE}
@@ -200,12 +198,12 @@ the user can request that ArctosR make multiple requests until all records for
 a given query are downloaded.
 
 ```{r eval = FALSE}
-get_record_count(guid_prefix = "MSB:Mamm", genus = "Canis", species = "lupus")
+get_record_count(guid_prefix = "MSB:Mamm", scientific_name = "Canis lupus",
+                 api_key=YOUR_API_KEY)
 #> [1] 1694
 
-query <- get_records(guid_prefix = "MSB:Mamm", genus = "Canis", 
-                     species = "lupus", all_records = TRUE,
-                     api_key=YOUR_API_KEY)
+query <- get_records(guid_prefix = "MSB:Mamm", scientific_name = "Canis lupus", 
+                     all_records = TRUE, api_key=YOUR_API_KEY)
 ```
 
 ## Downloading and using data from Arctos
@@ -223,11 +221,10 @@ my_cols <- list("guid", "scientific_name", "parts", "collectors", "state_prov",
                 "partdetail")
 
 # download records
-query <- get_records(guid_prefix = "MSB:Mamm", genus = "Canis", 
-                     species = "lupus", columns = my_cols,
-                     api_key=YOUR_API_KEY)
+query <- get_records(guid_prefix = "MSB:Mamm", scientific_name = "Canis lupus", 
+                     columns = my_cols, api_key=YOUR_API_KEY)
 
-# getting only the dataframe of data
+# getting only the data frame of data
 msb_wolves <- response_data(query)
 ```
 
@@ -240,18 +237,18 @@ record attributes and attribute values. In this example, the record attribute
 is `"detected"`, and the attribute value is `"Orthohantavirus"`.
 
 ```{r eval = FALSE}
-orthohantavirus_MSB <- get_records(guid_prefix="MSB:Mamm", taxon_name=Rodentia,
+orthohantavirus_MSB <- get_records(guid_prefix="MSB:Mamm", taxon_name="Rodentia",
                                    filter_by=list("detected"="Orthohantavirus"),
                                    api_key=YOUR_API_KEY)
 ```
 
 #### Expanding columns
 
-The column `partdetail` contains nested dataframes associated to each record. To
+The column `partdetail` contains nested data frames associated to each record. To
 explore these data fully, we can process the information and view it as a table.
 
 ```{r eval = FALSE}
-# process the information in partdetail into sub-dataframes
+# process the information in partdetail into sub-data frames
 expand_column(query, "partdetail")
 ```
 
