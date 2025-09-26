@@ -43,8 +43,8 @@ FromResponseRequestBuilder <- R6::R6Class("FromResponseRequestBuilder",
     #' @return Request
     build_request = function() {
       request <- ArctosR::Request$new()$
-        with_endpoint("catalog.cfc")$
-        add_param(method = "getCatalogData")$
+        with_endpoint("record.cfc")$
+        add_param(method = "getData")$
         add_param(queryformat = "struct")$
         add_param(tbl = private$table_id)$
         add_param(start = private$start)$

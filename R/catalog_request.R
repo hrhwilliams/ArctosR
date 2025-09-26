@@ -117,16 +117,16 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
       values_list <- list()
 
       if (!is.null(private$cols)) {
-        url_params$cols <- encode_list(private$cols, ",")
+        url_params$return_columns <- encode_list(private$cols, ",")
       }
       if (!is.null(private$parts)) {
-        url_params$cols <- encode_list(private$parts, ",")
+        url_params$return_columns <- encode_list(private$parts, ",")
       }
       if (!is.null(private$attributes)) {
-        url_params$cols <- encode_list(private$attributes, ",")
+        url_params$return_columns <- encode_list(private$attributes, ",")
       }
       if (!is.null(private$components)) {
-        url_params$cols <- encode_list(private$components, ",")
+        url_params$return_columns <- encode_list(private$components, ",")
       }
       if (!is.null(private$filter_by)) {
         i <- 1
@@ -139,8 +139,8 @@ CatalogRequestBuilder <- R6::R6Class("CatalogRequestBuilder",
       }
 
       request <- ArctosR::Request$new()$
-        with_endpoint("catalog.cfc")$
-        add_param(method = "getCatalogData")$
+        with_endpoint("record.cfc")$
+        add_param(method = "getData")$
         add_param(queryformat = "struct")$
         add_param(length = private$limit)$
         add_params(url_params)$
