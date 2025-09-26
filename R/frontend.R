@@ -41,7 +41,7 @@ get_query_parameters <- function() {
     build_request()
   response <- q$perform()
 
-  return(response$content$QUERY_PARAMS)
+  return(response$content$query_params)
 }
 
 
@@ -74,7 +74,7 @@ get_result_parameters <- function() {
     build_request()
   response <- q$perform()
 
-  return(response$content$RESULTS_PARAMS)
+  return(response$content$results_params)
 }
 
 
