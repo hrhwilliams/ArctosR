@@ -21,6 +21,7 @@
 #' @import R6
 #' @importFrom jsonlite toJSON
 #' @importFrom jsonlite fromJSON
+#' @importFrom jsonlite validate
 #' @export
 Records <- R6::R6Class("Records",
   public = list(
@@ -107,7 +108,7 @@ Records <- R6::R6Class("Records",
       }
 
       self$df[[column]] <- lapply(self$df[[column]], function(j) {
-        if (is.null(j) | is.na(j) | j == "") {
+        if (!validate(j)) {
           return(NULL)
         } else {
           fromJSON(j, simplifyDataFrame = T)
