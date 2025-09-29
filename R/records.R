@@ -107,7 +107,7 @@ Records <- R6::R6Class("Records",
       }
 
       self$df[[column]] <- lapply(self$df[[column]], function(j) {
-        if (is.null(j) || is.na(j) || j == "") {
+        if (is.null(j) | is.na(j) | j == "") {
           return(NULL)
         } else {
           fromJSON(j, simplifyDataFrame = T)
