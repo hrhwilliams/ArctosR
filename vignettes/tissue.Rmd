@@ -14,9 +14,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-In this example we query Arctos for specimens that have frozen tissue, which
-could be used for detecting viruses. We query for Microtus sampled in Mongolia
-and currently in the Museum of Southwestern Biology's collection.
+In this example we query Arctos for specimens of Clethrionomys gapperi (Southern
+red-backed vole) and Clethrionomys rutilus (Northern red-backed vole) that have
+frozen tissue.
 
 To begin, make sure to load the library:
 
@@ -38,8 +38,7 @@ query_params <- get_query_parameters()
 View(query_params)
 ```
 
-The query parameters we are interested in using are: `guid_prefix`, `genus`,
-`country`, `part_search`, `part_attribute`, and `part_attribute_value`.
+The query parameter we are interested in using is: `scientific_name`.
 
 Next, we can view a list of all parameters we can ask Arctos to return by
 calling:
@@ -53,32 +52,120 @@ result_params <- get_result_parameters()
 View(result_params)
 ```
 
-The parameters we are interested in returning are: `guid`.
+The parameters we are interested in returning are: `dec_lat`, `dec_long`, and
+`parts`.
 
 ## Requesting data
 
-Next we can first ask for a count of how many records we expect our search to
-return. If this count is not too large we can proceed to request all records.
-From the response we can get a data.frame using the `response_data` function.
-
 ```{r eval=FALSE}
-count <- get_record_count(guid_prefix="MSB:Mamm", genus="Microtus",
-                          country="Mongolia", part_search="tissue",
-                          part_attribute="preservation",
-                          part_attribute_value="=frozen",
-                          api_key=YOUR_API_KEY)
+cols <- list("dec_lat", "dec_long", "parts")
 
-microtus <- get_records(guid_prefix="MSB:Mamm", genus="Microtus",
-                        country="Mongolia", part_search="tissue",
-                        part_attribute="preservation",
-                        part_attribute_value="=frozen",
-                        columns=list("guid"),
-                        api_key=YOUR_API_KEY)
+# Southern red-backed vole
+gapperi_query <- get_records(
+  scientific_name = "Clethrionomys gapperi",
+  columns = cols,
+  all_records = TRUE,
+  api_key = YOUR_API_KEY
+)
+
+# Northern red-backed vole
+rutilus_query <- get_records(
+  scientific_name = "Clethrionomys rutilus",
+  columns = cols,
+  all_records = TRUE,
+  api_key = YOUR_API_KEY
+)
+
+gapperi_df <- response_data(gapperi_query)
+rutilus_df <- response_data(rutilus_query)
 ```
 
-Then we can request a data.frame giving us a list of all Microtus which have
-frozen preserved tissue.
+```{r eval=FALSE}
+# Plot of overall species ranges
+
+## adapted from
+## https://www.r-bloggers.com/2012/07/map-biodiversity-records-with-rgbif-maps-and-ggplot2-packages-in-r/
+
+# install.packages("maps")
+# install.packages("ggplot2")
+
+library(maps)
+library(ggplot2)
+
+plot_map <- map_data("world", region=c("USA", "Canada"))
+
+ggplot(plot_map, aes(long, lat)) +
+  geom_polygon(aes(group = group), fill = "white", color = "gray20",
+               linewidth = .2) +
+  geom_jitter(data = gapperi_df,
+              aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
+                  color = "C. gapperi", shape = "C. gapperi"),
+              alpha = .5, size = 1.5) +
+  geom_jitter(data = rutilus_df,
+              aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
+                  color = "C. rutilus", shape = "C. rutilus"),
+              alpha = .5, size = 1.5) +
+  scale_color_manual(values = c("C. gapperi" = "red", "C. rutilus" = "blue")) +
+  scale_shape_manual(values = c("C. gapperi" = 16, "C. rutilus" = 17)) +
+  labs(color = "Species", shape = "Species") +
+  coord_map(xlim = c(-155, -114), ylim = c(45, 65))
+```
+
+![](figures/vole1.png){width=98%}
 
 ```{r eval=FALSE}
-microtus_df <- response_data(microtus)
+# Plot of hybridization area
+
+plot_map <- map_data("world", region=c("USA", "Canada"))
+
+ggplot(plot_map, aes(long, lat)) +
+  geom_polygon(aes(group = group), fill = "white", color = "gray20",
+               linewidth = .2) +
+  geom_jitter(data = gapperi_df,
+              aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
+                  color = "C. gapperi", shape = "C. gapperi"),
+              alpha = .5, size = 1.5) +
+  geom_jitter(data = rutilus_df,
+              aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
+                  color = "C. rutilus", shape = "C. rutilus"),
+              alpha = .5, size = 1.5) +
+  scale_color_manual(values = c("C. gapperi" = "red", "C. rutilus" = "blue")) +
+  scale_shape_manual(values = c("C. gapperi" = 16, "C. rutilus" = 17)) +
+  labs(color = "Species", shape = "Species") +
+  coord_map(xlim = c(-140, -115), ylim = c(50, 60))
 ```
+
+![](figures/vole2.png){width=98%}
+
+```{r eval=FALSE}
+gapperi_df_tissue <- gapperi_df[
+  grepl("frozen", gapperi_df$parts, ignore.case = TRUE, perl = TRUE), ]
+
+rutilus_df_tissue <- rutilus_df[
+  grepl("frozen", rutilus_df$parts, ignore.case = TRUE, perl = TRUE), ]
+
+nrow(gapperi_df_tissue)
+nrow(rutilus_df_tissue)
+```
+
+```{r eval=FALSE}
+# Plot of hybridization area, filtering by specimens with frozen tissue
+
+ggplot(plot_map, aes(long, lat)) +
+  geom_polygon(aes(group = group), fill = "white", color = "gray20",
+               linewidth = .2) +
+  geom_jitter(data = gapperi_df_tissue,
+              aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
+                  color = "C. gapperi", shape = "C. gapperi"),
+              alpha = .5, size = 1.5) +
+  geom_jitter(data = rutilus_df_tissue,
+              aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
+                  color = "C. rutilus", shape = "C. rutilus"),
+              alpha = .5, size = 1.5) +
+  scale_color_manual(values = c("C. gapperi" = "red", "C. rutilus" = "blue")) +
+  scale_shape_manual(values = c("C. gapperi" = 16, "C. rutilus" = 17)) +
+  labs(color = "Species", shape = "Species") +
+  coord_map(xlim = c(-140, -115), ylim = c(50, 60))
+```
+
+![](figures/vole3.png){width=98%}
