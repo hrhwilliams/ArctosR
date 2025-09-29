@@ -116,8 +116,6 @@ ggplot(plot_map, aes(long, lat)) +
 ```{r eval=FALSE}
 # Plot of hybridization area
 
-plot_map <- map_data("world", region=c("USA", "Canada"))
-
 ggplot(plot_map, aes(long, lat)) +
   geom_polygon(aes(group = group), fill = "white", color = "gray20",
                linewidth = .2) +
@@ -147,6 +145,28 @@ rutilus_df_tissue <- rutilus_df[
 nrow(gapperi_df_tissue)
 nrow(rutilus_df_tissue)
 ```
+
+```{r eval=FALSE}
+# Plot of overall species ranges, filtering by specimens with frozen tissue
+
+ggplot(plot_map, aes(long, lat)) +
+  geom_polygon(aes(group = group), fill = "white", color = "gray20",
+               linewidth = .2) +
+  geom_jitter(data = gapperi_df_tissue,
+              aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
+                  color = "C. gapperi", shape = "C. gapperi"),
+              alpha = .5, size = 1.5) +
+  geom_jitter(data = rutilus_df_tissue,
+              aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
+                  color = "C. rutilus", shape = "C. rutilus"),
+              alpha = .5, size = 1.5) +
+  scale_color_manual(values = c("C. gapperi" = "red", "C. rutilus" = "blue")) +
+  scale_shape_manual(values = c("C. gapperi" = 16, "C. rutilus" = 17)) +
+  labs(color = "Species", shape = "Species") +
+  coord_map(xlim = c(-155, -114), ylim = c(45, 65))
+```
+
+![](figures/vole4.png){width=98%}
 
 ```{r eval=FALSE}
 # Plot of hybridization area, filtering by specimens with frozen tissue
