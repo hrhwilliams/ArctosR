@@ -61,23 +61,43 @@ The parameters we are interested in returning are: `dec_lat`, `dec_long`, and
 cols <- list("dec_lat", "dec_long", "parts")
 
 # Southern red-backed vole
-gapperi_query <- get_records(
+gapperi_query1 <- get_records(
   scientific_name = "Clethrionomys gapperi",
   columns = cols,
   all_records = TRUE,
   api_key = YOUR_API_KEY
 )
 
+gapperi_query2 <- get_records(
+  scientific_name = "Myodes gapperi",
+  columns = cols,
+  all_records = TRUE,
+  api_key = YOUR_API_KEY
+)
+
 # Northern red-backed vole
-rutilus_query <- get_records(
+rutilus_query1 <- get_records(
   scientific_name = "Clethrionomys rutilus",
   columns = cols,
   all_records = TRUE,
   api_key = YOUR_API_KEY
 )
 
-gapperi_df <- response_data(gapperi_query)
-rutilus_df <- response_data(rutilus_query)
+rutilus_query2 <- get_records(
+  scientific_name = "Myodes rutilus",
+  columns = cols,
+  all_records = TRUE,
+  api_key = YOUR_API_KEY
+)
+
+gapperi_df <- rbind(
+  response_data(gapperi_query1),
+  response_data(gapperi_query2)
+)
+rutilus_df <- rbind(
+  response_data(rutilus_query1),
+  response_data(rutilus_query2)
+)
 ```
 
 ```{r eval=FALSE}
@@ -108,7 +128,7 @@ ggplot(plot_map, aes(long, lat)) +
   scale_color_manual(values = c("C. gapperi" = "red", "C. rutilus" = "blue")) +
   scale_shape_manual(values = c("C. gapperi" = 16, "C. rutilus" = 17)) +
   labs(color = "Species", shape = "Species") +
-  coord_map("albers",lat0=39, lat1=45, xlim = c(-155, -114), ylim = c(45, 65))
+  coord_map("lambert",lat0=52, lat1=68, xlim = c(-155, -114), ylim = c(45, 65))
 ```
 
 ![](figures/vole1.png){width=98%}
@@ -130,7 +150,7 @@ ggplot(plot_map, aes(long, lat)) +
   scale_color_manual(values = c("C. gapperi" = "red", "C. rutilus" = "blue")) +
   scale_shape_manual(values = c("C. gapperi" = 16, "C. rutilus" = 17)) +
   labs(color = "Species", shape = "Species") +
-  coord_map("albers",lat0=39, lat1=45, xlim = c(-140, -115), ylim = c(50, 60))
+  coord_map("lambert",lat0=52, lat1=58, xlim = c(-140, -115), ylim = c(50, 60))
 ```
 
 ![](figures/vole2.png){width=98%}
@@ -163,7 +183,7 @@ ggplot(plot_map, aes(long, lat)) +
   scale_color_manual(values = c("C. gapperi" = "red", "C. rutilus" = "blue")) +
   scale_shape_manual(values = c("C. gapperi" = 16, "C. rutilus" = 17)) +
   labs(color = "Species", shape = "Species") +
-  coord_map("albers",lat0=39, lat1=45, xlim = c(-155, -114), ylim = c(45, 65))
+  coord_map("lambert",lat0=52, lat1=68, xlim = c(-155, -114), ylim = c(45, 65))
 ```
 
 ![](figures/vole3.png){width=98%}
@@ -185,7 +205,7 @@ ggplot(plot_map, aes(long, lat)) +
   scale_color_manual(values = c("C. gapperi" = "red", "C. rutilus" = "blue")) +
   scale_shape_manual(values = c("C. gapperi" = 16, "C. rutilus" = 17)) +
   labs(color = "Species", shape = "Species") +
-  coord_map("albers",lat0=39, lat1=45, xlim = c(-140, -115), ylim = c(50, 60))
+  coord_map("lambert",lat0=52, lat1=58, xlim = c(-140, -115), ylim = c(50, 60))
 ```
 
 ![](figures/vole4.png){width=98%}
