@@ -106,7 +106,9 @@ ggplot(california, aes(long, lat)) +
                linewidth = .2) +
   geom_jitter(data = alpinus_df,
               aes(x = as.numeric(dec_long), y = as.numeric(dec_lat)),
-              alpha = .5, size = 1.5, color = "red")
+              alpha = .5, size = 1.5, color = "red") +
+  coord_map("lambert", lat0 = 34, lat1 = 40.5, 
+            xlim = c(-124.5, -114), ylim = c(32.5, 42))
 ```
 
 The result of which is:
