@@ -190,7 +190,9 @@ ggplot(mongolia, aes(long, lat)) +
                linewidth = .2) +
   geom_jitter(data = microtus_df,
               aes(x = as.numeric(dec_long), y = as.numeric(dec_lat)),
-              alpha = .5, size = 2, color = "red")
+              alpha = .5, size = 2, color = "red") +
+  coord_map("lambert", lat0 = 44, lat1 = 50, 
+            xlim = c(87, 120), ylim = c(41.5, 52))
 ```
 
 ![](figures/mongolia1.png){width=98%}
@@ -210,7 +212,9 @@ ggplot(mongolia, aes(long, lat)) +
               alpha = .5, size = 2, color = "black") +
   geom_jitter(data = microtus_df_nematode,
               aes(x = as.numeric(dec_long), y = as.numeric(dec_lat)),
-              alpha = .5, size = 2, color = "red", shape="triangle")
+              alpha = .5, size = 2, color = "red", shape="triangle") +
+  coord_map("lambert", lat0 = 44, lat1 = 50, 
+            xlim = c(87, 120), ylim = c(41.5, 52))
 ```
 
 ![](figures/mongolia2.png){width=98%}
