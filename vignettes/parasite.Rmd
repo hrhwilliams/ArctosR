@@ -174,25 +174,72 @@ plot of the distribution of all specimens overMongolia.
 ```{r eval=FALSE}
 # Initial plot of Microtus sampled in Mongolia
 
-## adapted from
-## https://www.r-bloggers.com/2012/07/map-biodiversity-records-with-rgbif-maps-and-ggplot2-packages-in-r/
-
 # install.packages("maps")
 # install.packages("ggplot2")
+# install.packages("ggtext")
+# install.packages("ggspatial")
 
-library(maps)
 library(ggplot2)
+library(ggspatial)
+library(ggtext)
+library(maps)
 
-mongolia <- map_data("world", region="Mongolia")
+plot_map <- map_data("world", region=c("Mongolia"))
 
-ggplot(mongolia, aes(long, lat)) +
-  geom_polygon(aes(group = group), fill = "white", color = "gray20",
-               linewidth = .2) +
-  geom_jitter(data = microtus_df,
-              aes(x = as.numeric(dec_long), y = as.numeric(dec_lat)),
-              alpha = .5, size = 2, color = "red") +
-  coord_map("lambert", lat0 = 44, lat1 = 50, 
-            xlim = c(87, 120), ylim = c(41.5, 52))
+mongolia1 <- ggplot(plot_map, aes(long, lat)) +
+  geom_polygon(
+    aes(group = group), fill = "white", color = "gray20",
+    linewidth = .2
+  ) +
+  geom_jitter(
+    data = microtus_df,
+    aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
+    color = "Microtus", shape = "Microtus"),
+    alpha = .5, size = 1.0
+  ) +
+  scale_color_manual(
+    values = c("Microtus" = "red"),
+    labels = c("*Microtus*")
+  ) +
+  scale_shape_manual(
+    values = c("Microtus" = 16),
+    labels = c("*Microtus*")
+  ) +
+  labs(
+    color = "Genus", shape = "Genus", x = NULL, y = NULL
+  ) +
+  coord_sf(
+    crs = "+proj=lcc +lat_1=44 +lat_2=50 +lat_0=47 +lon_0=103.5 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs",
+    xlim = c(87, 120), 
+    ylim = c(40, 52.5),
+    default_crs = sf::st_crs(4326),
+    expand = FALSE
+  ) +
+  annotation_scale(
+    location = "bl",
+    width_hint = 0.4
+  ) +
+  annotation_north_arrow(
+    location = "bl",
+    which_north = "true", 
+    pad_x = unit(0.2, "in"),
+    pad_y = unit(0.3, "in"),
+    style = north_arrow_fancy_orienteering
+  ) +
+  theme_minimal() +
+  theme(
+    panel.background = element_rect(fill = "aliceblue"),
+    panel.border = element_rect(color = "black", fill = NA, linewidth = 1),
+    legend.position = "none"
+  )
+
+ggsave(
+  filename = "figures/mongolia1.png",
+  plot = plot,
+  width = 6.53,
+  height = 6.53,
+  dpi = 300
+)
 ```
 
 ![](figures/mongolia1.png){width=98%}
@@ -202,19 +249,73 @@ additional data that Arctos provides to plot *Microtus* with and *Microtus*
 without detected nematodes using the filter we established earlier.
 
 ```{r eval=FALSE}
+# install.packages("patchwork")
+library(patchwork)
+
 # Plot of Microtus sampled in Mongolia filtered by nematode detected/not detected
 
-ggplot(mongolia, aes(long, lat)) +
-  geom_polygon(aes(group = group), fill = "white", color = "gray20",
-               linewidth = .2) +
-  geom_jitter(data = microtus_df_no_nematode,
-              aes(x = as.numeric(dec_long), y = as.numeric(dec_lat)),
-              alpha = .5, size = 2, color = "black") +
-  geom_jitter(data = microtus_df_nematode,
-              aes(x = as.numeric(dec_long), y = as.numeric(dec_lat)),
-              alpha = .5, size = 2, color = "red", shape="triangle") +
-  coord_map("lambert", lat0 = 44, lat1 = 50, 
-            xlim = c(87, 120), ylim = c(41.5, 52))
+plot_map <- map_data("world", region=c("Mongolia"))
+
+mongolia2 <- ggplot(plot_map, aes(long, lat)) +
+  geom_polygon(
+    aes(group = group), fill = "white", color = "gray20",
+    linewidth = .2
+  ) +
+  geom_jitter(
+    data = microtus_df_no_nematode,
+    aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
+    color = "Microtus", shape = "Microtus"),
+    alpha = .5, size = 1.0
+  ) +
+  geom_jitter(
+    data = microtus_df_nematode,
+    aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
+    color = "Microtus nematodes", shape = "Microtus nematodes"),
+    alpha = .5, size = 1.0
+  ) +
+  scale_color_manual(
+    values = c("Microtus" = "red", "Microtus nematodes" = "black"),
+    labels = c("*Microtus*", "*Microtus* with nematodes")
+  ) +
+  scale_shape_manual(
+    values = c("Microtus" = 16, "Microtus nematodes" = 17),
+    labels = c("*Microtus*", "*Microtus* with nematodes")
+  ) +
+  labs(
+    color = "Genus", shape = "Genus", x = NULL, y = NULL
+  ) +
+  coord_sf(
+    crs = "+proj=lcc +lat_1=44 +lat_2=50 +lat_0=47 +lon_0=103.5 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs",
+    xlim = c(87, 120), 
+    ylim = c(40, 52.5),
+    default_crs = sf::st_crs(4326),
+    expand = FALSE
+  ) +
+  theme_minimal() +
+  theme(
+    panel.background = element_rect(fill = "aliceblue"),
+    panel.border = element_rect(color = "black", fill = NA, linewidth = 1.25),
+    legend.position = c(0.0025, 0.0025),
+    legend.justification = c(0, 0),
+    legend.background = element_rect(fill = "white"),
+    legend.text = element_markdown()
+  )
+
+ggsave(
+  filename = "figures/mongolia2.png",
+  plot = mongolia2,
+  width = 6.53,
+  height = 6.53,
+  dpi = 300
+)
+
+ggsave(
+  filename = "figures/mongolia_combined.png",
+  plot = mongolia1/mongolia2,
+  width = 6.53,
+  height = 6.53,
+  dpi = 300
+)
 ```
 
-![](figures/mongolia2.png){width=98%}
+![](figures/mongolia_combined.png){width=98%}

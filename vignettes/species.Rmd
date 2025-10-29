@@ -92,10 +92,12 @@ our plot:
 
 # install.packages("ggplot2")
 # install.packages("ggspatial")
+# install.packages("ggtext")
 # install.packages("maps")
 
 library(ggplot2)
 library(ggspatial)
+library(ggtext)
 library(maps)
 
 plot_map <- map_data("state", region=c("California"))
@@ -143,15 +145,18 @@ plot <- ggplot(plot_map, aes(long, lat)) +
   theme_minimal() +
   theme(
     panel.background = element_rect(fill = "aliceblue"),
-    panel.border = element_rect(color = "black", fill = NA, linewidth = 1),
-    legend.position = "none"
+    panel.border = element_rect(color = "black", fill = NA, linewidth = 1.25),
+    legend.position = c(0.998, 0.998),
+    legend.justification = c(1, 1),
+    legend.background = element_rect(fill = "white"),
+    legend.text = element_markdown()
   )
 
 ggsave(
   filename = "figures/california.png",
   plot = plot,
-  width = 6.53,
-  height = 6.53,
+  width = 6,
+  height = 6,
   dpi = 300
 )
 ```

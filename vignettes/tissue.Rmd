@@ -27,6 +27,7 @@ To begin, make sure to load the library:
 library(ArctosR)
 library(ggplot2)
 library(ggspatial)
+library(ggtext)
 library(maps)
 ```
 
@@ -164,7 +165,8 @@ vole1 <- ggplot(plot_map, aes(long, lat)) +
     panel.border = element_rect(color = "black", fill = NA, linewidth = 1.25),
     legend.position = c(0.0025, 0.0025),
     legend.justification = c(0, 0),
-    legend.background = element_rect(fill = "white")
+    legend.background = element_rect(fill = "white"),
+    legend.text = element_markdown()
   )
 
 ggsave(
@@ -249,7 +251,15 @@ vole2 <- ggplot(plot_map, aes(long, lat)) +
   )
 
 ggsave(
-  filename = "figures/combined.png",
+  filename = "figures/vole2.png",
+  plot = vole2,
+  width = 6.53,
+  height = 6.53,
+  dpi = 300
+)
+
+ggsave(
+  filename = "figures/voles_combined.png",
   plot = vole1/vole2,
   width = 6.53,
   height = 6.53,
@@ -257,4 +267,4 @@ ggsave(
 )
 ```
 
-![](figures/combined.png){width=98%}
+![](figures/voles_combined.png){width=98%}
