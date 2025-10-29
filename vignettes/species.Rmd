@@ -90,25 +90,70 @@ our plot:
 # Plot of Tamias alpinus sampled in California and currently stored in the
 # Museum of Vertebrate Zoology's collection
 
-## adapted from
-## https://www.r-bloggers.com/2012/07/map-biodiversity-records-with-rgbif-maps-and-ggplot2-packages-in-r/
-
-# install.packages("maps")
 # install.packages("ggplot2")
+# install.packages("ggspatial")
+# install.packages("maps")
 
-library(maps)
 library(ggplot2)
+library(ggspatial)
+library(maps)
 
-california <- map_data("state", region="California")
+plot_map <- map_data("state", region=c("California"))
 
-ggplot(california, aes(long, lat)) +
-  geom_polygon(aes(group = group), fill = "white", color = "gray20",
-               linewidth = .2) +
-  geom_jitter(data = alpinus_df,
-              aes(x = as.numeric(dec_long), y = as.numeric(dec_lat)),
-              alpha = .5, size = 1.5, color = "red") +
-  coord_map("lambert", lat0 = 34, lat1 = 40.5, 
-            xlim = c(-124.5, -114), ylim = c(32.5, 42))
+plot <- ggplot(plot_map, aes(long, lat)) +
+  geom_polygon(
+    aes(group = group), fill = "white", color = "gray20",
+    linewidth = .2
+  ) +
+  geom_jitter(
+    data = alpinus_df,
+    aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
+    color = "T. alpinus", shape = "T. alpinus"),
+    alpha = .5, size = 1.0
+  ) +
+  scale_color_manual(
+    values = c("T. alpinus" = "red"),
+    labels = c("*Tamias alpinus*")
+  ) +
+  scale_shape_manual(
+    values = c("T. alpinus" = 16),
+    labels = c("*Tamias alpinus*")
+  ) +
+  labs(
+    color = "Species", shape = "Species", x = NULL, y = NULL
+  ) +
+  coord_sf(
+    crs = "+proj=lcc +lat_1=34 +lat_2=40.5 +lat_0=37.25 +lon_0=-119.25 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs",
+    xlim = c(-125.5, -113.5),
+    ylim = c(32, 42.5),
+    default_crs = sf::st_crs(4326),
+    expand = FALSE
+  ) +
+  annotation_scale(
+    location = "bl",
+    width_hint = 0.4
+  ) +
+  annotation_north_arrow(
+    location = "bl",
+    which_north = "true", 
+    pad_x = unit(0.2, "in"),
+    pad_y = unit(0.3, "in"),
+    style = north_arrow_fancy_orienteering
+  ) +
+  theme_minimal() +
+  theme(
+    panel.background = element_rect(fill = "aliceblue"),
+    panel.border = element_rect(color = "black", fill = NA, linewidth = 1),
+    legend.position = "none"
+  )
+
+ggsave(
+  filename = "figures/california.png",
+  plot = plot,
+  width = 6.53,
+  height = 6.53,
+  dpi = 300
+)
 ```
 
 The result of which is:
