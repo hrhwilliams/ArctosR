@@ -106,7 +106,7 @@ rutilus_query2 <- read_response_rds(
   system.file("extdata", "rutilus_query2.RDS", package = "ArctosR"))
 ```
 
-```{r}
+```{r eval=TRUE}
 gapperi_df <- rbind(
   response_data(gapperi_query1),
   response_data(gapperi_query2)
@@ -117,7 +117,7 @@ rutilus_df <- rbind(
 )
 ```
 
-```{r}
+```{r eval=TRUE}
 # Plot of overall species ranges
 
 plot_map <- map_data("world", region=c("USA", "Canada"))
@@ -131,21 +131,24 @@ vole1 <- ggplot(plot_map, aes(long, lat)) +
     data = gapperi_df,
     aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
     color = "C. gapperi", shape = "C. gapperi"),
-    alpha = .5, size = 1.5
+    alpha = .5, size = 1.0
   ) +
   geom_jitter(
     data = rutilus_df,
     aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
     color = "C. rutilus", shape = "C. rutilus"),
-    alpha = .5, size = 1.5
+    alpha = .5, size = 1.0
   ) +
   scale_color_manual(
-    values = c("C. gapperi" = "red", "C. rutilus" = "blue")
+    values = c("C. gapperi" = "red", "C. rutilus" = "blue"),
+    labels = c("*Clethrionomys gapperi*", "*Clethrionomys rutilus*")
   ) +
   scale_shape_manual(
-    values = c("C. gapperi" = 16, "C. rutilus" = 17)
+    values = c("C. gapperi" = 16, "C. rutilus" = 17),
+    labels = c("*Clethrionomys gapperi*", "*Clethrionomys rutilus*")
   ) +
   labs(
+    # title = "Filtering *C. gapperi* and *C. rutilus* by tissue availability",
     color = "Species", shape = "Species", x = NULL, y = NULL
   ) +
   coord_sf(
@@ -155,100 +158,28 @@ vole1 <- ggplot(plot_map, aes(long, lat)) +
     default_crs = sf::st_crs(4326),
     expand = FALSE
   ) +
-  annotation_scale(
-    location = "bl",
-    width_hint = 0.4
-  ) +
-  annotation_north_arrow(
-    location = "bl",
-    which_north = "true", 
-    pad_x = unit(0.2, "in"),
-    pad_y = unit(0.3, "in"),
-    style = north_arrow_fancy_orienteering
-  ) +
   theme_minimal() +
   theme(
     panel.background = element_rect(fill = "aliceblue"),
-    panel.border = element_rect(color = "black", fill = NA, linewidth = 0.5)
+    panel.border = element_rect(color = "black", fill = NA, linewidth = 1.25),
+    legend.position = c(0.0025, 0.0025),
+    legend.justification = c(0, 0),
+    legend.background = element_rect(fill = "white")
   )
 
 ggsave(
-  filename = "vole1.png",
+  filename = "figures/vole1.png",
   plot = vole1,
-  width = 8,
-  height = 7,
+  width = 6.53,
+  height = 4.25,
   dpi = 300
 )
 
 ```
 
-![](vole1.png){width=98%}
+![](figures/vole1.png){width=98%}
 
-```{r}
-# Plot of hybridization area
-
-vole2 <- ggplot(plot_map, aes(long, lat)) +
-  geom_polygon(
-    aes(group = group), fill = "white", color = "gray20",
-    linewidth = .2
-  ) +
-  geom_jitter(
-    data = gapperi_df,
-    aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
-    color = "C. gapperi", shape = "C. gapperi"),
-    alpha = .5, size = 1.5
-  ) +
-  geom_jitter(
-    data = rutilus_df,
-    aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
-    color = "C. rutilus", shape = "C. rutilus"),
-    alpha = .5, size = 1.5
-  ) +
-  scale_color_manual(
-    values = c("C. gapperi" = "red", "C. rutilus" = "blue")
-  ) +
-  scale_shape_manual(
-    values = c("C. gapperi" = 16, "C. rutilus" = 17)
-  ) +
-  labs(
-    color = "Species", shape = "Species", x = NULL, y = NULL
-  ) +
-  coord_sf(
-    crs = "+proj=lcc +lat_1=52 +lat_2=58 +lon_0=-134.5 +datum=WGS84",
-    xlim = c(-140, -115), 
-    ylim = c(50, 60),
-    default_crs = sf::st_crs(4326),
-    expand = FALSE
-  ) +
-  annotation_scale(
-    location = "bl",
-    width_hint = 0.4
-  ) +
-  annotation_north_arrow(
-    location = "bl",
-    which_north = "true", 
-    pad_x = unit(0.2, "in"),
-    pad_y = unit(0.3, "in"),
-    style = north_arrow_fancy_orienteering
-  ) +
-  theme_minimal() +
-  theme(
-    panel.background = element_rect(fill = "aliceblue"),
-    panel.border = element_rect(color = "black", fill = NA, linewidth = 0.5)
-  )
-
-ggsave(
-  filename = "vole2.png",
-  plot = vole2,
-  width = 8,
-  height = 7,
-  dpi = 300
-)
-```
-
-![](vole2.png){width=98%}
-
-```{r}
+```{r eval=TRUE}
 gapperi_df_tissue <- gapperi_df[
   grepl("frozen", gapperi_df$parts, ignore.case = TRUE, perl = TRUE), ]
 
@@ -259,10 +190,12 @@ nrow(gapperi_df_tissue)
 nrow(rutilus_df_tissue)
 ```
 
-```{r}
+```{r eval=TRUE}
+library(patchwork)
+
 # Plot of overall species ranges, filtering by specimens with frozen tissue
 
-vole3 <- ggplot(plot_map, aes(long, lat)) +
+vole2 <- ggplot(plot_map, aes(long, lat)) +
   geom_polygon(
     aes(group = group), fill = "white", color = "gray20",
     linewidth = .2
@@ -271,19 +204,21 @@ vole3 <- ggplot(plot_map, aes(long, lat)) +
     data = gapperi_df_tissue,
     aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
     color = "C. gapperi", shape = "C. gapperi"),
-    alpha = .5, size = 1.5
+    alpha = .5, size = 1.0
   ) +
   geom_jitter(
     data = rutilus_df_tissue,
     aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
     color = "C. rutilus", shape = "C. rutilus"),
-    alpha = .5, size = 1.5
+    alpha = .5, size = 1.0
   ) +
   scale_color_manual(
-    values = c("C. gapperi" = "red", "C. rutilus" = "blue")
+    values = c("C. gapperi" = "red", "C. rutilus" = "blue"),
+    labels = c("*Clethrionomys gapperi*", "*Clethrionomys rutilus*")
   ) +
   scale_shape_manual(
-    values = c("C. gapperi" = 16, "C. rutilus" = 17)
+    values = c("C. gapperi" = 16, "C. rutilus" = 17),
+    labels = c("*Clethrionomys gapperi*", "*Clethrionomys rutilus*")
   ) +
   labs(
     color = "Species", shape = "Species", x = NULL, y = NULL
@@ -309,80 +244,17 @@ vole3 <- ggplot(plot_map, aes(long, lat)) +
   theme_minimal() +
   theme(
     panel.background = element_rect(fill = "aliceblue"),
-    panel.border = element_rect(color = "black", fill = NA, linewidth = 0.5)
+    panel.border = element_rect(color = "black", fill = NA, linewidth = 1),
+    legend.position = "none"
   )
 
 ggsave(
-  filename = "vole3.png",
-  plot = vole3,
-  width = 8,
-  height = 7,
+  filename = "figures/combined.png",
+  plot = vole1/vole2,
+  width = 6.53,
+  height = 6.53,
   dpi = 300
 )
 ```
 
-![](vole3.png){width=98%}
-
-```{r}
-# Plot of hybridization area, filtering by specimens with frozen tissue
-
-vole4 <- ggplot(plot_map, aes(long, lat)) +
-  geom_polygon(
-    aes(group = group), fill = "white", color = "gray20",
-    linewidth = .2
-  ) +
-  geom_jitter(
-    data = gapperi_df_tissue,
-    aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
-    color = "C. gapperi", shape = "C. gapperi"),
-    alpha = .5, size = 1.5
-  ) +
-  geom_jitter(
-    data = rutilus_df_tissue,
-    aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
-    color = "C. rutilus", shape = "C. rutilus"),
-    alpha = .5, size = 1.5
-  ) +
-  scale_color_manual(
-    values = c("C. gapperi" = "red", "C. rutilus" = "blue")
-  ) +
-  scale_shape_manual(
-    values = c("C. gapperi" = 16, "C. rutilus" = 17)
-  ) +
-  labs(
-    color = "Species", shape = "Species", x = NULL, y = NULL
-  ) +
-  coord_sf(
-    crs = "+proj=lcc +lat_1=52 +lat_2=58 +lon_0=-134.5 +datum=WGS84",
-    xlim = c(-140, -115), 
-    ylim = c(50, 60),
-    default_crs = sf::st_crs(4326),
-    expand = FALSE
-  ) +
-  annotation_scale(
-    location = "bl",
-    width_hint = 0.4
-  ) +
-  annotation_north_arrow(
-    location = "bl",
-    which_north = "true", 
-    pad_x = unit(0.2, "in"),
-    pad_y = unit(0.3, "in"),
-    style = north_arrow_fancy_orienteering
-  ) +
-  theme_minimal() +
-  theme(
-    panel.background = element_rect(fill = "aliceblue"),
-    panel.border = element_rect(color = "black", fill = NA, linewidth = 0.5)
-  )
-
-ggsave(
-  filename = "vole4.png",
-  plot = vole4,
-  width = 8,
-  height = 7,
-  dpi = 300
-)
-```
-
-![](vole4.png){width=98%}
+![](figures/combined.png){width=98%}
