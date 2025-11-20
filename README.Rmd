@@ -23,52 +23,6 @@ knitr::opts_chunk$set(
 [![shields.io](https://img.shields.io/cran/v/ArctosR)](https://CRAN.R-project.org/package=ArctosR)
 <!-- badges: end -->
 
-## GSoC project description
-
-**Student**: Harlan Williams
-
-**GSoC Mentors**: Marlon Cobos, Vijay Barve, Jocelyn Colella, Michelle Koo
-
-**Organization**: R Project For Statistical Computing
-
-### Motivation
-
-Arctos (https://arctosdb.org/) has an extensive database that connects >100 data
-fields to physical specimen records using standard DarwinCore vocabulary, many 
-of which are only accessible through its web interface. Data can be accessed 
-through the web interface, but downloads are memory intensive, such that only a 
-subset of fields or specimens can be queried at once. The goal of this package 
-is to provide a programmatic way to access these data for researchers, in hopes
-of improving their workflows and the accessibility of biodiversity data stored
-on Arctos.
-
-The main difficulties in accessing Arctos via the API is pagination of records,
-requiring multiple API queries, and hierarchical data where specific columns
-in Arctos records could themselves be tables or point to other Arctos records.
-This package was developed specifically to handle these two difficulties for
-the user. Pagination is handled by package internals so that the user only has
-to ask for all records pertaining to a query to get all of those records.
-
-The user also is able to expand columns representing hierarchical data and
-explore that data within RStudio natively, making analysis of that data much
-more intuitive.
-
-### Status of the project
-
-At the time of submission for GSoC 2024 a set of functions for querying from
-Arctos as well as looking up documentation for Arctos are available to the user.
-The user is also able to explore downloaded records in a hierarchical manner
-by expanding columns returned from Arctos which represent tables of tables.
-These records are then able to be saved in a CSV format or stored as R objects
-for further data analysis tasks by researchers.
-
-With these functions, ArctosR can be integrated into existing data analysis
-pipelines to provide updated records. Each query in ArctosR is also accompanied
-by metadata, allowing for better data documentation and query reproducibility by
-other researchers. At this stage the project fulfills the goals set out in the
-proposal, the only thing remaining is for it to be submitted to CRAN.
-
-A complete history of commits can be accessed <a href="https://github.com/hrhwilliams/ArctosR/commits/main/" target="_blank">here</a>.
 
 ## Installation and Usage
 
@@ -151,3 +105,51 @@ query <- get_records(
 # Grab the dataframe of records from the response and save that as a csv.
 df <- response_data(query)
 ```
+
+
+## GSoC project description
+
+**Student**: Harlan Williams
+
+**GSoC Mentors**: Marlon Cobos, Vijay Barve, Jocelyn Colella, Michelle Koo
+
+**Organization**: R Project For Statistical Computing
+
+### Motivation
+
+Arctos (https://arctosdb.org/) has an extensive database that connects >100 data
+fields to physical specimen records using standard DarwinCore vocabulary, many 
+of which are only accessible through its web interface. Data can be accessed 
+through the web interface, but downloads are memory intensive, such that only a 
+subset of fields or specimens can be queried at once. The goal of this package 
+is to provide a programmatic way to access these data for researchers, in hopes
+of improving their workflows and the accessibility of biodiversity data stored
+on Arctos.
+
+The main difficulties in accessing Arctos via the API is pagination of records,
+requiring multiple API queries, and hierarchical data where specific columns
+in Arctos records could themselves be tables or point to other Arctos records.
+This package was developed specifically to handle these two difficulties for
+the user. Pagination is handled by package internals so that the user only has
+to ask for all records pertaining to a query to get all of those records.
+
+The user also is able to expand columns representing hierarchical data and
+explore that data within RStudio natively, making analysis of that data much
+more intuitive.
+
+### Status of the project
+
+At the time of submission for GSoC 2024 a set of functions for querying from
+Arctos as well as looking up documentation for Arctos are available to the user.
+The user is also able to explore downloaded records in a hierarchical manner
+by expanding columns returned from Arctos which represent tables of tables.
+These records are then able to be saved in a CSV format or stored as R objects
+for further data analysis tasks by researchers.
+
+With these functions, ArctosR can be integrated into existing data analysis
+pipelines to provide updated records. Each query in ArctosR is also accompanied
+by metadata, allowing for better data documentation and query reproducibility by
+other researchers. At this stage the project fulfills the goals set out in the
+proposal, the only thing remaining is for it to be submitted to CRAN.
+
+A complete history of commits can be accessed <a href="https://github.com/hrhwilliams/ArctosR/commits/main/" target="_blank">here</a>.
