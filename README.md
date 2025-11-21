@@ -75,21 +75,23 @@ View(result_params)
 
 # Request just the number of records matching a query.
 count <- get_record_count(
-  scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm", api_key=YOUR_API_KEY
+  scientific_name = "Canis lupus", 
+  guid_prefix = "MSB:Mamm", 
+  api_key = YOUR_API_KEY
 )
 
 # Request to download data. This is limited to 100 records by default.
 query <- get_records(
   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
   columns = list("guid", "parts", "partdetail"),
-  api_key=YOUR_API_KEY
+  api_key = YOUR_API_KEY
 )
 
 # Request to download all available data.
 query <- get_records(
   scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
   columns = list("guid", "parts", "partdetail"),
-  api_key=YOUR_API_KEY,
+  api_key = YOUR_API_KEY,
   all_records = TRUE
 )
 
