@@ -78,6 +78,11 @@ query parameters used by Arctos. The names in the `obj_name` column are what are
 used as parameters to the `get_records` function.
 
 ```{r eval = FALSE}
+# You will have to request an API key from Arctos to get records, and pass it
+# to the `get_record_count` and `get_records` functions through the `api_key`
+# parameter.
+YOUR_API_KEY <- "11111111-2222-3333-4444444444444444"
+
 # run the function and store results in an object
 query_params <- get_query_parameters()
 
