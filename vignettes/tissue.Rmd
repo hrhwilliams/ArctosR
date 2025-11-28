@@ -166,7 +166,8 @@ vole1 <- ggplot(plot_map, aes(long, lat)) +
     legend.position = c(0.0025, 0.0025),
     legend.justification = c(0, 0),
     legend.background = element_rect(fill = "white"),
-    legend.text = element_markdown()
+    legend.text = element_markdown(),
+    legend.title=element_blank()
   )
 
 ggsave(
