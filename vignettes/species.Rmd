@@ -81,12 +81,17 @@ alpinus_df <- response_data(alpinus)
 alpinus_df <- alpinus_df[alpinus_df$dec_lat != "" & alpinus_df$dec_long != "", ]
 ```
 
+```{r include=FALSE}
+alpinus <- read_response_rds(
+  system.file("extdata", "alpinus.RDS", package = "ArctosR"))
+```
+
 ## Plotting data
 
 Now we use the `dec_lat` and `dec_long` fields from our data.frame to create
 our plot:
 
-```{r eval=FALSE}
+```{r eval=TRUE}
 # Plot of Tamias alpinus sampled in California and currently stored in the
 # Museum of Vertebrate Zoology's collection
 
@@ -149,14 +154,15 @@ plot <- ggplot(plot_map, aes(long, lat)) +
     legend.position = c(0.998, 0.998),
     legend.justification = c(1, 1),
     legend.background = element_rect(fill = "white"),
-    legend.text = element_markdown()
+    legend.text = element_markdown(),
+    legend.title = element_blank()
   )
 
 ggsave(
   filename = "figures/california.png",
   plot = plot,
-  width = 4,
-  height = 4,
+  width = 6.53,
+  height = 6.53,
   dpi = 300
 )
 ```

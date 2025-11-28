@@ -108,10 +108,15 @@ microtus <- get_records(country = "Mongolia", genus = "Microtus",
                         api_key=YOUR_API_KEY)
 ```
 
+```{r include=FALSE}
+microtus <- read_response_rds(
+  system.file("extdata", "microtus.RDS", package = "ArctosR"))
+```
+
 In Arctos, some table entries, such as `partdetail` are themselves tables. We
 can expand these tables into data.frames using:
 
-```{r eval=FALSE}
+```{r eval=TRUE}
 # Expand a column that contains complex information in JSON format
 expand_column(query = microtus, column_name = "partdetail")
 ```
@@ -121,7 +126,7 @@ the request which is useful for making further requests based on the data
 returned from the first request. To get the data.frame of the response, use
 `response_data` and pass in the response:
 
-```{r eval=FALSE}
+```{r eval=TRUE}
 # Grab the dataframe of records from the response.
 microtus_df <- response_data(microtus)
 
@@ -134,7 +139,7 @@ microtus_df <- microtus_df[microtus_df$dec_lat != "" & microtus_df$dec_long != "
 Now, we write a custom function to check the `partdetail` entries of each specimen
 for whether or not nematodes were present in the specimen.
 
-```{r eval=FALSE}
+```{r eval=TRUE}
 # Filter the data to keep only Microtus records in which nematodes were found
 ## Whole-word match for 'nematode' or 'nematodes'
 pattern <- "\\bnematodes?\\b"
@@ -171,7 +176,7 @@ We can plot the spatial distribution of specimens with and without detected
 nematodes using the `ggplot2` and `maps` packages. First, we can simply create a
 plot of the distribution of all specimens overMongolia.
 
-```{r eval=FALSE}
+```{r eval=TRUE}
 # Initial plot of Microtus sampled in Mongolia
 
 # install.packages("maps")
@@ -248,7 +253,7 @@ Now this is what really highlights ArctosR's strengths; we can use the
 additional data that Arctos provides to plot *Microtus* with and *Microtus* 
 without detected nematodes using the filter we established earlier.
 
-```{r eval=FALSE}
+```{r eval=TRUE}
 # install.packages("patchwork")
 library(patchwork)
 
@@ -298,7 +303,8 @@ mongolia2 <- ggplot(plot_map, aes(long, lat)) +
     legend.position = c(0.0025, 0.0025),
     legend.justification = c(0, 0),
     legend.background = element_rect(fill = "white"),
-    legend.text = element_markdown()
+    legend.text = element_markdown(),
+    legend.title = element_blank()
   )
 
 ggsave(
@@ -313,7 +319,7 @@ ggsave(
   filename = "figures/mongolia_combined.png",
   plot = mongolia1/mongolia2,
   width = 6.53,
-  height = 6.53,
+  height = 6.75,
   dpi = 300
 )
 ```
