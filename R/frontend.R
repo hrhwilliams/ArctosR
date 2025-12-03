@@ -241,12 +241,12 @@ get_records <- function(..., api_key = NULL, columns = NULL, limit = NULL,
 #' @returns a data frame of all related items. This contains URLs
 #'
 #' @export
-get_relationships <- function(guid) {
+get_relationships <- function(guid, api_key) {
   query <- Query$new()
   builder <- query$catalog_request()
   builder$set_query(guid=guid)
   builder$set_columns("relatedcatalogeditems")
-  result <- query$perform()
+  result <- query$perform(api_key)
   return(response_data(query))
 }
 
