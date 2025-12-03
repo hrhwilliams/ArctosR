@@ -74,16 +74,20 @@ alpinus <- get_records(guid_prefix="MVZ:Mamm", scientific_name="Tamias alpinus",
                        state_prov="California",
                        columns=list("dec_lat", "dec_long"),
                        all_records=TRUE, api_key=YOUR_API_KEY)
-
-alpinus_df <- response_data(alpinus)
-
-# Filter out records which are missing latitude and longitude information
-alpinus_df <- alpinus_df[alpinus_df$dec_lat != "" & alpinus_df$dec_long != "", ]
 ```
 
 ```{r include=FALSE}
 alpinus <- read_response_rds(
   system.file("extdata", "alpinus.RDS", package = "ArctosR"))
+```
+
+```{r eval=TRUE}
+alpinus_df <- response_data(alpinus)
+
+# Filter out records which are missing latitude and longitude information
+alpinus_df <- alpinus_df[alpinus_df$dec_lat != "" & alpinus_df$dec_long != "", ]
+
+nrow(alpinus_df)
 ```
 
 ## Plotting data

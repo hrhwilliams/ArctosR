@@ -262,7 +262,7 @@ ggsave(
 ggsave(
   filename = "figures/voles_combined.png",
   plot = vole1/vole2,
-  width = 6.53,
+  width = 4,
   height = 6.53,
   dpi = 300
 )
