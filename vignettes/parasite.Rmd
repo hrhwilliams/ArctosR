@@ -325,3 +325,14 @@ ggsave(
 ```
 
 ![](figures/mongolia_combined.png){width=98%}
+
+## Viewing relationships
+
+You can return a data frame of all related records with the `get_relationships`
+function. It takes the GUID of a single record and your API key to perform the
+request. In this case, the record returned is a parasite that this record was
+a host of.
+
+```{r eval=FALSE}
+get_relationships("MSB:Mamm:293449", YOUR_API_KEY)
+```
