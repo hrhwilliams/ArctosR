@@ -27,6 +27,11 @@ Imports:
     curl (>= 5.0.0),
     jsonlite (>= 1.8.0)
 Suggests: 
+    ggplot2,
+    ggspatial,
+    ggtext,
+    maps,
+    patchwork,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
