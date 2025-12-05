@@ -120,7 +120,7 @@ plot <- ggplot(plot_map, aes(long, lat)) +
     data = alpinus_df,
     aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
     color = "T. alpinus", shape = "T. alpinus"),
-    alpha = .5, size = 1.0
+    alpha = .5, size = 2.0
   ) +
   scale_color_manual(
     values = c("T. alpinus" = "red"),
@@ -165,8 +165,8 @@ plot <- ggplot(plot_map, aes(long, lat)) +
 ggsave(
   filename = "figures/california.png",
   plot = plot,
-  width = 6.53,
-  height = 6.53,
+  width = 4,
+  height = 4,
   dpi = 300
 )
 ```

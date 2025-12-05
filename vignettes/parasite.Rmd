@@ -194,8 +194,7 @@ plot_map <- map_data("world", region=c("Mongolia"))
 mongolia1 <- ggplot(plot_map, aes(long, lat)) +
   geom_polygon(
     aes(group = group), fill = "white", color = "gray20",
-    linewidth = .2
-  ) +
+    linewidth = .2) +
   geom_jitter(
     data = microtus_df,
     aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
@@ -240,7 +239,7 @@ mongolia1 <- ggplot(plot_map, aes(long, lat)) +
 
 ggsave(
   filename = "figures/mongolia1.png",
-  plot = plot,
+  plot = mongolia1,
   width = 6.53,
   height = 6.53,
   dpi = 300
@@ -270,13 +269,13 @@ mongolia2 <- ggplot(plot_map, aes(long, lat)) +
     data = microtus_df_no_nematode,
     aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
     color = "Microtus", shape = "Microtus"),
-    alpha = .5, size = 1.0
+    alpha = .5, size = 2.0
   ) +
   geom_jitter(
     data = microtus_df_nematode,
     aes(x = as.numeric(dec_long), y = as.numeric(dec_lat),
     color = "Microtus nematodes", shape = "Microtus nematodes"),
-    alpha = .5, size = 1.0
+    alpha = .5, size = 2.0
   ) +
   scale_color_manual(
     values = c("Microtus" = "red", "Microtus nematodes" = "black"),
@@ -296,6 +295,17 @@ mongolia2 <- ggplot(plot_map, aes(long, lat)) +
     default_crs = sf::st_crs(4326),
     expand = FALSE
   ) +
+  annotation_scale(
+    location = "br",
+    width_hint = 0.4
+  ) +
+  annotation_north_arrow(
+    location = "br",
+    which_north = "true", 
+    pad_x = unit(0.2, "in"),
+    pad_y = unit(0.3, "in"),
+    style = north_arrow_fancy_orienteering
+  ) +
   theme_minimal() +
   theme(
     panel.background = element_rect(fill = "aliceblue"),
@@ -310,21 +320,13 @@ mongolia2 <- ggplot(plot_map, aes(long, lat)) +
 ggsave(
   filename = "figures/mongolia2.png",
   plot = mongolia2,
-  width = 6.53,
-  height = 6.53,
-  dpi = 300
-)
-
-ggsave(
-  filename = "figures/mongolia_combined.png",
-  plot = mongolia1/mongolia2,
-  width = 6.53,
-  height = 6.75,
+  width = 6.5,
+  height = 4,
   dpi = 300
 )
 ```
 
-![](figures/mongolia_combined.png){width=98%}
+![](figures/mongolia2.png){width=98%}
 
 ## Viewing relationships
 
