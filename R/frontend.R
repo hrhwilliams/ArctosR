@@ -225,7 +225,7 @@ get_records <- function(..., api_key = NULL, columns = NULL, limit = NULL,
 #' function will return all items related by any such relationship in the table
 #' in a data frame.
 #'
-#' @usage get_relationships(guid)
+#' @usage get_relationships(guid, api_key = NULL)
 #'
 #' @examples
 #' library(ArctosR)
@@ -240,7 +240,7 @@ get_records <- function(..., api_key = NULL, columns = NULL, limit = NULL,
 #' @returns a data frame of all related items. This contains URLs
 #'
 #' @export
-get_relationships <- function(guid, api_key) {
+get_relationships <- function(guid, api_key = NULL) {
   query <- Query$new()
   builder <- query$catalog_request()
   builder$set_query(guid=guid)

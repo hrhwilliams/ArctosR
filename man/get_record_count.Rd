@@ -4,14 +4,13 @@
 \alias{get_record_count}
 \title{Count number of records in a query}
 \usage{
-get_record_count(..., api_key = NULL)
+get_record_count(..., api_key)
 }
 \arguments{
 \item{...}{Query parameters and their values to pass to Arctos to search.
 For example, `scientific_name = "Canis lupus"``}
 
-\item{api_key}{(character) The API key to use for this request.
-The default, \code{NULL}, uses the package's default API key.}
+\item{api_key}{(character) The API key to use for this request.}
 }
 \value{
 The number of records matching the given query, as an integer.

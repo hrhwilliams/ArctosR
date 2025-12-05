@@ -4,10 +4,12 @@
 \alias{get_relationships}
 \title{Get the relationships (e.g. "host of") a cataloged item has}
 \usage{
-get_relationships(guid)
+get_relationships(guid, api_key = NULL)
 }
 \arguments{
 \item{guid}{The Arctos GUID of the item to query relationships over}
+
+\item{api_key}{(character) The API key to use for this request.}
 }
 \value{
 a data frame of all related items. This contains URLs

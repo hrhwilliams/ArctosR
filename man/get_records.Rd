@@ -11,8 +11,7 @@ get_records(..., api_key = NULL, columns = NULL, limit = NULL,
 \item{...}{Query parameters and their values to pass to Arctos to search.
 For example, \code{scientific_name = "Canis lupus"}}
 
-\item{api_key}{(character) The API key to use for this request.
-The default, \code{NULL}, uses the package's default API key.}
+\item{api_key}{(character) The API key to use for this request.}
 
 \item{columns}{A list of columns to be returned in the table of records
 to be downloaded from Arctos.}

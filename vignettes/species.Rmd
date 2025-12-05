@@ -29,12 +29,14 @@ To begin, make sure to load the library:
 # install.packages("ggspatial")
 # install.packages("ggtext")
 # install.packages("maps")
+# install.packages("sf")
 
 library(ArctosR)
 library(ggplot2)
 library(ggspatial)
 library(ggtext)
 library(maps)
+library(sf)
 ```
 
 ## Exploring Arctos options
@@ -135,7 +137,7 @@ plot <- ggplot(plot_map, aes(long, lat)) +
     crs = "+proj=lcc +lat_1=34 +lat_2=40.5 +lat_0=37.25 +lon_0=-119.25 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs",
     xlim = c(-125.5, -113.5),
     ylim = c(32, 42.5),
-    default_crs = sf::st_crs(4326),
+    default_crs = st_crs(4326),
     expand = FALSE
   ) +
   annotation_scale(
