@@ -167,7 +167,8 @@ ggsave(
   plot = plot,
   width = 4,
   height = 4,
-  dpi = 300
+  dpi = 300,
+  create.dir = TRUE
 )
 ```
 

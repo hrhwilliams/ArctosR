@@ -185,7 +185,8 @@ ggsave(
   plot = vole1,
   width = 6.53,
   height = 4.25,
-  dpi = 300
+  dpi = 300,
+  create.dir = TRUE
 )
 
 ```
@@ -264,7 +265,8 @@ ggsave(
   plot = vole2,
   width = 6.53,
   height = 6.53,
-  dpi = 300
+  dpi = 300,
+  create.dir = TRUE
 )
 
 ggsave(
@@ -272,7 +274,8 @@ ggsave(
   plot = vole1/vole2,
   width = 4,
   height = 6.53,
-  dpi = 300
+  dpi = 300,
+  create.dir = TRUE
 )
 ```
 
