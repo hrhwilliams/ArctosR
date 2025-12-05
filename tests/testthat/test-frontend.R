@@ -63,7 +63,7 @@ test_that("query catalog request", {
   testthat::expect_equal(request$params$cols, "guid,scientific_name,relatedcatalogeditems")
   testthat::expect_equal(
     request$url,
-    "https://arctos.database.museum/component/api/v2/catalog.cfc?method=getCatalogData&queryformat=struct&length=100&guid_prefix=MSB%3AMamm&genus=Canis&species=lupus&cols=guid%2Cscientific_name%2Crelatedcatalogeditems"
+    "https://arctos.database.museum/component/api/v2/record.cfc?method=getData&queryformat=struct&length=100&guid_prefix=MSB%3AMamm&genus=Canis&species=lupus&cols=guid%2Cscientific_name%2Crelatedcatalogeditems"
   )
 })
 
@@ -86,7 +86,7 @@ test_that("query catalog request with record filters", {
   testthat::expect_equal(request$params$cols, "guid,scientific_name,relatedcatalogeditems")
   testthat::expect_equal(
     request$url,
-    "https://arctos.database.museum/component/api/v2/catalog.cfc?method=getCatalogData&queryformat=struct&length=100&guid_prefix=MSB%3AMamm&genus=Canis&species=lupus&cols=guid%2Cscientific_name%2Crelatedcatalogeditems&attribute_type_1=sex&attribute_type_2=weight&attribute_value_1=%3Dmale&attribute_value_2=%3E100"
+    "https://arctos.database.museum/component/api/v2/record.cfc?method=getData&queryformat=struct&length=100&guid_prefix=MSB%3AMamm&genus=Canis&species=lupus&cols=guid%2Cscientific_name%2Crelatedcatalogeditems&attribute_type_1=sex&attribute_type_2=weight&attribute_value_1=%3Dmale&attribute_value_2=%3E100"
   )
 })
 
@@ -284,6 +284,6 @@ test_that("get_url after get_records", {
 
   testthat::expect_equal(
     get_request_url(query),
-    "https://arctos.database.museum/component/api/v2/catalog.cfc?method=getCatalogData&queryformat=struct&length=100&guid_prefix=MSB%3AMamm&species=Canis&genus=lupus"
+    "https://arctos.database.museum/component/api/v2/record.cfc?method=getData&queryformat=struct&length=100&guid_prefix=MSB%3AMamm&species=Canis&genus=lupus"
   )
 })
