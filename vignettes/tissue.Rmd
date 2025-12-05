@@ -24,11 +24,19 @@ frozen tissue.
 To begin, make sure to load the library:
 
 ```{r setup}
+# install.packages("ArctosR")
+# install.packages("ggplot2")
+# install.packages("ggspatial")
+# install.packages("ggtext")
+# install.packages("maps")
+# install.packages("patchwork")
+
 library(ArctosR)
 library(ggplot2)
 library(ggspatial)
 library(ggtext)
 library(maps)
+library(patchwork)
 ```
 
 ## Exploring Arctos options
@@ -194,8 +202,6 @@ nrow(rutilus_df_tissue)
 ```
 
 ```{r eval=TRUE}
-library(patchwork)
-
 # Plot of overall species ranges, filtering by specimens with frozen tissue
 
 vole2 <- ggplot(plot_map, aes(long, lat)) +

@@ -25,8 +25,16 @@ To begin, make sure to load the library:
 
 ```{r setup}
 # install.packages("ArctosR")
+# install.packages("ggplot2")
+# install.packages("ggspatial")
+# install.packages("ggtext")
+# install.packages("maps")
 
 library(ArctosR)
+library(ggplot2)
+library(ggspatial)
+library(ggtext)
+library(maps)
 ```
 
 ## Exploring Arctos options
@@ -98,16 +106,6 @@ our plot:
 ```{r eval=TRUE}
 # Plot of Tamias alpinus sampled in California and currently stored in the
 # Museum of Vertebrate Zoology's collection
-
-# install.packages("ggplot2")
-# install.packages("ggspatial")
-# install.packages("ggtext")
-# install.packages("maps")
-
-library(ggplot2)
-library(ggspatial)
-library(ggtext)
-library(maps)
 
 plot_map <- map_data("state", region=c("California"))
 
