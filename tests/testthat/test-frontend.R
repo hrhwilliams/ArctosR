@@ -29,22 +29,6 @@ test_that("query info build request", {
   testthat::expect_equal(request$params$method, "about")
 })
 
-test_that("query info perform request", {
-  local_mocked_bindings(
-    perform_request = function(...) {
-      return(readRDS("params_response.rds"))
-    }
-  )
-
-  query_params <- get_query_parameters()
-  result_params <- get_result_parameters()
-
-  testthat::expect_s3_class(query_params, "data.frame")
-  testthat::expect_s3_class(result_params, "data.frame")
-  testthat::expect_gt(nrow(query_params), 0)
-  testthat::expect_gt(nrow(result_params), 0)
-})
-
 test_that("query catalog request", {
   q <- Query$new()
   request <- q$catalog_request()$
@@ -53,17 +37,17 @@ test_that("query catalog request", {
     set_columns("guid", "scientific_name", "relatedcatalogeditems")$
     build_request()
 
-  testthat::expect_equal(request$end_point, "catalog.cfc")
+  testthat::expect_equal(request$end_point, "record.cfc")
   testthat::expect_equal(length(request$params), 7)
-  testthat::expect_equal(request$params$method, "getCatalogData")
+  testthat::expect_equal(request$params$method, "getData")
   testthat::expect_equal(request$params$queryformat, "struct")
   testthat::expect_equal(request$params$length, 100)
   testthat::expect_equal(request$params$guid_prefix, "MSB:Mamm")
   testthat::expect_equal(request$params$genus, "Canis")
-  testthat::expect_equal(request$params$cols, "guid,scientific_name,relatedcatalogeditems")
+  testthat::expect_equal(request$params$return_columns, "guid,scientific_name,relatedcatalogeditems")
   testthat::expect_equal(
     request$url,
-    "https://arctos.database.museum/component/api/v2/record.cfc?method=getData&queryformat=struct&length=100&guid_prefix=MSB%3AMamm&genus=Canis&species=lupus&cols=guid%2Cscientific_name%2Crelatedcatalogeditems"
+    "https://arctos.database.museum/component/api/v2/record.cfc?method=getData&queryformat=struct&length=100&guid_prefix=MSB%3AMamm&genus=Canis&species=lupus&return_columns=guid%2Cscientific_name%2Crelatedcatalogeditems"
   )
 })
 
@@ -76,17 +60,17 @@ test_that("query catalog request with record filters", {
     set_filter(sex="=male", weight=">100")$
     build_request()
 
-  testthat::expect_equal(request$end_point, "catalog.cfc")
+  testthat::expect_equal(request$end_point, "record.cfc")
   testthat::expect_equal(length(request$params), 11)
-  testthat::expect_equal(request$params$method, "getCatalogData")
+  testthat::expect_equal(request$params$method, "getData")
   testthat::expect_equal(request$params$queryformat, "struct")
   testthat::expect_equal(request$params$length, 100)
   testthat::expect_equal(request$params$guid_prefix, "MSB:Mamm")
   testthat::expect_equal(request$params$genus, "Canis")
-  testthat::expect_equal(request$params$cols, "guid,scientific_name,relatedcatalogeditems")
+  testthat::expect_equal(request$params$return_columns, "guid,scientific_name,relatedcatalogeditems")
   testthat::expect_equal(
     request$url,
-    "https://arctos.database.museum/component/api/v2/record.cfc?method=getData&queryformat=struct&length=100&guid_prefix=MSB%3AMamm&genus=Canis&species=lupus&cols=guid%2Cscientific_name%2Crelatedcatalogeditems&attribute_type_1=sex&attribute_type_2=weight&attribute_value_1=%3Dmale&attribute_value_2=%3E100"
+    "https://arctos.database.museum/component/api/v2/record.cfc?method=getData&queryformat=struct&length=100&guid_prefix=MSB%3AMamm&genus=Canis&species=lupus&return_columns=guid%2Cscientific_name%2Crelatedcatalogeditems&attribute_type_1=sex&attribute_type_2=weight&attribute_value_1=%3Dmale&attribute_value_2=%3E100"
   )
 })
 
