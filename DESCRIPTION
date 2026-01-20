@@ -2,11 +2,16 @@ Package: ArctosR
 Title: An Interface to the 'Arctos' Database
 Version: 0.1.3
 Authors@R: c(
-    person("Harlan R.", "Williams", email = "harlanrhwilliams@gmail.com", role = c("aut", "cre")),
-    person("Marlon E.", "Cobos", email = "manubio13@gmail.com", role = "aut"),
-    person("Jocelyn P.", "Colella", email = "colella@ku.edu", role = "aut"),
-    person("Michelle S.", "Koo", email = "mkoo@berkeley.edu", role = "aut"),
-    person("Vijay", "Barve", email = "vijay.barve@gmail.com", role = "aut"))
+    person("Harlan R.", "Williams", email = "harlanrhwilliams@gmail.com",
+      role = c("aut", "cre"), comment = c(ORCID = "0009-0000-9958-121X")),
+    person("Marlon E.", "Cobos", email = "manubio13@gmail.com", role = "aut",
+      comment = c(ORCID = "0000-0002-2611-1767")),
+    person("Jocelyn P.", "Colella", email = "colella@ku.edu", role = "aut",
+      comment = c(ORCID = "0000-0003-2463-1029")),
+    person("Michelle S.", "Koo", email = "mkoo@berkeley.edu", role = "aut",
+      comment = c(ORCID = "0000-0003-0410-722X")),
+    person("Vijay", "Barve", email = "vijay.barve@gmail.com", role = "aut",
+      comment = c(ORCID = "0000-0002-4852-2567")))
 Maintainer: Harlan R. Williams <harlanrhwilliams@gmail.com>
 Date: 2025-9-22
 Description: Performs requests to the 'Arctos' API to download data. Provides a
