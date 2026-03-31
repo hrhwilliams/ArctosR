@@ -1,4 +1,36 @@
 url: https://hrhwilliams.github.io/ArctosR/
 template:
+  light-switch: true
+  params:
+     bootswatch: united
   bootstrap: 5
-
+  bslib:
+    bg: "#ffffff" # white background
+    fg: "#212529" # black text
+    primary: "#003c64" # primary elements: arctos blue
+    input-bg: "#ffffff"     # color search bar
+    input-color: "#212529"  # color text search bar
+    navbar-light-bg: "#003c64" #color for navbar when light
+    navbar-dark-bg: "#003c64" #color for navbar when dark
+# navigation bar configuration
+navbar:
+  left:
+    - icon: fa-home
+      href: index.html
+    - text: "Functions"
+      href: reference/index.html
+    - icon: fas fa-book
+      text: "Articles"
+      menu:
+      -  text: "1. An overview of ArctosR"
+         href: articles/overview.html
+      -  text: "2. Species search and mapping"
+         href: articles/species.html
+      -  text: "3. Parasite search and mapping"
+         href: articles/parasite.html
+      -  text: "4. Frozen tissue search"
+         href: articles/tissue.html
+      -  text: "5. Performing ecological niche modeling with ArctosR data"
+         href: articles/enm.html
+  components:
+    home: ~
