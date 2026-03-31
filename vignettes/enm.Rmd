@@ -29,6 +29,7 @@ Arctos via ArctosR.
 # install.packages("ggspatial")
 # install.packages("ggtext")
 # install.packages("kuenm2")
+# install.packages("maps")
 # install.packages("terra")
 
 # Load packagess
@@ -38,6 +39,7 @@ library(ggplot2)
 library(ggspatial)
 library(ggtext)
 library(kuenm2)
+library(maps)
 library(terra)
 ```
 

@@ -28,6 +28,7 @@ To begin, make sure to load the library:
 # install.packages("ggplot2")
 # install.packages("ggspatial")
 # install.packages("ggtext")
+# install.packages("maps")
 # install.packages("patchwork")
 # install.packages("sf")
 
@@ -35,6 +36,7 @@ library(ArctosR)
 library(ggplot2)
 library(ggspatial)
 library(ggtext)
+library(maps)
 library(patchwork)
 library(sf)
 ```
