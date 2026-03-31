@@ -1,10 +1,11 @@
 # Performing ecological niche modeling with ArctosR data
 
 In this example we query Arctos for records of *Amblyomma americanum*
-(the turkey tick) and use their geographical coordinate data to model
-their distribution in North America. This vignette closely follows the
-usage example from <https://github.com/marlonecobos/kuenm> but uses data
-downloaded directly from Arctos via ArctosR.
+(the turkey tick) and use their geographical coordinate data as input
+for ecological niche modeling via
+[kuenm2](https://marlonecobos.github.io/kuenm2/). This vignette closely
+follows the usage example from <https://github.com/marlonecobos/kuenm>
+but uses data downloaded directly from Arctos via ArctosR.
 
 ``` r
 # Install packages if needed
@@ -55,7 +56,8 @@ turkey_tick_query <- get_records(
 
 Next, we filter the Arctos data to specimens collected just in North
 America, and relabel the columns `dec_lat` and `dec_long` to `latitude`
-and `longitude` as those names are what the `kuenm2` package expects.
+and `longitude` as those names are what the
+[kuenm2](https://marlonecobos.github.io/kuenm2/) package expects.
 
 ``` r
 # Limits on latitude and longitude for the Arctos data and for climate data
@@ -86,10 +88,11 @@ occurrences_filter <- occurrences[filter, ]
 
 ## Downloading environmental data
 
-Next, we use the `geodata` package to download climate data from
-WorldClim, which will form part of the input into the models we are
-going to train. It will save these data as files, so we pass it our
-current working directory as the path to save those files to.
+Next, we use the [geodata](https://github.com/rspatial/geodata) package
+to download climate data from [WorldClim](https://www.worldclim.org/),
+which will form part of the input into the models we are going to train.
+It will save these data as files, so we pass it our current working
+directory as the path to save those files to.
 
 ``` r
 # Get working directory
@@ -99,8 +102,8 @@ project_root <- getwd()
 biovars <- worldclim_global(var = "bio", res = 10, path = project_root)
 ```
 
-Similarly we filter the WorldClim data to only coordinates in North
-America.
+Similarly we filter the [WorldClim](https://www.worldclim.org/) data to
+only coordinates in North America.
 
 ``` r
 # Mask environmental layers to an area relevant for records and predictions
@@ -120,8 +123,9 @@ biovar_na <- crop(biovars[[c(1, 7, 12, 15)]], ext(longitude_west_lim, longitude_
 
 ## Cleaning data and performing model selection with kuenm2
 
-Now, we use `kuenm2`’s built-in data cleaning functions to prepare the
-data for the machine learning algorithms.
+Now, we use [kuenm2](https://marlonecobos.github.io/kuenm2/)’s built-in
+data cleaning functions to prepare the data for ecological niche
+modeling.
 
 ``` r
 # Basic data cleaning (remove duplicates, no data, (0,0) coordinates)
@@ -145,12 +149,7 @@ occ_clean2 <- remove_cell_duplicates(
 
 nrow(occ_clean2)
 #> [1] 96
-```
 
-Now we pass the cleaned data to `kuenm2` to train and evaluate candidate
-models.
-
-``` r
 # Prepare data for models
 d <- prepare_data(
   algorithm = "maxnet",
@@ -165,7 +164,12 @@ d <- prepare_data(
   features = c("lq", "lqp"),
   r_multiplier = c(0.1, 1, 2)
 )
+```
 
+Now we use the cleaned data to perform model selection and finally
+return a prediction from our best fitting models.
+
+``` r
 # Run model selection
 cal <- calibration(
   data = d, 

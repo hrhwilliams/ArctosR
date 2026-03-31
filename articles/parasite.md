@@ -14,7 +14,6 @@ To begin, make sure to load the library:
 # install.packages("ggplot2")
 # install.packages("ggspatial")
 # install.packages("ggtext")
-# install.packages("maps")
 # install.packages("patchwork")
 # install.packages("sf")
 
@@ -22,7 +21,6 @@ library(ArctosR)
 library(ggplot2)
 library(ggspatial)
 library(ggtext)
-library(maps)
 library(patchwork)
 library(sf)
 #> Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.4.0; sf_use_s2() is TRUE
@@ -173,9 +171,9 @@ nrow(microtus_df_no_nematode)
 ## Plotting spatial data
 
 We can plot the spatial distribution of specimens with and without
-detected nematodes using the `ggplot2` and `maps` packages. First, we
-can simply create a plot of the distribution of all specimens
-overMongolia.
+detected nematodes using the [ggplot2](https://ggplot2.tidyverse.org/)
+package. First, we can simply create a plot of the distribution of all
+specimens over Mongolia.
 
 ``` r
 # Initial plot of Microtus sampled in Mongolia

@@ -86,7 +86,6 @@ red-backed vole) that have frozen tissue.</p>
 <span><span class="co"># install.packages("ggplot2")</span></span>
 <span><span class="co"># install.packages("ggspatial")</span></span>
 <span><span class="co"># install.packages("ggtext")</span></span>
-<span><span class="co"># install.packages("maps")</span></span>
 <span><span class="co"># install.packages("patchwork")</span></span>
 <span><span class="co"># install.packages("sf")</span></span>
 <span></span>
@@ -94,7 +93,6 @@ red-backed vole) that have frozen tissue.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://paleolimbot.github.io/ggspatial/" class="external-link">ggspatial</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/ggtext/" class="external-link">ggtext</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/adeckmyn/maps" class="external-link">maps</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.4.0; sf_use_s2() is TRUE</span></span></code></pre></div>
@@ -167,6 +165,8 @@ return by calling:</p>
 <span>  <span class="fu"><a href="../reference/response_data.html">response_data</a></span><span class="op">(</span><span class="va">rutilus_query1</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="../reference/response_data.html">response_data</a></span><span class="op">(</span><span class="va">rutilus_query2</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
+<p>Now, we use the <a href="https://ggplot2.tidyverse.org/" class="external-link">ggplot2</a>
+package to plot the occurrence data we downloaded.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Plot of overall species ranges</span></span>
 <span></span>
@@ -232,6 +232,8 @@ return by calling:</p>
 <span><span class="co">#&gt; Warning: Removed 1043 rows containing missing values or values outside the scale range</span></span>
 <span><span class="co">#&gt; (`geom_point()`).</span></span></code></pre></div>
 <p><img src="figures/vole1.png" style="width:98.0%"></p>
+<p>Next, we filter our original download by records which have
+associated frozen tissue.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gapperi_df_tissue</span> <span class="op">&lt;-</span> <span class="va">gapperi_df</span><span class="op">[</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"frozen"</span>, <span class="va">gapperi_df</span><span class="op">$</span><span class="va">parts</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span>, perl <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>, <span class="op">]</span></span>
@@ -243,6 +245,9 @@ return by calling:</p>
 <span><span class="co">#&gt; [1] 3778</span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">rutilus_df_tissue</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 7121</span></span></code></pre></div>
+<p>Now we plot only the coordinates of records with frozen tissue. This
+information can be used to filter to specimens only in geographic
+proximity and with frozen tissue which can be analyzed.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Plot of overall species ranges, filtering by specimens with frozen tissue</span></span>
 <span></span>

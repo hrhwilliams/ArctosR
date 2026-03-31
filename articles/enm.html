@@ -79,8 +79,8 @@
     
 <p>In this example we query Arctos for records of <em>Amblyomma
 americanum</em> (the turkey tick) and use their geographical coordinate
-data to model their distribution in North America. This vignette closely
-follows the usage example from <a href="https://github.com/marlonecobos/kuenm" class="external-link uri">https://github.com/marlonecobos/kuenm</a> but uses data
+data as input for ecological niche modeling via <a href="https://marlonecobos.github.io/kuenm2/" class="external-link">kuenm2</a>. This vignette
+closely follows the usage example from <a href="https://github.com/marlonecobos/kuenm" class="external-link uri">https://github.com/marlonecobos/kuenm</a> but uses data
 downloaded directly from Arctos via ArctosR.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Install packages if needed</span></span>
@@ -129,8 +129,8 @@ latitude, and longitude columns for each specimen.</p>
 <p>Next, we filter the Arctos data to specimens collected just in North
 America, and relabel the columns <code>dec_lat</code> and
 <code>dec_long</code> to <code>latitude</code> and
-<code>longitude</code> as those names are what the <code>kuenm2</code>
-package expects.</p>
+<code>longitude</code> as those names are what the <a href="https://marlonecobos.github.io/kuenm2/" class="external-link">kuenm2</a> package
+expects.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Limits on latitude and longitude for the Arctos data and for climate data</span></span>
 <span><span class="va">latitude_north_lim</span> <span class="op">&lt;-</span> <span class="fl">60</span></span>
@@ -160,18 +160,19 @@ package expects.</p>
 <div class="section level2">
 <h2 id="downloading-environmental-data">Downloading environmental data<a class="anchor" aria-label="anchor" href="#downloading-environmental-data"></a>
 </h2>
-<p>Next, we use the <code>geodata</code> package to download climate
-data from WorldClim, which will form part of the input into the models
-we are going to train. It will save these data as files, so we pass it
-our current working directory as the path to save those files to.</p>
+<p>Next, we use the <a href="https://github.com/rspatial/geodata" class="external-link">geodata</a> package to
+download climate data from <a href="https://www.worldclim.org/" class="external-link">WorldClim</a>, which will form part of
+the input into the models we are going to train. It will save these data
+as files, so we pass it our current working directory as the path to
+save those files to.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get working directory</span></span>
 <span><span class="va">project_root</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Get environmental data</span></span>
 <span><span class="va">biovars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/geodata/man/worldclim.html" class="external-link">worldclim_global</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"bio"</span>, res <span class="op">=</span> <span class="fl">10</span>, path <span class="op">=</span> <span class="va">project_root</span><span class="op">)</span></span></code></pre></div>
-<p>Similarly we filter the WorldClim data to only coordinates in North
-America.</p>
+<p>Similarly we filter the <a href="https://www.worldclim.org/" class="external-link">WorldClim</a> data to only coordinates
+in North America.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Mask environmental layers to an area relevant for records and predictions</span></span>
 <span><span class="co"># Transform occurrences into spatial points </span></span>
@@ -190,8 +191,9 @@ America.</p>
 <div class="section level2">
 <h2 id="cleaning-data-and-performing-model-selection-with-kuenm2">Cleaning data and performing model selection with kuenm2<a class="anchor" aria-label="anchor" href="#cleaning-data-and-performing-model-selection-with-kuenm2"></a>
 </h2>
-<p>Now, we use <code>kuenm2</code>’s built-in data cleaning functions to
-prepare the data for the machine learning algorithms.</p>
+<p>Now, we use <a href="https://marlonecobos.github.io/kuenm2/" class="external-link">kuenm2</a>’s built-in data
+cleaning functions to prepare the data for ecological niche
+modeling.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Basic data cleaning (remove duplicates, no data, (0,0) coordinates)</span></span>
 <span><span class="va">occ_clean1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://marlonecobos.github.io/kuenm2/reference/initial_cleaning.html" class="external-link">initial_cleaning</a></span><span class="op">(</span></span>
@@ -213,11 +215,9 @@ prepare the data for the machine learning algorithms.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">occ_clean2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 96</span></span></code></pre></div>
-<p>Now we pass the cleaned data to <code>kuenm2</code> to train and
-evaluate candidate models.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Prepare data for models</span></span>
+<span><span class="co">#&gt; [1] 96</span></span>
+<span></span>
+<span><span class="co"># Prepare data for models</span></span>
 <span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://marlonecobos.github.io/kuenm2/reference/prepare_data.html" class="external-link">prepare_data</a></span><span class="op">(</span></span>
 <span>  algorithm <span class="op">=</span> <span class="st">"maxnet"</span>,</span>
 <span>  occ <span class="op">=</span> <span class="va">occ_clean2</span>,</span>
@@ -230,9 +230,11 @@ evaluate candidate models.</p>
 <span>  n_background <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>  features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lq"</span>, <span class="st">"lqp"</span><span class="op">)</span>,</span>
 <span>  r_multiplier <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Run model selection</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>Now we use the cleaned data to perform model selection and finally
+return a prediction from our best fitting models.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Run model selection</span></span>
 <span><span class="va">cal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://marlonecobos.github.io/kuenm2/reference/calibration.html" class="external-link">calibration</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">d</span>, </span>
 <span>  error_considered <span class="op">=</span> <span class="fl">5</span>,</span>
