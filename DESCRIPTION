@@ -31,10 +31,12 @@ Imports:
     R6 (>= 2.5.1),
     curl (>= 5.0.0),
     jsonlite (>= 1.8.0)
-Suggests: 
+Suggests:
+    geodata,
     ggplot2,
     ggspatial,
     ggtext,
+    kuenm2,
     maps,
     patchwork,
     knitr,
