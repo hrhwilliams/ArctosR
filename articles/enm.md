@@ -15,6 +15,7 @@ but uses data downloaded directly from Arctos via ArctosR.
 # install.packages("ggspatial")
 # install.packages("ggtext")
 # install.packages("kuenm2")
+# install.packages("maps")
 # install.packages("terra")
 
 # Load packagess
@@ -31,6 +32,7 @@ library(kuenm2)
 #> The following object is masked from 'package:ggplot2':
 #> 
 #>     remove_missing
+library(maps)
 library(terra)
 ```
 

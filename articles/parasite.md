@@ -14,6 +14,7 @@ To begin, make sure to load the library:
 # install.packages("ggplot2")
 # install.packages("ggspatial")
 # install.packages("ggtext")
+# install.packages("maps")
 # install.packages("patchwork")
 # install.packages("sf")
 
@@ -21,6 +22,7 @@ library(ArctosR)
 library(ggplot2)
 library(ggspatial)
 library(ggtext)
+library(maps)
 library(patchwork)
 library(sf)
 #> Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.4.0; sf_use_s2() is TRUE
