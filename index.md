@@ -1,0 +1,142 @@
+# ArctosR ![logo](reference/figures/arctosr-bear-hex.png)
+
+## Installation and Usage
+
+### CRAN
+
+ArctosR can be installed from [CRAN](https://cran.r-project.org/) by
+running the command in R:
+
+``` r
+install.packages("ArctosR")
+```
+
+### GitHub
+
+You can install the development version of ArctosR from
+[GitHub](https://github.com/) with:
+
+``` r
+install.packages("remotes")
+remotes::install_github("hrhwilliams/ArctosR")
+```
+
+### API key
+
+To use ArctosR, you will need to request an API key from Arctos by
+filing a GitHub issue in their issue tracker. You can do this with the
+following steps:
+
+- Navigate to the [Arctos GitHub issue
+  tracker](https://github.com/ArctosDB/arctos/issues) and open a new
+  issue
+- Fill out the issue by following the template found at
+  <https://handbook.arctosdb.org/documentation/api.html>:
+  - Name, institution, position
+  - Two means of contact: email, phone, address, etc.
+  - Justification
+  - Method of access (ArctosR)
+  - Acknowledge that any granted access is read-only and will expire in
+    one year. There is no limit on renewal or extension requests but it
+    is the responsibility of the user to make them.
+  - Acknowledge that by requesting and gaining permission to use of
+    Arctos data, you are agreeing to all terms of the [Arctos Community
+    Data Policy](https://arctosdb.org/arctosdata-policy/)
+
+## Example
+
+``` r
+library(ArctosR)
+
+# You will have to request an API key from Arctos to get records, and pass it
+# to the `get_record_count` and `get_records` functions through the `api_key`
+# parameter.
+YOUR_API_KEY <- "11111111-2222-3333-4444444444444444"
+
+# Request a list of all result parameters. These are the names that can show up
+# as columns in a dataframe returned by ArctosR.
+result_params <- get_result_parameters()
+
+# Print the first six rows and first 3 columns to the console.
+result_params[1:6, 1:3]
+
+# If using RStudio, view the entire dataframe of result parameters.
+View(result_params)
+
+# Request just the number of records matching a query.
+count <- get_record_count(
+  scientific_name = "Canis lupus", 
+  guid_prefix = "MSB:Mamm", 
+  api_key = YOUR_API_KEY
+)
+
+# Request to download data. This is limited to 100 records by default.
+query <- get_records(
+  scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
+  columns = list("guid", "parts", "partdetail"),
+  api_key = YOUR_API_KEY
+)
+
+# Request to download all available data.
+query <- get_records(
+  scientific_name = "Canis lupus", guid_prefix = "MSB:Mamm",
+  columns = list("guid", "parts", "partdetail"),
+  api_key = YOUR_API_KEY,
+  all_records = TRUE
+)
+
+# Grab the dataframe of records from the response and save that as a csv.
+df <- response_data(query)
+```
+
+## GSoC project description
+
+**Student**: Harlan Williams
+
+**GSoC Mentors**: Marlon Cobos, Vijay Barve, Jocelyn Colella, Michelle
+Koo
+
+**Organization**: R Project For Statistical Computing
+
+### Motivation
+
+Arctos (<https://arctosdb.org/>) has an extensive database that connects
+\>100 data fields to physical specimen records using standard DarwinCore
+vocabulary, many of which are only accessible through its web interface.
+Data can be accessed through the web interface, but downloads are memory
+intensive, such that only a subset of fields or specimens can be queried
+at once. The goal of this package is to provide a programmatic way to
+access these data for researchers, in hopes of improving their workflows
+and the accessibility of biodiversity data stored on Arctos.
+
+The main difficulties in accessing Arctos via the API is pagination of
+records, requiring multiple API queries, and hierarchical data where
+specific columns in Arctos records could themselves be tables or point
+to other Arctos records. This package was developed specifically to
+handle these two difficulties for the user. Pagination is handled by
+package internals so that the user only has to ask for all records
+pertaining to a query to get all of those records.
+
+The user also is able to expand columns representing hierarchical data
+and explore that data within RStudio natively, making analysis of that
+data much more intuitive.
+
+### Status of the project
+
+At the time of submission for GSoC 2024 a set of functions for querying
+from Arctos as well as looking up documentation for Arctos are available
+to the user. The user is also able to explore downloaded records in a
+hierarchical manner by expanding columns returned from Arctos which
+represent tables of tables. These records are then able to be saved in a
+CSV format or stored as R objects for further data analysis tasks by
+researchers.
+
+With these functions, ArctosR can be integrated into existing data
+analysis pipelines to provide updated records. Each query in ArctosR is
+also accompanied by metadata, allowing for better data documentation and
+query reproducibility by other researchers. At this stage the project
+fulfills the goals set out in the proposal, the only thing remaining is
+for it to be submitted to CRAN.
+
+A complete history of commits can be accessed
+[here](https://github.com/hrhwilliams/ArctosR/commits/main/).

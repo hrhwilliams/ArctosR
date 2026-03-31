@@ -1,0 +1,283 @@
+# An overview of ArctosR
+
+ArctosR is a package designed to download data from Arctos, format these
+data to make it easier for users to read and relate content, and save
+results in various formats. This vignette provides an overview of the
+basic usage of this package.
+
+## Basics
+
+### API key
+
+In order to use most of the functions in ArctosR, you will have to
+request an API key from Arctos. See
+<https://handbook.arctosdb.org/documentation/api.html> for instructions
+on how to do this.
+
+### Types of data in Arctos
+
+Arctos contains specimen records and diverse types of data associated
+with them (e.g., measurements, locality coordinates and descriptions,
+tissue samples available, etc.). For a full description of Arctos and
+its data visit its [website](https://arctosdb.org/).
+
+### Queries and responses in ArctosR
+
+ArctosR abstracts interacting with the Arctos API via objects. These
+objects can be manipulated with a set of using friendly functions for
+most tasks, or created and manipulated directly using builder functions.
+
+#### Query objects
+
+A **query** in ArctosR is a collection of searches by a user of the
+package for a specific task. This can be: (1) a simple search, such as a
+one-off search for specimens of a species held by some museum; (2) a
+search that requires the concatenation of multiple responses, such as
+one that requests more records than Arctos can provide in a single
+response; (3) or a complex search that uses requests for one set of
+search terms, then uses those responses as part of another request.
+
+#### Response objects
+
+A **response** then is an object that stores the contents of *one*
+response from Arctos back to ArctosR. Each response has associated
+metadata, such as search terms and time-stamp, and content, such as a
+table of records matching those search terms.
+
+#### Metadata
+
+Detailed **metadata** about each response is also saved in the user’s
+query for the purposes of documentation and reproducibility. This
+metadata is saved along with downloaded records as a JSON file.
+
+## Making queries to Arctos
+
+Make sure to load the package:
+
+``` r
+library(ArctosR)
+```
+
+### A basic query
+
+ArctosR provides a single function, `get_records`, to search for records
+in the Arctos database. In order to start building a search, we have to
+find out the possible *query parameters* we can use to search. These can
+be found with the `get_query_parameters` function, which returns a data
+frame of all query parameters used by Arctos. The names in the
+`obj_name` column are what are used as parameters to the `get_records`
+function.
+
+``` r
+# You will have to request an API key from Arctos to get records, and pass it
+# to the `get_record_count` and `get_records` functions through the `api_key`
+# parameter.
+YOUR_API_KEY <- "11111111-2222-3333-4444444444444444"
+
+# run the function and store results in an object
+query_params <- get_query_parameters()
+
+# checking the data frame obtained (showing only 6 rows and 3 columns)
+query_params[1:6,1:3]
+#>             display                obj_name category
+#> 1     Verbatim Date           verbatim_date    event
+#> 2 Collecting Method       collecting_method    event
+#> 3 Collecting Source       collecting_source    event
+#> 4        Ended Date              ended_date    event
+#> 5  Event Attributes evtAttributeSearchTable    event
+#> 6           Habitat                 habitat    event
+```
+
+For this basic query, we can use `guid_prefix`, whose description can be
+found by listing the row of the query parameter data frame:
+
+``` r
+# checking row 37 in the data frame
+query_params[37,1:5]
+#>       display    obj_name   category subcategory
+#> 37 Collection guid_prefix identifier       basic
+#>                                                                description
+#> 37 Collection responsible for the record. Turning this off will break most
+#>    forms.
+```
+
+We will also use `scientific_name`:
+
+``` r
+query_params[28,1:5]
+#>    display obj_name       category subcategory
+#> 28   Genus    genus identification  curatorial 
+#>                                               description
+#> 28 Genus as provided in collection's preferred Source(s).
+
+query_params[23,1:5]
+#>    display obj_name       category subcategory 
+#> 23 Species  species identification  curatorial
+#>                                                            description
+#> 23 Species (binomial) as provided in collection's preferred Source(s).
+```
+
+Now that we have a set of parameters to use, we can pass them to the
+`get_records` function and send our request to Arctos. This will return
+a **query**, which bundles our search parameters with the returned data
+from Arctos.
+
+``` r
+query <- get_records(guid_prefix = "MSB:Mamm", scientific_name = "Canis lupus", 
+                     api_key=YOUR_API_KEY)
+```
+
+This simple search returned the default (core) columns provided by
+Arctos. There is a a lot more information that can be requested from
+Arctos, see below for an example of how to do it.
+
+### Requesting other columns than the core set
+
+By default, the columns returned by Arctos are all of those with the
+category core. These columns can be listed as follows:
+
+``` r
+result_params <- get_result_parameters()
+result_params[result_params$category == 'core',1:2]
+#>                      display                      obj_name
+#> 1  GUID (DarwinCore Triplet)                          guid
+#> 7              Identified As               scientific_name
+#> 43          Asserted Country                       country
+#> 44   Asserted State/Province                    state_prov
+#> 51         Specific Locality                 spec_locality
+#> 57             Verbatim Date                 verbatim_date
+#> 69          Decimal Latitude                       dec_lat
+#> 70         Decimal Longitude                      dec_long
+#> 71      Coordinate Error (m) coordinateuncertaintyinmeters
+```
+
+Additional columns can be requested by passing a vector of result
+parameters to the `get_records` function in the `columns` parameter like
+so:
+
+``` r
+# making a list of additional columns to get (see get_query_parameters())
+add_cols <- list("guid", "scientific_name", "relatedcatalogeditems", "collectors",
+                 "state_prov", "spec_locality", "dec_lat", "dec_long", 
+                 "verbatim_date", "examined_for", "detected", "not_detected")
+
+# getting records with additional columns
+query <- get_records(guid_prefix = "MSB:Mamm", scientific_name = "Canis lupus", 
+                     columns = add_cols, api_key=YOUR_API_KEY)
+```
+
+#### Requesting columns that are tables
+
+Certain result parameters (columns) in Arctos are entire tables
+associated to a single specimen record. For instance, `partdetail`,
+which links to the attributes of each part listed in `parts` associated
+with a specimen. These can be requested just like any other result
+parameter. The information in these complex columns is obtained in JSON
+format, but can be expanded into data frames of their own with the
+function `expand_column`.
+
+``` r
+# defining the columns to be obtained
+some_cols <- list("guid", "parts", "partdetail")
+
+# performing the query
+query <- get_records(guid_prefix = "MSB:Mamm", genus = "Canis", 
+                     species = "lupus", columns = some_cols,
+                     api_key=YOUR_API_KEY)
+```
+
+See an example of expanding the columns in the section [Expanding
+columns](#expanding-columns)
+
+### Requesting all records
+
+By default, `get_records` avoids requesting all records for a query
+unless otherwise asked. By passing the parameter `all_records = TRUE` to
+`get_records`, the user can request that ArctosR make multiple requests
+until all records for a given query are downloaded.
+
+``` r
+get_record_count(guid_prefix = "MSB:Mamm", scientific_name = "Canis lupus",
+                 api_key=YOUR_API_KEY)
+#> [1] 1694
+
+query <- get_records(guid_prefix = "MSB:Mamm", scientific_name = "Canis lupus", 
+                     all_records = TRUE, api_key=YOUR_API_KEY)
+```
+
+## Downloading and using data from Arctos
+
+We have gone through the basic functionality of ArctosR. Below you can
+find an example of using the package to get, process, explore, and save
+data from Arctos.
+
+### Get and view data
+
+``` r
+# a list of columns to download with the query
+my_cols <- list("guid", "scientific_name", "parts", "collectors", "state_prov", 
+                "spec_locality", "dec_lat", "dec_long", "verbatim_date",
+                "partdetail")
+
+# download records
+query <- get_records(guid_prefix = "MSB:Mamm", scientific_name = "Canis lupus", 
+                     columns = my_cols, api_key=YOUR_API_KEY)
+
+# getting only the data frame of data
+msb_wolves <- response_data(query)
+```
+
+#### Filter by
+
+You can filter records by the presence or absence of certain data. For
+example, to find rodents in the MSB:Mamm collection who have
+Orthohantavirus, you can use the `filter_by` argument to `get_records`.
+`filter_by` takes a list of record attributes and attribute values. In
+this example, the record attribute is `"detected"`, and the attribute
+value is `"Orthohantavirus"`.
+
+``` r
+orthohantavirus_MSB <- get_records(guid_prefix="MSB:Mamm", taxon_name="Rodentia",
+                                   filter_by=list("detected"="Orthohantavirus"),
+                                   api_key=YOUR_API_KEY)
+```
+
+#### Expanding columns
+
+The column `partdetail` contains nested data frames associated to each
+record. To explore these data fully, we can process the information and
+view it as a table.
+
+``` r
+# process the information in partdetail into sub-data frames
+expand_column(query, "partdetail")
+```
+
+### Saving data
+
+ArctosR offers multiple options to save the data obtained from Arctos.
+See below for examples of how to do it.
+
+#### Saving as a flat CSV file
+
+``` r
+save_response_csv(query, "msb_wolves.csv")
+```
+
+#### Saving an expanded CSV
+
+``` r
+save_response_csv(query, "msb_wolves.csv", expanded = TRUE)
+```
+
+#### Saving as an RDS
+
+``` r
+save_response_rds(query, "msb_wolves.rds")
+```
+
+#### Saving query metadata
+
+``` r
+save_response_csv(query, "msb_wolves2.csv", with_metadata = TRUE)
+```
