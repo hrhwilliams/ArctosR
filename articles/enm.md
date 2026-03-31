@@ -12,6 +12,7 @@ downloaded directly from Arctos via ArctosR.
 # install.packages("geodata")
 # install.packages("ggplot2")
 # install.packages("ggspatial")
+# install.packages("ggtext")
 # install.packages("kuenm2")
 # install.packages("terra")
 
@@ -22,6 +23,7 @@ library(geodata)
 #> terra 1.9.11
 library(ggplot2)
 library(ggspatial)
+library(ggtext)
 library(kuenm2)
 #> 
 #> Attaching package: 'kuenm2'
@@ -200,6 +202,9 @@ pred <- predict_selected(mfit, new_variables = biovar_na)
 
 ## Visualizing the niche model
 
+Here we use [ggplot2](https://ggplot2.tidyverse.org/) to plot climate
+suitability for Amblyomma americanum, with occurrences overlaid.
+
 ``` r
 pred_df <- as.data.frame(pred$General_consensus[["median"]], xy = TRUE)
 occ_points_df <- as.data.frame(occ_geo_points, geom = "XY")
@@ -219,13 +224,13 @@ tick <- ggplot() +
   ) +
   geom_point(
     data = occ_points_df,
-    aes(x = x, y = y, color = "A. americanum"),
+    aes(x = x, y = y, color = "Amblyomma americanum"),
     shape = "+", size = 3, alpha = 0.8
   ) +
   scale_color_manual(
     name = NULL,
-    values = c("A. americanum" = "red"),
-    labels = c("*A. americanum*")
+    values = c("Amblyomma americanum" = "red"),
+    labels = c("*Amblyomma americanum*")
   ) +
   scale_fill_viridis_c(
     name = "Suitability",
@@ -240,7 +245,7 @@ tick <- ggplot() +
     expand = FALSE
   ) +
   labs(
-    x = NULL, y = NULL,
+    x = NULL, y = NULL
   ) +
   annotation_scale(
     location = "bl",
@@ -256,7 +261,8 @@ tick <- ggplot() +
   theme_minimal() +
   theme(
     panel.background = element_rect(fill = "aliceblue"),
-    panel.border = element_rect(color = "black", fill = NA, linewidth = 1)
+    panel.border = element_rect(color = "black", fill = NA, linewidth = 1),
+    legend.text = element_markdown()
   )
   
 ggsave(
