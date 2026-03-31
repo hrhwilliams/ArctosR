@@ -28,7 +28,6 @@ To begin, make sure to load the library:
 # install.packages("ggplot2")
 # install.packages("ggspatial")
 # install.packages("ggtext")
-# install.packages("maps")
 # install.packages("patchwork")
 # install.packages("sf")
 
@@ -36,7 +35,6 @@ library(ArctosR)
 library(ggplot2)
 library(ggspatial)
 library(ggtext)
-library(maps)
 library(patchwork)
 library(sf)
 ```
@@ -128,6 +126,9 @@ rutilus_df <- rbind(
 )
 ```
 
+Now, we use the [ggplot2](https://ggplot2.tidyverse.org/) package to plot the
+occurrence data we downloaded.
+
 ```{r eval=TRUE}
 # Plot of overall species ranges
 
@@ -193,6 +194,9 @@ ggsave(
 
 ![](figures/vole1.png){width=98%}
 
+Next, we filter our original download by records which have associated frozen
+tissue.
+
 ```{r eval=TRUE}
 gapperi_df_tissue <- gapperi_df[
   grepl("frozen", gapperi_df$parts, ignore.case = TRUE, perl = TRUE), ]
@@ -203,6 +207,10 @@ rutilus_df_tissue <- rutilus_df[
 nrow(gapperi_df_tissue)
 nrow(rutilus_df_tissue)
 ```
+
+Now we plot only the coordinates of records with frozen tissue. This information
+can be used to filter to specimens only in geographic proximity and with frozen
+tissue which can be analyzed.
 
 ```{r eval=TRUE}
 # Plot of overall species ranges, filtering by specimens with frozen tissue

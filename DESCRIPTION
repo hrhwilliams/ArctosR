@@ -37,7 +37,6 @@ Suggests:
     ggspatial,
     ggtext,
     kuenm2,
-    maps,
     patchwork,
     knitr,
     rmarkdown,

@@ -102,8 +102,9 @@ nrow(alpinus_df)
 
 ## Plotting data
 
-Now we use the `dec_lat` and `dec_long` fields from our data.frame to create
-our plot:
+Now we use the [ggplot2](https://ggplot2.tidyverse.org/) package to plot the
+`dec_lat` and `dec_long` fields from our data.frame over a map of the state of
+California.
 
 ```{r eval=TRUE}
 # Plot of Tamias alpinus sampled in California and currently stored in the
