@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
   comment = "#>",
   fig.width = 8,
   fig.height = 6,
-  dpi = 300
+  dpi = 600
 )
 ```
 
@@ -185,7 +185,7 @@ ggsave(
   plot = vole1,
   width = 6.53,
   height = 4.25,
-  dpi = 300,
+  dpi = 600,
   create.dir = TRUE
 )
 
@@ -265,7 +265,7 @@ ggsave(
   plot = vole2,
   width = 6.53,
   height = 6.53,
-  dpi = 300,
+  dpi = 600,
   create.dir = TRUE
 )
 
@@ -274,7 +274,7 @@ ggsave(
   plot = vole1/vole2,
   width = 4,
   height = 6.53,
-  dpi = 300,
+  dpi = 600,
   create.dir = TRUE
 )
 ```
