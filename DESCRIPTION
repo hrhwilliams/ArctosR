@@ -20,7 +20,7 @@ Description: Performs requests to the 'Arctos' API to download data. Provides a
     information about 'Arctos' can be found in 
     Cicero et al. (2024) <doi:10.1371/journal.pone.0296478> or on their website
     <https://arctosdb.org/>.
-URL: https://github.com/hrhwilliams/arctosr
+URL: https://github.com/hrhwilliams/arctosr, https://hrhwilliams.github.io/ArctosR/
 BugReports: https://github.com/hrhwilliams/arctosr/issues
 Depends: R (>= 4.1.0)
 License: GPL-3

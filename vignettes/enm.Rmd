@@ -1,0 +1,141 @@
+---
+title: "Performing ecological niche modeling with ArctosR data"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Performing ecological niche modeling with ArctosR data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+
+```{r setup}
+# Install packages if needed
+# install.packages("ArctosR")
+# install.packages("geodata")
+# install.packages("kuenm2")
+
+# Load packages
+library(ArctosR)
+library(geodata)
+library(kuenm2)
+```
+
+
+
+```{r eval=FALSE}
+## Count records in Arctos 
+turkey_tick_records <- get_record_count(
+  scientific_name = "Amblyomma americanum",
+  api_key = YOUR_API_KEY
+)
+
+## Get all available records
+turkey_tick_query <- get_records(
+  scientific_name = "Amblyomma americanum",
+  columns = list("guid", "dec_lat", "dec_long"),
+  api_key = YOUR_API_KEY,
+  all_records = TRUE
+)
+```
+
+
+```{r include=FALSE}
+turkey_tick_query <- read_response_rds(
+  system.file("extdata", "tick_query.RDS", package = "ArctosR"))
+```
+
+
+
+```{r eval=TRUE}
+project_root <- getwd()
+
+
+occurrences_raw <- response_data(turkey_tick_query)
+
+## Get environmental data
+biovars <- worldclim_global(var = "bio", res = 10, path = project_root)
+
+
+# Data processing 
+## formatting as data frame
+occurrences <- data.frame(species = "Amblyomma americanum", 
+                          longitude = as.numeric(occurrences_raw$dec_long),
+                          latitude = as.numeric(occurrences_raw$dec_lat))
+
+## filtering geographically to known range of species
+filter <- occurrences$longitude > -120 & occurrences$latitude < 50 | 
+  is.na(occurrences$longitude) | is.na(occurrences$latitude)
+
+occurrences_filter <- occurrences[filter, ]
+
+## Mask environmental layers to an area relevant for records and predictions
+### Transform occurrences into spatial points 
+occ_geo_points <- vect(occurrences_filter, geom = c("longitude", "latitude"), 
+                       crs = crs(biovars))
+
+### Buffer records
+occ_buffer <- buffer(occ_geo_points, width = 100000)
+
+### Mask layers with buffer
+biovar_mask <- crop(biovars[[c(1, 7, 12, 15)]], occ_buffer, mask = TRUE)
+
+### Mask layers to an extent within North America
+biovar_na <- crop(biovars[[c(1, 7, 12, 15)]], ext(-130, -60, 15, 50))
+
+
+# Data cleaning
+## Basic data cleaning (remove duplicates, no data, (0,0) coordinates)
+occ_clean1 <- initial_cleaning(data = occurrences_filter, 
+                               species = "species", 
+                               x = "longitude", 
+                               y = "latitude", 
+                               remove_na = TRUE, 
+                               remove_empty = TRUE, 
+                               remove_duplicates = TRUE) 
+
+## Remove duplicates based on layer pixel
+occ_clean2 <- remove_cell_duplicates(data = occ_clean1,
+                                     x = "longitude", 
+                                     y = "latitude",
+                                     raster_layer = biovar_mask[[1]])
+
+nrow(occ_clean2)
+
+
+# ENM
+## Prepare data for models
+d <- prepare_data(algorithm = "maxnet",
+                  occ = occ_clean2,
+                  x = "longitude", y = "latitude",
+                  raster_variables = biovar_mask,
+                  species = "Amblyomma americanum",
+                  partition_method = "kfolds", 
+                  n_partitions = 4,
+                  n_background = 1000,
+                  features = c("lq", "lqp"),
+                  r_multiplier = c(0.1, 1, 2))
+
+# Run model selection
+cal <- calibration(data = d, 
+                   error_considered = 5,
+                   omission_rate = 5)
+
+## Fit selected models
+mfit <- fit_selected(calibration_results = cal)
+
+## Predict to part of North America
+pred <- predict_selected(mfit, new_variables = biovar_na)
+
+
+# Plot predictions and points
+plot(pred$General_consensus$median)
+points(occ_geo_points, col = "red", pch = "+", cex = 1.5)
+```
