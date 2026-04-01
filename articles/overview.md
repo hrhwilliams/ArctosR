@@ -1,18 +1,25 @@
 # An overview of ArctosR
 
-ArctosR is a package designed to download data from Arctos, format these
-data to make it easier for users to read and relate content, and save
-results in various formats. This vignette provides an overview of the
-basic usage of this package.
+ArctosR is a package designed to download data from
+[Arctos](https://arctosdb.org/), format these data to make it easier for
+users to read and relate content, and save results in various formats.
+This vignette provides an overview of the basic usage of this package.
 
 ## Basics
 
 ### API key
 
 In order to use most of the functions in ArctosR, you will have to
-request an API key from Arctos. See
+request an API key from [Arctos](https://arctosdb.org/). See
 <https://handbook.arctosdb.org/documentation/api.html> for instructions
 on how to do this.
+
+Once you have your API key, you can store it in your `.Renviron` file by
+calling `usethis::edit_r_environ()` and setting the `ARCTOSR_API_KEY`
+variable to your API key. This is an example how your `.Renviron` file
+should look after setting `ARCTOSR_API_KEY`:
+
+    ARCTOSR_API_KEY=D803093F-AB3A-423B-BA8C-1B1CE1C6A786
 
 ### Types of data in Arctos
 
@@ -123,8 +130,11 @@ a **query**, which bundles our search parameters with the returned data
 from Arctos.
 
 ``` r
-query <- get_records(guid_prefix = "MSB:Mamm", scientific_name = "Canis lupus", 
-                     api_key=YOUR_API_KEY)
+query <- get_records(
+  guid_prefix = "MSB:Mamm",
+  scientific_name = "Canis lupus", 
+  api_key=YOUR_API_KEY
+)
 ```
 
 This simple search returned the default (core) columns provided by
@@ -157,13 +167,28 @@ so:
 
 ``` r
 # making a list of additional columns to get (see get_query_parameters())
-add_cols <- list("guid", "scientific_name", "relatedcatalogeditems", "collectors",
-                 "state_prov", "spec_locality", "dec_lat", "dec_long", 
-                 "verbatim_date", "examined_for", "detected", "not_detected")
+add_cols <- list(
+  "guid",
+  "scientific_name",
+  "relatedcatalogeditems",
+  "collectors",
+  "state_prov",
+  "spec_locality",
+  "dec_lat",
+  "dec_long", 
+  "verbatim_date",
+  "examined_for",
+  "detected",
+  "not_detected"
+)
 
 # getting records with additional columns
-query <- get_records(guid_prefix = "MSB:Mamm", scientific_name = "Canis lupus", 
-                     columns = add_cols, api_key=YOUR_API_KEY)
+query <- get_records(
+  guid_prefix = "MSB:Mamm",
+  scientific_name = "Canis lupus", 
+  columns = add_cols,
+  api_key=YOUR_API_KEY
+)
 ```
 
 #### Requesting columns that are tables
@@ -181,9 +206,13 @@ function `expand_column`.
 some_cols <- list("guid", "parts", "partdetail")
 
 # performing the query
-query <- get_records(guid_prefix = "MSB:Mamm", genus = "Canis", 
-                     species = "lupus", columns = some_cols,
-                     api_key=YOUR_API_KEY)
+query <- get_records(
+  guid_prefix = "MSB:Mamm",
+  genus = "Canis", 
+  species = "lupus",
+  columns = some_cols,
+  api_key=YOUR_API_KEY
+)
 ```
 
 See an example of expanding the columns in the section [Expanding
@@ -197,12 +226,19 @@ unless otherwise asked. By passing the parameter `all_records = TRUE` to
 until all records for a given query are downloaded.
 
 ``` r
-get_record_count(guid_prefix = "MSB:Mamm", scientific_name = "Canis lupus",
-                 api_key=YOUR_API_KEY)
+get_record_count(
+  guid_prefix = "MSB:Mamm",
+  scientific_name = "Canis lupus",
+  api_key=YOUR_API_KEY
+)
 #> [1] 1694
 
-query <- get_records(guid_prefix = "MSB:Mamm", scientific_name = "Canis lupus", 
-                     all_records = TRUE, api_key=YOUR_API_KEY)
+query <- get_records(
+  guid_prefix = "MSB:Mamm",
+  scientific_name = "Canis lupus", 
+  all_records = TRUE,
+  api_key=YOUR_API_KEY
+)
 ```
 
 ## Downloading and using data from Arctos
@@ -220,8 +256,12 @@ my_cols <- list("guid", "scientific_name", "parts", "collectors", "state_prov",
                 "partdetail")
 
 # download records
-query <- get_records(guid_prefix = "MSB:Mamm", scientific_name = "Canis lupus", 
-                     columns = my_cols, api_key=YOUR_API_KEY)
+query <- get_records(
+  guid_prefix = "MSB:Mamm",
+  scientific_name = "Canis lupus", 
+  columns = my_cols,
+  api_key=YOUR_API_KEY
+)
 
 # getting only the data frame of data
 msb_wolves <- response_data(query)
@@ -237,9 +277,12 @@ this example, the record attribute is `"detected"`, and the attribute
 value is `"Orthohantavirus"`.
 
 ``` r
-orthohantavirus_MSB <- get_records(guid_prefix="MSB:Mamm", taxon_name="Rodentia",
-                                   filter_by=list("detected"="Orthohantavirus"),
-                                   api_key=YOUR_API_KEY)
+orthohantavirus_MSB <- get_records(
+  guid_prefix="MSB:Mamm",
+  taxon_name="Rodentia",
+  filter_by=list("detected"="Orthohantavirus"),
+  api_key=YOUR_API_KEY
+)
 ```
 
 #### Expanding columns
