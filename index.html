@@ -105,12 +105,15 @@
 </ul>
 </li>
 </ul>
+<p>Once you have obtained an API key, you can store it as an environment variable inside your <code>.Renviron</code> file. This file can be edited by calling <code>usethis::edit_r_environ()</code>. In it, store your API key as</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>ARCTOSR_API_KEY<span class="ot">=</span>...</span></code></pre></div>
+<p>and functions in ArctosR requiring an API key will be able to read it from there.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hrhwilliams/arctosr" class="external-link">ArctosR</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># You will have to request an API key from Arctos to get records, and pass it</span></span>
