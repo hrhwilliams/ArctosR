@@ -57,6 +57,21 @@ build_url <- function(endpoint, queries = NULL) {
   }
 }
 
+get_api_key <- function(callee_name, api_key) {
+  if (is.null(api_key)) {
+    api_key <- Sys.getenv("ARCTOSR_API_KEY")
+
+    if (api_key == "") {
+      stop(sprintf(
+        "ARCTOSR_API_KEY is not set in your .Renviron.  Either set it with `usethis::edit_r_environ()`, or pass in your API key directly via the `api_key` parameter, e.g., as `%s(..., api_key=\"8acd28be-e559-485c-870e-374fa4a6730e\")`",
+        callee_name
+      ))
+    }
+  }
+
+  return(api_key)
+}
+
 encode_list <- function(params, collapse) {
   qq <- c()
 

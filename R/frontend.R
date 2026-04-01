@@ -105,6 +105,8 @@ get_result_parameters <- function() {
 #'
 #' @export
 get_record_count <- function(..., api_key = NULL) {
+  api_key <- get_api_key("get_record_count", api_key)
+
   query <- Query$new()
   query$catalog_request()$
     set_query(...)$
@@ -167,8 +169,16 @@ get_record_count <- function(..., api_key = NULL) {
 #' fulfill the user's query, and a data frame of records.
 #'
 #' @export
-get_records <- function(..., api_key = NULL, columns = NULL, limit = NULL,
-                        filter_by = NULL, all_records = FALSE) {
+get_records <- function(
+    ...,
+    api_key = NULL,
+    columns = NULL,
+    limit = NULL,
+    filter_by = NULL,
+    all_records = FALSE
+) {
+  api_key <- get_api_key("get_records", api_key)
+
   query <- Query$new()
   builder <- query$catalog_request()
 
@@ -241,6 +251,8 @@ get_records <- function(..., api_key = NULL, columns = NULL, limit = NULL,
 #'
 #' @export
 get_relationships <- function(guid, api_key = NULL) {
+  api_key <- get_api_key("get_relationships", api_key)
+
   query <- Query$new()
   builder <- query$catalog_request()
   builder$set_query(guid=guid)
