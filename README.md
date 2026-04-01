@@ -53,6 +53,15 @@ following steps:
     Arctos data, you are agreeing to all terms of the [Arctos Community
     Data Policy](https://arctosdb.org/arctosdata-policy/)
 
+Once you have obtained an API key, you can store it as an environment
+variable inside your `.Renviron` file. This file can be edited by
+calling `usethis::edit_r_environ()`. In it, store your API key as
+
+    ARCTOSR_API_KEY=...
+
+and functions in ArctosR requiring an API key will be able to read it
+from there.
+
 ## Example
 
 ``` r
