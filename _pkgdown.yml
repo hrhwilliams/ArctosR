@@ -30,7 +30,9 @@ navbar:
          href: articles/parasite.html
       -  text: "4. Frozen tissue search"
          href: articles/tissue.html
-      -  text: "5. Performing ecological niche modeling with ArctosR data"
+      -  text: "5. Exploring patterns of Bergmann’s rule"
+         href: articles/bergmann_rule.html
+      -  text: "6. Performing ecological niche modeling with ArctosR data"
          href: articles/enm.html
   components:
     home: ~

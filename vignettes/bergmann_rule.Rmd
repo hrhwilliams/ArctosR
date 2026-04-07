@@ -1,0 +1,123 @@
+---
+title: "Exploring patterns of Bergmann’s rule"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Exploring patterns of Bergmann’s rule}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+In this example we query Arctos for morphological data for *Didelphis virginiana* (the
+Virginia opossum) and use geographical coordinate data and weights to explore 
+patterns of Bergmann’s rule.
+
+```{r setup}
+# Install packages if needed
+# install.packages("ArctosR")
+# install.packages("ggplot2")
+
+# Load packages
+library(ArctosR)
+library(ggplot2)
+```
+
+## Querying Arctos for relevant data
+
+First, we query Arctos for *Didelphis virginiana* records using `get_records()`, 
+requesting only the GUID identifier, decimal latitude, longitude, weight, and 
+age columns for each specimen.
+
+```{r eval=FALSE}
+# Download all available records of Didelphis virginiana, and include latitude
+# and longitude data
+brule_query <- get_records(
+  scientific_name = "Didelphis virginiana",
+  columns = list("guid", "dec_lat", "dec_long", "weight", "age"),
+  api_key = YOUR_API_KEY,
+  all_records = TRUE
+)
+```
+
+
+```{r include=FALSE}
+brule_query <- read_response_rds(
+  system.file("extdata", "brule_query.RDS", package = "ArctosR"))
+```
+
+## Processing query to obtain size
+
+Because of the multiple formats and options in which data can be uploaded to 
+Arctos, data cleaning steps are needed before we can analyze it. The code below
+helps to filter data to keep only what is relevant for analysis and format it 
+as numeric values
+
+```{r eval=TRUE}
+# Obtain data frame from response 
+brule_query_df <- response_data(brule_query)
+colnames(brule_query_df)
+
+# Filter by age and keep a subset of columns
+adults <- brule_query_df$age %in% c("adult", "")
+
+brule_data <- brule_query_df[adults, c("dec_lat", "dec_long", "weight", "age")]
+
+# Filter to keep records with latitude information
+brule_data <- brule_data[brule_data$dec_lat != "", ]
+
+# Format latitude as numeric
+brule_data$dec_lat <- as.numeric(brule_data$dec_lat)
+
+# Filter by weight
+## Remove no data
+unique(brule_data$weight)
+
+brule_data <- brule_data[brule_data$weight != "", ]
+
+## Process data to keep it in the same units
+oweghts <- brule_data$weight
+
+### Erase units from values
+brule_data$weight <- gsub(" g$", "", brule_data$weight)
+brule_data$weight <- gsub(" kg$", "", brule_data$weight)
+brule_data$weight <- gsub(" oz$", "", brule_data$weight)
+
+### Make it numeric
+brule_data$weight <- as.numeric(brule_data$weight)
+
+### Transform units
+woz <- grep(" oz$", oweghts)
+wkg <- grep(" kg$", oweghts)
+
+brule_data$weight[woz] <- brule_data$weight[woz] * 28.35
+brule_data$weight[wkg] <- brule_data$weight[wkg] * 1000
+
+### Filter by weights considered to represent adult sizes
+brule_data <- brule_data[brule_data$weight > 300 &
+                          brule_data$weight < 6500, ]
+
+```
+
+## Exploring if Bergmann’s rule applies to this example
+
+The following lines of code help to produce a plot to explore the relationship 
+between latitude and weight. Under the Bergmann’s rule, we expect to see a 
+positive relationship (i.e., weight increases with latitude). 
+
+```{r eval=TRUE}
+# Create the plot with a linear regression line
+ggplot(brule_data, aes(x = dec_lat, y = weight)) +
+  geom_point(alpha = 0.5) + 
+  geom_smooth(formula = "y ~ x", method = "lm", col = "blue") + 
+  labs(title = "Relationship between latitude and weight for the Virginia opossum",
+       x = "Decimal Latitude",
+       y = "Weight") +
+  theme_minimal() 
+```
+
