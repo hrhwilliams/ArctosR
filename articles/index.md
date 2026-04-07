@@ -2,6 +2,8 @@
 
 ### All vignettes
 
+- [Exploring patterns of Bergmann’s
+  rule](https://hrhwilliams.github.io/ArctosR/articles/bergmann_rule.md):
 - [Performing ecological niche modeling with ArctosR
   data](https://hrhwilliams.github.io/ArctosR/articles/enm.md):
 - [An overview of

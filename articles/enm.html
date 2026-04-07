@@ -38,7 +38,8 @@
     <li><a class="dropdown-item" href="../articles/species.html">2. Species search and mapping</a></li>
     <li><a class="dropdown-item" href="../articles/parasite.html">3. Parasite search and mapping</a></li>
     <li><a class="dropdown-item" href="../articles/tissue.html">4. Frozen tissue search</a></li>
-    <li><a class="dropdown-item" href="../articles/enm.html">5. Performing ecological niche modeling with ArctosR data</a></li>
+    <li><a class="dropdown-item" href="../articles/bergmann_rule.html">5. Exploring patterns of Bergmann’s rule</a></li>
+    <li><a class="dropdown-item" href="../articles/enm.html">6. Performing ecological niche modeling with ArctosR data</a></li>
   </ul>
 </li>
       </ul>
@@ -79,9 +80,9 @@
     
 <p>In this example we query Arctos for records of <em>Amblyomma
 americanum</em> (the turkey tick) and use their geographical coordinate
-data as input for ecological niche modeling via <a href="https://marlonecobos.github.io/kuenm2/" class="external-link">kuenm2</a>. This vignette
-closely follows the usage example from <a href="https://github.com/marlonecobos/kuenm" class="external-link uri">https://github.com/marlonecobos/kuenm</a> but uses data
-downloaded directly from Arctos via ArctosR.</p>
+data as input for ecological niche modeling (ENM) via <a href="https://marlonecobos.github.io/kuenm2/" class="external-link">kuenm2</a>. This vignette
+guides on downloading data directly from Arctos via ArctosR to use it in
+a simple ENM exercise.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Install packages if needed</span></span>
 <span><span class="co"># install.packages("ArctosR")</span></span>
@@ -93,7 +94,7 @@ downloaded directly from Arctos via ArctosR.</p>
 <span><span class="co"># install.packages("maps")</span></span>
 <span><span class="co"># install.packages("terra")</span></span>
 <span></span>
-<span><span class="co"># Load packagess</span></span>
+<span><span class="co"># Load packages</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hrhwilliams/arctosr" class="external-link">ArctosR</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">geodata</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: terra</span></span>
@@ -107,8 +108,7 @@ downloaded directly from Arctos via ArctosR.</p>
 <span><span class="co">#&gt; The following object is masked from 'package:ggplot2':</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;     remove_missing</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/adeckmyn/maps" class="external-link">maps</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/" class="external-link">terra</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/adeckmyn/maps" class="external-link">maps</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="querying-arctos-for-occurrence-records">Querying Arctos for occurrence records<a class="anchor" aria-label="anchor" href="#querying-arctos-for-occurrence-records"></a>
 </h2>
@@ -131,15 +131,13 @@ latitude, and longitude columns for each specimen.</p>
 <p>Next, we filter the Arctos data to specimens collected just in North
 America, and relabel the columns <code>dec_lat</code> and
 <code>dec_long</code> to <code>latitude</code> and
-<code>longitude</code> as those names are what the <a href="https://marlonecobos.github.io/kuenm2/" class="external-link">kuenm2</a> package
-expects.</p>
+<code>longitude</code>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Limits on latitude and longitude for the Arctos data and for climate data</span></span>
 <span><span class="va">latitude_north_lim</span> <span class="op">&lt;-</span> <span class="fl">60</span></span>
 <span><span class="va">latitude_south_lim</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
 <span><span class="va">longitude_east_lim</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">50</span></span>
 <span><span class="va">longitude_west_lim</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">130</span></span>
-<span></span>
 <span></span>
 <span><span class="co"># Get response data.frame from ArctosR</span></span>
 <span><span class="va">occurrences_raw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/response_data.html">response_data</a></span><span class="op">(</span><span class="va">turkey_tick_query</span><span class="op">)</span></span>
@@ -164,17 +162,16 @@ expects.</p>
 </h2>
 <p>Next, we use the <a href="https://github.com/rspatial/geodata" class="external-link">geodata</a> package to
 download climate data from <a href="https://www.worldclim.org/" class="external-link">WorldClim</a>, which will form part of
-the input into the models we are going to train. It will save these data
-as files, so we pass it our current working directory as the path to
-save those files to.</p>
+the input into the models we are going to train. These data will be
+saved in a directory.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Get working directory</span></span>
+<code class="sourceCode R"><span><span class="co"># Get current working directory</span></span>
 <span><span class="va">project_root</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Get environmental data</span></span>
 <span><span class="va">biovars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/geodata/man/worldclim.html" class="external-link">worldclim_global</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"bio"</span>, res <span class="op">=</span> <span class="fl">10</span>, path <span class="op">=</span> <span class="va">project_root</span><span class="op">)</span></span></code></pre></div>
-<p>Similarly we filter the <a href="https://www.worldclim.org/" class="external-link">WorldClim</a> data to only coordinates
-in North America.</p>
+<p>Then, we filter the <a href="https://www.worldclim.org/" class="external-link">WorldClim</a> data to an area in North
+America that is relevant to the distribution of the species.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Mask environmental layers to an area relevant for records and predictions</span></span>
 <span><span class="co"># Transform occurrences into spatial points </span></span>
@@ -191,7 +188,7 @@ in North America.</p>
 <span><span class="va">biovar_na</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/crop.html" class="external-link">crop</a></span><span class="op">(</span><span class="va">biovars</span><span class="op">[[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">7</span>, <span class="fl">12</span>, <span class="fl">15</span><span class="op">)</span><span class="op">]</span><span class="op">]</span>, <span class="fu"><a href="https://rspatial.github.io/terra/reference/ext.html" class="external-link">ext</a></span><span class="op">(</span><span class="va">longitude_west_lim</span>, <span class="va">longitude_east_lim</span>, <span class="va">latitude_south_lim</span>, <span class="va">latitude_north_lim</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="cleaning-data-and-performing-model-selection-with-kuenm2">Cleaning data and performing model selection with kuenm2<a class="anchor" aria-label="anchor" href="#cleaning-data-and-performing-model-selection-with-kuenm2"></a>
+<h2 id="cleaning-and-preparing-data-for-enm">Cleaning and preparing data for ENM<a class="anchor" aria-label="anchor" href="#cleaning-and-preparing-data-for-enm"></a>
 </h2>
 <p>Now, we use <a href="https://marlonecobos.github.io/kuenm2/" class="external-link">kuenm2</a>’s built-in data
 cleaning functions to prepare the data for ecological niche
@@ -217,9 +214,15 @@ modeling.</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rspatial.github.io/terra/reference/dimensions.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">occ_clean2</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 96</span></span>
-<span></span>
-<span><span class="co"># Prepare data for models</span></span>
+<span><span class="co">#&gt; [1] 96</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="enm-process-using-kuenm2">ENM process using kuenm2<a class="anchor" aria-label="anchor" href="#enm-process-using-kuenm2"></a>
+</h2>
+<p>We start by preparing the data the way it is needed for the next
+step, model selection.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Prepare data for models</span></span>
 <span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://marlonecobos.github.io/kuenm2/reference/prepare_data.html" class="external-link">prepare_data</a></span><span class="op">(</span></span>
 <span>  algorithm <span class="op">=</span> <span class="st">"maxnet"</span>,</span>
 <span>  occ <span class="op">=</span> <span class="va">occ_clean2</span>,</span>
@@ -233,9 +236,8 @@ modeling.</p>
 <span>  features <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lq"</span>, <span class="st">"lqp"</span><span class="op">)</span>,</span>
 <span>  r_multiplier <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>Now we use the cleaned data to perform model selection and finally
-return a prediction from our best fitting models.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<p>Now we use the prepared data to perform model selection.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Run model selection</span></span>
 <span><span class="va">cal</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://marlonecobos.github.io/kuenm2/reference/calibration.html" class="external-link">calibration</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">d</span>, </span>
@@ -257,9 +259,11 @@ return a prediction from our best fitting models.</p>
 <span><span class="co">#&gt; Validating pROC of selected models...</span></span>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |==================                                                    |  25%  |                                                                              |===================================                                   |  50%  |                                                                              |====================================================                  |  75%  |                                                                              |======================================================================| 100%</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; All selected models have significant pROC values.</span></span>
-<span></span>
-<span><span class="co"># Fit selected models</span></span>
+<span><span class="co">#&gt; All selected models have significant pROC values.</span></span></code></pre></div>
+<p>We fit selected models and predict over a relevant are to explore
+suitable conditions for this tick.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Fit selected models</span></span>
 <span><span class="va">mfit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://marlonecobos.github.io/kuenm2/reference/fit_selected.html" class="external-link">fit_selected</a></span><span class="op">(</span>calibration_results <span class="op">=</span> <span class="va">cal</span><span class="op">)</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fitting full models...</span></span>
@@ -270,12 +274,12 @@ return a prediction from our best fitting models.</p>
 <span><span class="co">#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |==================                                                    |  25%  |                                                                              |===================================                                   |  50%  |                                                                              |====================================================                  |  75%  |                                                                              |======================================================================| 100%</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="visualizing-the-niche-model">Visualizing the niche model<a class="anchor" aria-label="anchor" href="#visualizing-the-niche-model"></a>
+<h2 id="visualizing-model-prediction">Visualizing model prediction<a class="anchor" aria-label="anchor" href="#visualizing-model-prediction"></a>
 </h2>
 <p>Here we use <a href="https://ggplot2.tidyverse.org/" class="external-link">ggplot2</a> to
-plot climate suitability for Amblyomma americanum, with occurrences
-overlaid.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+plot predicted suitability for <em>Amblyomma americanum</em>, with
+occurrences overlaid.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">pred_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">pred</span><span class="op">$</span><span class="va">General_consensus</span><span class="op">[[</span><span class="st">"median"</span><span class="op">]</span><span class="op">]</span>, xy <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">occ_points_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/terra/reference/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">occ_geo_points</span>, geom <span class="op">=</span> <span class="st">"XY"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">pred_df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"long"</span>, <span class="st">"lat"</span>, <span class="st">"suitability"</span><span class="op">)</span></span>
