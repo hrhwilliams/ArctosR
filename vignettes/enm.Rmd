@@ -16,10 +16,9 @@ knitr::opts_chunk$set(
 
 In this example we query Arctos for records of *Amblyomma americanum* (the
 turkey tick) and use their geographical coordinate data as input for ecological
-niche modeling via [kuenm2](https://marlonecobos.github.io/kuenm2/). This
-vignette closely follows the usage example from
-<https://github.com/marlonecobos/kuenm> but uses data downloaded directly from
-Arctos via ArctosR.
+niche modeling (ENM) via [kuenm2](https://marlonecobos.github.io/kuenm2/). This
+vignette guides on downloading data directly from Arctos via ArctosR to use it
+in a simple ENM exercise.
 
 ```{r setup}
 # Install packages if needed
@@ -32,7 +31,7 @@ Arctos via ArctosR.
 # install.packages("maps")
 # install.packages("terra")
 
-# Load packagess
+# Load packages
 library(ArctosR)
 library(geodata)
 library(ggplot2)
@@ -40,7 +39,6 @@ library(ggspatial)
 library(ggtext)
 library(kuenm2)
 library(maps)
-library(terra)
 ```
 
 ## Querying Arctos for occurrence records
@@ -69,9 +67,7 @@ turkey_tick_query <- read_response_rds(
 ## Filtering and cleaning data for kuenm2
 
 Next, we filter the Arctos data to specimens collected just in North America, and
-relabel the columns `dec_lat` and `dec_long` to `latitude` and `longitude` as
-those names are what the [kuenm2](https://marlonecobos.github.io/kuenm2/)
-package expects.
+relabel the columns `dec_lat` and `dec_long` to `latitude` and `longitude`.
 
 ```{r eval=TRUE}
 # Limits on latitude and longitude for the Arctos data and for climate data
@@ -79,7 +75,6 @@ latitude_north_lim <- 60
 latitude_south_lim <- 10
 longitude_east_lim <- -50
 longitude_west_lim <- -130
-
 
 # Get response data.frame from ArctosR
 occurrences_raw <- response_data(turkey_tick_query)
@@ -104,20 +99,19 @@ occurrences_filter <- occurrences[filter, ]
 
 Next, we use the [geodata](https://github.com/rspatial/geodata) package to
 download climate data from [WorldClim](https://www.worldclim.org/), which will
-form part of the input into the models we are going to train. It will save these
-data as files, so we pass it our current working directory as the path to save
-those files to.
+form part of the input into the models we are going to train. These data will be
+saved in a directory.
 
 ```{r eval=TRUE}
-# Get working directory
+# Get current working directory
 project_root <- getwd()
 
 # Get environmental data
 biovars <- worldclim_global(var = "bio", res = 10, path = project_root)
 ```
 
-Similarly we filter the [WorldClim](https://www.worldclim.org/) data to only
-coordinates in North America.
+Then, we filter the [WorldClim](https://www.worldclim.org/) data to an area
+in North America that is relevant to the distribution of the species.
 
 ```{r eval=TRUE}
 # Mask environmental layers to an area relevant for records and predictions
@@ -135,7 +129,7 @@ biovar_mask <- crop(biovars[[c(1, 7, 12, 15)]], occ_buffer, mask = TRUE)
 biovar_na <- crop(biovars[[c(1, 7, 12, 15)]], ext(longitude_west_lim, longitude_east_lim, latitude_south_lim, latitude_north_lim))
 ```
 
-## Cleaning data and performing model selection with kuenm2
+## Cleaning and preparing data for ENM
 
 Now, we use [kuenm2](https://marlonecobos.github.io/kuenm2/)'s built-in data
 cleaning functions to prepare the data for ecological niche modeling.
@@ -161,7 +155,13 @@ occ_clean2 <- remove_cell_duplicates(
 )
 
 nrow(occ_clean2)
+```
 
+## ENM process using kuenm2
+
+We start by preparing the data the way it is needed for the next step, model selection.
+
+```{r eval=TRUE}
 # Prepare data for models
 d <- prepare_data(
   algorithm = "maxnet",
@@ -178,8 +178,7 @@ d <- prepare_data(
 )
 ```
 
-Now we use the cleaned data to perform model selection and finally return a
-prediction from our best fitting models.
+Now we use the prepared data to perform model selection.
 
 ```{r eval=TRUE}
 # Run model selection
@@ -188,7 +187,12 @@ cal <- calibration(
   error_considered = 5,
   omission_rate = 5
 )
+```
 
+We fit selected models and predict over a relevant are to explore suitable 
+conditions for this tick. 
+
+``` {r, eval=TRUE}
 # Fit selected models
 mfit <- fit_selected(calibration_results = cal)
 
@@ -196,10 +200,10 @@ mfit <- fit_selected(calibration_results = cal)
 pred <- predict_selected(mfit, new_variables = biovar_na)
 ```
 
-## Visualizing the niche model
+## Visualizing model prediction
 
-Here we use [ggplot2](https://ggplot2.tidyverse.org/) to plot climate
-suitability for Amblyomma americanum, with occurrences overlaid.
+Here we use [ggplot2](https://ggplot2.tidyverse.org/) to plot predicted
+suitability for *Amblyomma americanum*, with occurrences overlaid.
 
 ```{r eval=TRUE}
 pred_df <- as.data.frame(pred$General_consensus[["median"]], xy = TRUE)
