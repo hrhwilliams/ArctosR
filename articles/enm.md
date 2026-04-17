@@ -98,6 +98,7 @@ project_root <- getwd()
 
 # Get environmental data
 biovars <- worldclim_global(var = "bio", res = 10, path = project_root)
+#> Cached as: /home/runner/work/ArctosR/ArctosR/vignettes/climate/wc2.1_10m//wc2.1_10m_bio.zip
 ```
 
 Then, we filter the [WorldClim](https://www.worldclim.org/) data to an

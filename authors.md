@@ -20,13 +20,13 @@ Source:
 [`DESCRIPTION`](https://github.com/hrhwilliams/arctosr/blob/main/DESCRIPTION)
 
 Williams H, Colella J, Barve V, Koo M, Cobos M (2026). *ArctosR: An
-Interface to the 'Arctos' Database*. R package version 0.1.3,
+Interface to the 'Arctos' Database*. R package version 0.1.4,
 <https://github.com/hrhwilliams/arctosr>.
 
     @Manual{,
       title = {ArctosR: An Interface to the 'Arctos' Database},
       author = {Harlan R. Williams and Jocelyn P. Colella and Vijay Barve and Michelle S. Koo and Marlon E. Cobos},
       year = {2026},
-      note = {R package version 0.1.3},
+      note = {R package version 0.1.4},
       url = {https://github.com/hrhwilliams/arctosr},
     }

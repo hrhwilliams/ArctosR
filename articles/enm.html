@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">ArctosR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -96,7 +96,7 @@ a simple ENM exercise.</p>
 <span></span>
 <span><span class="co"># Load packages</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/hrhwilliams/arctosr" class="external-link">ArctosR</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">geodata</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.github.io/geodata/" class="external-link">geodata</a></span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: terra</span></span>
 <span><span class="co">#&gt; terra 1.9.11</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
@@ -169,7 +169,8 @@ saved in a directory.</p>
 <span><span class="va">project_root</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/getwd.html" class="external-link">getwd</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Get environmental data</span></span>
-<span><span class="va">biovars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/geodata/man/worldclim.html" class="external-link">worldclim_global</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"bio"</span>, res <span class="op">=</span> <span class="fl">10</span>, path <span class="op">=</span> <span class="va">project_root</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">biovars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rspatial.github.io/geodata/reference/worldclim.html" class="external-link">worldclim_global</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"bio"</span>, res <span class="op">=</span> <span class="fl">10</span>, path <span class="op">=</span> <span class="va">project_root</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Cached as: /home/runner/work/ArctosR/ArctosR/vignettes/climate/wc2.1_10m//wc2.1_10m_bio.zip</span></span></code></pre></div>
 <p>Then, we filter the <a href="https://www.worldclim.org/" class="external-link">WorldClim</a> data to an area in North
 America that is relevant to the distribution of the species.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
