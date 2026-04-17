@@ -1,6 +1,6 @@
 Package: ArctosR
 Title: An Interface to the 'Arctos' Database
-Version: 0.1.3
+Version: 0.1.4
 Authors@R: c(
     person("Harlan R.", "Williams", email = "harlanrhwilliams@gmail.com",
       role = c("aut", "cre"), comment = c(ORCID = "0009-0000-9958-121X")),
@@ -13,7 +13,7 @@ Authors@R: c(
     person("Marlon E.", "Cobos", email = "manubio13@gmail.com", role = "aut",
       comment = c(ORCID = "0000-0002-2611-1767")))
 Maintainer: Harlan R. Williams <harlanrhwilliams@gmail.com>
-Date: 2026-4-9
+Date: 2026-4-17
 Description: Performs requests to the 'Arctos' API to download data. Provides a
     set of builder classes for performing complex requests, as well as a set of
     simple functions for automating many common requests and workflows. More
