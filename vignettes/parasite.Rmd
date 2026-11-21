@@ -245,7 +245,7 @@ ggsave(
   plot = mongolia1,
   width = 6.53,
   height = 6.53,
-  dpi = 600,
+  dpi = 150,
   create.dir = TRUE
 )
 ```
@@ -326,7 +326,7 @@ ggsave(
   plot = mongolia2,
   width = 6.5,
   height = 4,
-  dpi = 600,
+  dpi = 150,
   create.dir = TRUE
 )
 ```
