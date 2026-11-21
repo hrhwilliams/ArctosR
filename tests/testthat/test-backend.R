@@ -48,3 +48,29 @@ test_that("file name", {
   testthat::expect_equal(file_name("example.csv"), "example")
   testthat::expect_equal(file_name("example.json"), "example")
 })
+
+test_that("arctos_response parses JSON regardless of content-type spelling", {
+  response <- arctos_response(200, "application/json; charset=utf-8", "Thu, 26 Sep 2024 01:58:51 GMT", '{"recordsTotal": 3}')
+  testthat::expect_equal(response$content$recordsTotal, 3)
+  testthat::expect_equal(format(response$arctos_timestamp, tz = "GMT"), "2024-09-26 01:58:51")
+
+  html <- arctos_response(500, "text/html", "Thu, 26 Sep 2024 01:58:51 GMT", "<html></html>")
+  testthat::expect_null(html$content)
+})
+
+test_that("api key is sent with the request but never stored on it", {
+  sent_url <- NULL
+  local_mocked_bindings(
+    perform_request = function(url) {
+      sent_url <<- url
+      fixture_response("test_request_no_cols_part3")
+    }
+  )
+
+  request <- Request$new()$with_endpoint("record.cfc")$add_param(method = "getData")
+  response <- request$perform(api_key = "SECRET")
+
+  testthat::expect_match(sent_url, "api_key=SECRET", fixed = TRUE)
+  testthat::expect_null(request$params$api_key)
+  testthat::expect_no_match(response$metadata$url, "SECRET", fixed = TRUE)
+})

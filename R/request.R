@@ -58,23 +58,15 @@ Request <- R6::R6Class("Request",
         stop("No endpoint given.")
       }
 
-      if (!is.null(api_key)) {
-        self$params$api_key <- api_key
-      }
-
-      raw_response <- perform_request(self$url)
-      if (is.null(raw_response)) {
-        return(NULL)
-      }
+      response <- perform_request(build_url(self$end_point, c(self$params, if (!is.null(api_key)) list(api_key = api_key))))
 
       self$timestamp <- Sys.time()
       attr(self$timestamp, "tzone") <- "GMT"
-      self$params$api_key <- NULL
 
-      return(ArctosR::Response$new(self, raw_response))
+      return(ArctosR::Response$new(self, response))
     },
-    from_raw_response = function(raw_response) {
-      return(ArctosR::Response$new(self, raw_response))
+    from_raw_response = function(response) {
+      return(ArctosR::Response$new(self, response))
     }
   ),
   active = list(

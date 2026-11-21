@@ -34,19 +34,23 @@ new_arctosr_handle <- function() {
 }
 
 perform_request <- function(url) {
-  curl_fetch_memory(new_arctosr_handle(), url = url)
+  raw <- curl_fetch_memory(url, handle = new_arctosr_handle())
+  arctos_response(
+    status_code = raw$status_code,
+    type = raw$type,
+    date_header = get_header(rawToChar(raw$headers), "Date: "),
+    body = rawToChar(raw$content)
+  )
 }
 
-response_is_json <- function(raw_response) {
-  return(raw_response$type == "application/json;charset=UTF-8")
-}
-
-parse_response <- function(raw_response) {
-  if (raw_response$type == "application/json;charset=UTF-8") {
-    return(fromJSON(rawToChar(raw_response$content), simplifyDataFrame = TRUE))
-  } else {
-    stop("Expected response in JSON format")
-  }
+arctos_response <- function(status_code, type, date_header, body) {
+  is_json <- !is.null(type) && grepl("application/json", type, fixed = TRUE)
+  list(
+    status_code = status_code,
+    type = type,
+    arctos_timestamp = as.POSIXct(date_header, format = "%a, %d %b %Y %H:%M:%S GMT", tz = "GMT"),
+    content = if (is_json) fromJSON(body, simplifyDataFrame = TRUE) else NULL
+  )
 }
 
 build_url <- function(endpoint, queries = NULL) {

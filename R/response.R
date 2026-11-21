@@ -27,23 +27,18 @@ Response <- R6::R6Class("Response",
     content = NULL,
     start_index = 0,
     stop_index = 1,
-    initialize = function(request, raw_response) {
+    initialize = function(request, response) {
       self$request <- request
 
       self$metadata <- ArctosR::Metadata$new()
       self$metadata$url <- request$url
       self$metadata$params <- request$params
-      self$metadata$status_code <- raw_response$status_code
+      self$metadata$status_code <- response$status_code
       self$metadata$system_timestamp <- request$timestamp
-      self$metadata$arctos_timestamp <- as.POSIXct(
-        get_header(rawToChar(raw_response$headers), "Date: "),
-        format = "%a, %d %b %Y %H:%M:%S GMT"
-      )
+      self$metadata$arctos_timestamp <- response$arctos_timestamp
 
-      self$response_type <- raw_response$type
-      if (response_is_json(raw_response)) {
-        self$content <- parse_response(raw_response)
-      }
+      self$response_type <- response$type
+      self$content <- response$content
     },
     set_start_index = function(start) {
       self$start_index <- start

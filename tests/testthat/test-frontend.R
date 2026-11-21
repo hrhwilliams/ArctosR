@@ -77,7 +77,7 @@ test_that("query catalog request with record filters", {
 test_that("get_record_count", {
   local_mocked_bindings(
     perform_request = function(...) {
-      return(readRDS("test_request_no_cols.rds"))
+      return(fixture_response("test_request_no_cols"))
     },
     check_for_status = function(...) {
       return(TRUE)
@@ -95,7 +95,7 @@ test_that("get_record_count", {
 test_that("get_records_no_cols", {
   local_mocked_bindings(
     perform_request = function(...) {
-      return(readRDS("test_request_no_cols.rds"))
+      return(fixture_response("test_request_no_cols"))
     },
     check_for_status = function(...) {
       return(TRUE)
@@ -130,11 +130,11 @@ test_that("get_records_no_cols concatenate", {
       i <<- i + 1
 
       if (i == 1) {
-        return(readRDS("test_request_no_cols.rds"))
+        return(fixture_response("test_request_no_cols"))
       } else if (i == 2) {
-        return(readRDS("test_request_no_cols_part2.rds"))
+        return(fixture_response("test_request_no_cols_part2"))
       } else {
-        return(readRDS("test_request_no_cols_part3.rds"))
+        return(fixture_response("test_request_no_cols_part3"))
       }
     },
     check_for_status = function(...) {
@@ -154,7 +154,7 @@ test_that("get_records_no_cols concatenate", {
 test_that("get_records_with_cols", {
   local_mocked_bindings(
     perform_request = function(...) {
-      return(readRDS("test_request_with_cols.rds"))
+      return(fixture_response("test_request_with_cols"))
     },
     check_for_status = function(...) {
       return(TRUE)
@@ -175,7 +175,7 @@ test_that("get_records_with_cols", {
 test_that("expand_cols", {
   local_mocked_bindings(
     perform_request = function(...) {
-      return(readRDS("test_request_with_cols.rds"))
+      return(fixture_response("test_request_with_cols"))
     },
     check_for_status = function(...) {
       return(TRUE)
@@ -198,7 +198,7 @@ test_that("expand_cols", {
 test_that("expand_cols fail", {
   local_mocked_bindings(
     perform_request = function(...) {
-      return(readRDS("test_request_with_cols.rds"))
+      return(fixture_response("test_request_with_cols"))
     },
     check_for_status = function(...) {
       return(TRUE)
@@ -217,7 +217,7 @@ test_that("re-expand cols after write", {
 
   local_mocked_bindings(
     perform_request = function(...) {
-      return(readRDS("test_request_with_cols.rds"))
+      return(fixture_response("test_request_with_cols"))
     },
     check_for_status = function(...) {
       return(TRUE)
@@ -272,7 +272,7 @@ test_that("regression: saving to CSV fails after expanding a column and then req
 test_that("get_url after get_records", {
   local_mocked_bindings(
     perform_request = function(...) {
-      return(readRDS("test_request_no_cols.rds"))
+      return(fixture_response("test_request_no_cols"))
     },
     check_for_status = function(...) {
       return(TRUE)
