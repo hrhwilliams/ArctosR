@@ -27,15 +27,13 @@ Records <- R6::R6Class("Records",
   public = list(
     df = NULL,
     initialize = function(df, tbl) {
-      # private$query_params <- query_params
-      # private$result_params <- result_params
       private$tbl <- tbl
+      private$raw <- df
       self$df <- df
     },
     append = function(other) {
-      private$unexpand_cols()
-      self$df <- rbind(self$df, other$df)
-      private$reexpand_cols()
+      private$raw <- rbind(private$raw, other$raw_df)
+      private$refresh()
     },
 
     #' @description Writes the data in the response object to a CSV file.
@@ -49,9 +47,7 @@ Records <- R6::R6Class("Records",
         stop("No data to export.")
       }
 
-      private$unexpand_cols()
-      write_csv(self$df, file_path)
-      private$reexpand_cols()
+      write_csv(private$raw, file_path)
     },
     save_nested_csvs = function(file_path) {
       if (is.null(self$df)) {
@@ -95,25 +91,16 @@ Records <- R6::R6Class("Records",
     #'
     #' @param col (`string`)
     expand_col = function(column) {
-      if (is.null(self$df)) {
+      if (is.null(private$raw)) {
         stop("No data to expand")
       }
 
-      if (is.null(self$df[[column]])) {
+      if (is.null(private$raw[[column]])) {
         stop("No such column")
       }
 
-      if (!(column %in% names(private$expanded_cols))) {
-        private$expanded_cols <- c(private$expanded_cols, setNames(list(self$df[[column]]), c(column)))
-      }
-
-      self$df[[column]] <- lapply(self$df[[column]], function(j) {
-        if (!validate(j)) {
-          return(NULL)
-        } else {
-          fromJSON(j, simplifyDataFrame = T)
-        }
-      })
+      private$expanded <- union(private$expanded, column)
+      private$refresh()
     }
   ),
   active = list(
@@ -125,23 +112,27 @@ Records <- R6::R6Class("Records",
     },
     table_id = function() {
       return(private$tbl)
+    },
+    raw_df = function() {
+      return(private$raw)
     }
   ),
   private = list(
-    query_params = NULL,
-    result_params = NULL,
-    timestamp = NULL,
-    expanded_cols = NULL,
+    raw = NULL,
+    expanded = character(0),
     tbl = NULL,
-    unexpand_cols = function() {
-      for (column in names(private$expanded_cols)) {
-        self$df[[column]] <- private$expanded_cols[[column]]
+    refresh = function() {
+      df <- private$raw
+      for (column in private$expanded) {
+        df[[column]] <- lapply(df[[column]], function(j) {
+          if (!validate(j)) {
+            return(NULL)
+          } else {
+            fromJSON(j, simplifyDataFrame = TRUE)
+          }
+        })
       }
-    },
-    reexpand_cols = function() {
-      for (column in names(private$expanded_cols)) {
-        self$expand_col(column)
-      }
+      self$df <- df
     }
   )
 )

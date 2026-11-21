@@ -251,6 +251,24 @@ test_that("re-expand cols after write", {
   testthat::expect_equal(basename(getwd()), basename(tmp))
 })
 
+test_that("regression: saving to CSV fails after expanding a column and then requesting", {
+  make_records <- function(ids) {
+    Records$new(data.frame(guid = ids, parts = sprintf('[{"part":"skin%s"}]', ids)), "tbl")
+  }
+
+  records <- make_records(c("a", "b"))
+  records$expand_col("parts")
+  records$append(make_records(c("c", "d", "e")))
+
+  testthat::expect_equal(nrow(records$df), 5)
+  testthat::expect_equal(records$df$parts[[5]]$part, "skine")
+
+  csv <- tempfile(fileext = ".csv")
+  records$save_flat_csv(csv)
+  testthat::expect_equal(read.csv(csv)$parts, sprintf('[{"part":"skin%s"}]', c("a", "b", "c", "d", "e")))
+  testthat::expect_s3_class(records$df$parts[[1]], "data.frame")
+})
+
 test_that("get_url after get_records", {
   local_mocked_bindings(
     perform_request = function(...) {
