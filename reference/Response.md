@@ -28,7 +28,7 @@ Response returned from Arctos.
 
 #### Usage
 
-    Response$new(request, raw_response)
+    Response$new(request, response)
 
 ------------------------------------------------------------------------
 

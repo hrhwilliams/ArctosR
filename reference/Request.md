@@ -67,7 +67,7 @@ InfoRequestBuilder and CatalogRequestBuilder.
 
 #### Usage
 
-    Request$from_raw_response(raw_response)
+    Request$from_raw_response(response)
 
 ------------------------------------------------------------------------
 

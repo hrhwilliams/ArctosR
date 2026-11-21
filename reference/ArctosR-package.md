@@ -38,18 +38,25 @@ Useful links:
 
 - <https://github.com/hrhwilliams/arctosr>
 
+- <https://hrhwilliams.github.io/ArctosR/>
+
 - Report bugs at <https://github.com/hrhwilliams/arctosr/issues>
 
 ## Author
 
 **Maintainer**: Harlan R. Williams <harlanrhwilliams@gmail.com>
+([ORCID](https://orcid.org/0009-0000-9958-121X))
 
 Authors:
 
-- Marlon E. Cobos <manubio13@gmail.com>
-
 - Jocelyn P. Colella <colella@ku.edu>
-
-- Michelle S. Koo <mkoo@berkeley.edu>
+  ([ORCID](https://orcid.org/0000-0003-2463-1029))
 
 - Vijay Barve <vijay.barve@gmail.com>
+  ([ORCID](https://orcid.org/0000-0002-4852-2567))
+
+- Michelle S. Koo <mkoo@berkeley.edu>
+  ([ORCID](https://orcid.org/0000-0003-0410-722X))
+
+- Marlon E. Cobos <manubio13@gmail.com>
+  ([ORCID](https://orcid.org/0000-0002-2611-1767))
