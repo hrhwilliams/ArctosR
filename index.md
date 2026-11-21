@@ -8,6 +8,7 @@ ArctosR can be installed from [CRAN](https://cran.r-project.org/) by
 running the command in R:
 
 ``` r
+
 install.packages("ArctosR")
 ```
 
@@ -17,6 +18,7 @@ You can install the development version of ArctosR from
 [GitHub](https://github.com/) with:
 
 ``` r
+
 install.packages("remotes")
 remotes::install_github("hrhwilliams/ArctosR")
 ```
@@ -57,6 +59,7 @@ from there.
 ## Example
 
 ``` r
+
 library(ArctosR)
 
 # You will have to request an API key from Arctos to get records, and pass it

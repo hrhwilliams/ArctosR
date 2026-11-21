@@ -62,6 +62,7 @@ metadata is saved along with downloaded records as a JSON file.
 Make sure to load the package:
 
 ``` r
+
 library(ArctosR)
 ```
 
@@ -76,6 +77,7 @@ frame of all query parameters used by Arctos. The names in the
 function.
 
 ``` r
+
 # You will have to request an API key from Arctos to get records, and pass it
 # to the `get_record_count` and `get_records` functions through the `api_key`
 # parameter.
@@ -99,6 +101,7 @@ For this basic query, we can use `guid_prefix`, whose description can be
 found by listing the row of the query parameter data frame:
 
 ``` r
+
 # checking row 37 in the data frame
 query_params[37,1:5]
 #>       display    obj_name   category subcategory
@@ -111,6 +114,7 @@ query_params[37,1:5]
 We will also use `scientific_name`:
 
 ``` r
+
 query_params[28,1:5]
 #>    display obj_name       category subcategory
 #> 28   Genus    genus identification  curatorial 
@@ -130,6 +134,7 @@ a **query**, which bundles our search parameters with the returned data
 from Arctos.
 
 ``` r
+
 query <- get_records(
   guid_prefix = "MSB:Mamm",
   scientific_name = "Canis lupus", 
@@ -147,6 +152,7 @@ By default, the columns returned by Arctos are all of those with the
 category core. These columns can be listed as follows:
 
 ``` r
+
 result_params <- get_result_parameters()
 result_params[result_params$category == 'core',1:2]
 #>                      display                      obj_name
@@ -166,6 +172,7 @@ parameters to the `get_records` function in the `columns` parameter like
 so:
 
 ``` r
+
 # making a list of additional columns to get (see get_query_parameters())
 add_cols <- list(
   "guid",
@@ -202,6 +209,7 @@ format, but can be expanded into data frames of their own with the
 function `expand_column`.
 
 ``` r
+
 # defining the columns to be obtained
 some_cols <- list("guid", "parts", "partdetail")
 
@@ -226,6 +234,7 @@ unless otherwise asked. By passing the parameter `all_records = TRUE` to
 until all records for a given query are downloaded.
 
 ``` r
+
 get_record_count(
   guid_prefix = "MSB:Mamm",
   scientific_name = "Canis lupus",
@@ -250,6 +259,7 @@ data from Arctos.
 ### Get and view data
 
 ``` r
+
 # a list of columns to download with the query
 my_cols <- list("guid", "scientific_name", "parts", "collectors", "state_prov", 
                 "spec_locality", "dec_lat", "dec_long", "verbatim_date",
@@ -277,6 +287,7 @@ this example, the record attribute is `"detected"`, and the attribute
 value is `"Orthohantavirus"`.
 
 ``` r
+
 orthohantavirus_MSB <- get_records(
   guid_prefix="MSB:Mamm",
   taxon_name="Rodentia",
@@ -292,6 +303,7 @@ record. To explore these data fully, we can process the information and
 view it as a table.
 
 ``` r
+
 # process the information in partdetail into sub-data frames
 expand_column(query, "partdetail")
 ```
@@ -304,23 +316,27 @@ See below for examples of how to do it.
 #### Saving as a flat CSV file
 
 ``` r
+
 save_response_csv(query, "msb_wolves.csv")
 ```
 
 #### Saving an expanded CSV
 
 ``` r
+
 save_response_csv(query, "msb_wolves.csv", expanded = TRUE)
 ```
 
 #### Saving as an RDS
 
 ``` r
+
 save_response_rds(query, "msb_wolves.rds")
 ```
 
 #### Saving query metadata
 
 ``` r
+
 save_response_csv(query, "msb_wolves2.csv", with_metadata = TRUE)
 ```

@@ -5,6 +5,7 @@ virginiana* (the Virginia opossum) and use geographical coordinate data
 and weights to explore patterns of Bergmann’s rule.
 
 ``` r
+
 # Install packages if needed
 # install.packages("ArctosR")
 # install.packages("ggplot2")
@@ -22,6 +23,7 @@ requesting only the GUID identifier, decimal latitude, longitude,
 weight, and age columns for each specimen.
 
 ``` r
+
 # Download all available records of Didelphis virginiana, and include latitude
 # and longitude data
 brule_query <- get_records(
@@ -40,6 +42,7 @@ it. The code below helps to filter data to keep only what is relevant
 for analysis and format it as numeric values
 
 ``` r
+
 # Obtain data frame from response 
 brule_query_df <- response_data(brule_query)
 colnames(brule_query_df)
@@ -158,6 +161,7 @@ expect to see a positive relationship (i.e., weight increases with
 latitude).
 
 ``` r
+
 # Create the plot with a linear regression line
 ggplot(brule_data, aes(x = dec_lat, y = weight)) +
   geom_point(alpha = 0.5) + 

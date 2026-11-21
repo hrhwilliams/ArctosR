@@ -10,6 +10,7 @@ distribution of specimens found with and without nematodes.
 To begin, make sure to load the library:
 
 ``` r
+
 # install.packages("ArctosR")
 # install.packages("ggplot2")
 # install.packages("ggspatial")
@@ -25,7 +26,7 @@ library(ggtext)
 library(maps)
 library(patchwork)
 library(sf)
-#> Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.4.0; sf_use_s2() is TRUE
+#> Linking to GEOS 3.14.1, GDAL 3.12.2, PROJ 9.7.1; sf_use_s2() is TRUE
 ```
 
 ## Exploring Arctos options
@@ -33,6 +34,7 @@ library(sf)
 First, we can view all parameters we can use to search by on Arctos:
 
 ``` r
+
 # Request a list of all query parameters.
 query_params <- get_query_parameters()
 
@@ -47,6 +49,7 @@ Next, we can view a list of all parameters we can ask Arctos to return
 by calling:
 
 ``` r
+
 # Request a list of all result parameters. These are the names that can show up
 # as columns in a dataframe returned by ArctosR.
 result_params <- get_result_parameters()
@@ -65,6 +68,7 @@ categories of result parameter, we can filter the data.frame returned by
 like so:
 
 ``` r
+
 # Check only core and record parameters.
 result_params[result_params$category %in% c("core", "record"), 1:3]
 ```
@@ -82,6 +86,7 @@ are additional data about a record such as quantitative information or a
 record of additional processing done to the record.
 
 ``` r
+
 # Request just the number of records matching a query.
 count <- get_record_count(country = "Mongolia", genus = "Microtus",
                           guid_prefix = "MSB:Mamm",
@@ -99,6 +104,7 @@ results, returning only 100 at a time. Setting `all_records = TRUE` lets
 the search.
 
 ``` r
+
 # Request to download all available data matching a query (specific columns). 
 microtus <- get_records(country = "Mongolia", genus = "Microtus",
                         guid_prefix = "MSB:Mamm",
@@ -114,6 +120,7 @@ In Arctos, some table entries, such as `partdetail` are themselves
 tables. We can expand these tables into data.frames using:
 
 ``` r
+
 # Expand a column that contains complex information in JSON format
 expand_column(query = microtus, column_name = "partdetail")
 ```
@@ -124,6 +131,7 @@ the data returned from the first request. To get the data.frame of the
 response, use `response_data` and pass in the response:
 
 ``` r
+
 # Grab the dataframe of records from the response.
 microtus_df <- response_data(microtus)
 
@@ -137,6 +145,7 @@ Now, we write a custom function to check the `partdetail` entries of
 each specimen for whether or not nematodes were present in the specimen.
 
 ``` r
+
 # Filter the data to keep only Microtus records in which nematodes were found
 ## Whole-word match for 'nematode' or 'nematodes'
 pattern <- "\\bnematodes?\\b"
@@ -178,6 +187,7 @@ package. First, we can simply create a plot of the distribution of all
 specimens over Mongolia.
 
 ``` r
+
 # Initial plot of Microtus sampled in Mongolia
 
 plot_map <- map_data("world", region=c("Mongolia"))
@@ -233,7 +243,7 @@ ggsave(
   plot = mongolia1,
   width = 6.53,
   height = 6.53,
-  dpi = 600,
+  dpi = 150,
   create.dir = TRUE
 )
 ```
@@ -246,6 +256,7 @@ additional data that Arctos provides to plot *Microtus* with and
 earlier.
 
 ``` r
+
 # install.packages("patchwork")
 library(patchwork)
 
@@ -315,7 +326,7 @@ ggsave(
   plot = mongolia2,
   width = 6.5,
   height = 4,
-  dpi = 600,
+  dpi = 150,
   create.dir = TRUE
 )
 ```
@@ -330,5 +341,6 @@ your API key to perform the request. In this case, the record returned
 is a parasite that this record was a host of.
 
 ``` r
+
 get_relationships("MSB:Mamm:293449", YOUR_API_KEY)
 ```

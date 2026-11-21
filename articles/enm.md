@@ -8,6 +8,7 @@ on downloading data directly from Arctos via ArctosR to use it in a
 simple ENM exercise.
 
 ``` r
+
 # Install packages if needed
 # install.packages("ArctosR")
 # install.packages("geodata")
@@ -22,7 +23,6 @@ simple ENM exercise.
 library(ArctosR)
 library(geodata)
 #> Loading required package: terra
-#> terra 1.9.11
 library(ggplot2)
 library(ggspatial)
 library(ggtext)
@@ -43,6 +43,7 @@ requesting only the GUID identifier, decimal latitude, and longitude
 columns for each specimen.
 
 ``` r
+
 # Download all available records of Amblyomma americanum, and include latitude
 # and longitude data
 turkey_tick_query <- get_records(
@@ -60,6 +61,7 @@ America, and relabel the columns `dec_lat` and `dec_long` to `latitude`
 and `longitude`.
 
 ``` r
+
 # Limits on latitude and longitude for the Arctos data and for climate data
 latitude_north_lim <- 60
 latitude_south_lim <- 10
@@ -93,6 +95,7 @@ which will form part of the input into the models we are going to train.
 These data will be saved in a directory.
 
 ``` r
+
 # Get current working directory
 project_root <- getwd()
 
@@ -106,6 +109,7 @@ area in North America that is relevant to the distribution of the
 species.
 
 ``` r
+
 # Mask environmental layers to an area relevant for records and predictions
 # Transform occurrences into spatial points 
 occ_geo_points <- vect(occurrences_filter, geom = c("longitude", "latitude"), 
@@ -128,6 +132,7 @@ data cleaning functions to prepare the data for ecological niche
 modeling.
 
 ``` r
+
 # Basic data cleaning (remove duplicates, no data, (0,0) coordinates)
 occ_clean1 <- initial_cleaning(
   data = occurrences_filter, 
@@ -157,6 +162,7 @@ We start by preparing the data the way it is needed for the next step,
 model selection.
 
 ``` r
+
 # Prepare data for models
 d <- prepare_data(
   algorithm = "maxnet",
@@ -176,6 +182,7 @@ d <- prepare_data(
 Now we use the prepared data to perform model selection.
 
 ``` r
+
 # Run model selection
 cal <- calibration(
   data = d, 
@@ -204,6 +211,7 @@ We fit selected models and predict over a relevant are to explore
 suitable conditions for this tick.
 
 ``` r
+
 # Fit selected models
 mfit <- fit_selected(calibration_results = cal)
 #> 
@@ -221,6 +229,7 @@ Here we use [ggplot2](https://ggplot2.tidyverse.org/) to plot predicted
 suitability for *Amblyomma americanum*, with occurrences overlaid.
 
 ``` r
+
 pred_df <- as.data.frame(pred$General_consensus[["median"]], xy = TRUE)
 occ_points_df <- as.data.frame(occ_geo_points, geom = "XY")
 colnames(pred_df) <- c("long", "lat", "suitability")
@@ -285,7 +294,7 @@ ggsave(
   plot = tick,
   width = 6.53,
   height = 4.5,
-  dpi = 600,
+  dpi = 150,
   create.dir = TRUE
 )
 #> Warning: Removed 7 rows containing missing values or values outside the scale range

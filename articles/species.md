@@ -10,6 +10,7 @@ collected over the state of California.
 To begin, make sure to load the library:
 
 ``` r
+
 # install.packages("ArctosR")
 # install.packages("ggplot2")
 # install.packages("ggspatial")
@@ -23,7 +24,7 @@ library(ggspatial)
 library(ggtext)
 library(maps)
 library(sf)
-#> Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.4.0; sf_use_s2() is TRUE
+#> Linking to GEOS 3.14.1, GDAL 3.12.2, PROJ 9.7.1; sf_use_s2() is TRUE
 ```
 
 ## Exploring Arctos options
@@ -31,6 +32,7 @@ library(sf)
 First, we can view all parameters we can use to search by on Arctos:
 
 ``` r
+
 # Request a list of all query parameters.
 query_params <- get_query_parameters()
 
@@ -45,6 +47,7 @@ Next, we can view a list of all parameters we can ask Arctos to return
 by calling:
 
 ``` r
+
 # Request a list of all result parameters. These are the names that can show up
 # as columns in a dataframe returned by ArctosR.
 result_params <- get_result_parameters()
@@ -64,6 +67,7 @@ request all records. From the response we can get a data.frame using the
 `response_data` function.
 
 ``` r
+
 count <- get_record_count(guid_prefix="MVZ:Mamm", 
                           scientific_name="Tamias alpinus",
                           state_prov="California",
@@ -76,6 +80,7 @@ alpinus <- get_records(guid_prefix="MVZ:Mamm", scientific_name="Tamias alpinus",
 ```
 
 ``` r
+
 alpinus_df <- response_data(alpinus)
 
 # Filter out records which are missing latitude and longitude information
@@ -92,6 +97,7 @@ the `dec_lat` and `dec_long` fields from our data.frame over a map of
 the state of California.
 
 ``` r
+
 # Plot of Tamias alpinus sampled in California and currently stored in the
 # Museum of Vertebrate Zoology's collection
 
@@ -153,7 +159,7 @@ ggsave(
   plot = plot,
   width = 4,
   height = 4,
-  dpi = 600,
+  dpi = 150,
   create.dir = TRUE
 )
 ```

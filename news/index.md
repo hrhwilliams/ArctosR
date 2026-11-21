@@ -37,3 +37,5 @@ CRAN release: 2025-09-23
   the effects of Bergmann’s rule
 - Add vignette demonstrating downloading Arctos data for use in
   ecological niche modeling
+- Fix saving to CSV failing after expanding a column and then requesting
+  more records

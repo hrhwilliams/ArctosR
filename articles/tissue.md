@@ -7,6 +7,7 @@ red-backed vole) that have frozen tissue.
 To begin, make sure to load the library:
 
 ``` r
+
 # install.packages("ArctosR")
 # install.packages("ggplot2")
 # install.packages("ggspatial")
@@ -22,7 +23,7 @@ library(ggtext)
 library(maps)
 library(patchwork)
 library(sf)
-#> Linking to GEOS 3.12.1, GDAL 3.8.4, PROJ 9.4.0; sf_use_s2() is TRUE
+#> Linking to GEOS 3.14.1, GDAL 3.12.2, PROJ 9.7.1; sf_use_s2() is TRUE
 ```
 
 ## Exploring Arctos options
@@ -30,6 +31,7 @@ library(sf)
 First, we can view all parameters we can use to search by on Arctos:
 
 ``` r
+
 # Request a list of all query parameters.
 query_params <- get_query_parameters()
 
@@ -43,6 +45,7 @@ Next, we can view a list of all parameters we can ask Arctos to return
 by calling:
 
 ``` r
+
 # Request a list of all result parameters. These are the names that can show up
 # as columns in a dataframe returned by ArctosR.
 result_params <- get_result_parameters()
@@ -57,6 +60,7 @@ The parameters we are interested in returning are: `dec_lat`,
 ## Requesting data
 
 ``` r
+
 cols <- list("dec_lat", "dec_long", "parts")
 
 # Southern red-backed vole
@@ -91,6 +95,7 @@ rutilus_query2 <- get_records(
 ```
 
 ``` r
+
 gapperi_df <- rbind(
   response_data(gapperi_query1),
   response_data(gapperi_query2)
@@ -105,6 +110,7 @@ Now, we use the [ggplot2](https://ggplot2.tidyverse.org/) package to
 plot the occurrence data we downloaded.
 
 ``` r
+
 # Plot of overall species ranges
 
 plot_map <- map_data("world", region=c("USA", "Canada"))
@@ -161,7 +167,7 @@ ggsave(
   plot = vole1,
   width = 6.53,
   height = 4.25,
-  dpi = 600,
+  dpi = 150,
   create.dir = TRUE
 )
 #> Warning: Removed 1197 rows containing missing values or values outside the scale range
@@ -176,6 +182,7 @@ Next, we filter our original download by records which have associated
 frozen tissue.
 
 ``` r
+
 gapperi_df_tissue <- gapperi_df[
   grepl("frozen", gapperi_df$parts, ignore.case = TRUE, perl = TRUE), ]
 
@@ -193,6 +200,7 @@ information can be used to filter to specimens only in geographic
 proximity and with frozen tissue which can be analyzed.
 
 ``` r
+
 # Plot of overall species ranges, filtering by specimens with frozen tissue
 
 vole2 <- ggplot(plot_map, aes(long, lat)) +
@@ -253,7 +261,7 @@ ggsave(
   plot = vole2,
   width = 6.53,
   height = 6.53,
-  dpi = 600,
+  dpi = 150,
   create.dir = TRUE
 )
 #> Warning: Removed 342 rows containing missing values or values outside the scale range
@@ -266,7 +274,7 @@ ggsave(
   plot = vole1/vole2,
   width = 4,
   height = 6.53,
-  dpi = 600,
+  dpi = 150,
   create.dir = TRUE
 )
 #> Warning: Removed 1197 rows containing missing values or values outside the scale range
