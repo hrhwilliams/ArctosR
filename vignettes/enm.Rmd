@@ -102,7 +102,7 @@ download climate data from [WorldClim](https://www.worldclim.org/), which will
 form part of the input into the models we are going to train. These data will be
 saved in a directory.
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 # Get current working directory
 project_root <- getwd()
 
@@ -113,7 +113,7 @@ biovars <- worldclim_global(var = "bio", res = 10, path = project_root)
 Then, we filter the [WorldClim](https://www.worldclim.org/) data to an area
 in North America that is relevant to the distribution of the species.
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 # Mask environmental layers to an area relevant for records and predictions
 # Transform occurrences into spatial points 
 occ_geo_points <- vect(occurrences_filter, geom = c("longitude", "latitude"), 
@@ -134,7 +134,7 @@ biovar_na <- crop(biovars[[c(1, 7, 12, 15)]], ext(longitude_west_lim, longitude_
 Now, we use [kuenm2](https://marlonecobos.github.io/kuenm2/)'s built-in data
 cleaning functions to prepare the data for ecological niche modeling.
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 # Basic data cleaning (remove duplicates, no data, (0,0) coordinates)
 occ_clean1 <- initial_cleaning(
   data = occurrences_filter, 
@@ -161,7 +161,7 @@ nrow(occ_clean2)
 
 We start by preparing the data the way it is needed for the next step, model selection.
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 # Prepare data for models
 d <- prepare_data(
   algorithm = "maxnet",
@@ -180,7 +180,7 @@ d <- prepare_data(
 
 Now we use the prepared data to perform model selection.
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 # Run model selection
 cal <- calibration(
   data = d, 
@@ -192,7 +192,7 @@ cal <- calibration(
 We fit selected models and predict over a relevant are to explore suitable 
 conditions for this tick. 
 
-``` {r, eval=TRUE}
+```{r eval=FALSE}
 # Fit selected models
 mfit <- fit_selected(calibration_results = cal)
 
@@ -205,7 +205,7 @@ pred <- predict_selected(mfit, new_variables = biovar_na)
 Here we use [ggplot2](https://ggplot2.tidyverse.org/) to plot predicted
 suitability for *Amblyomma americanum*, with occurrences overlaid.
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 pred_df <- as.data.frame(pred$General_consensus[["median"]], xy = TRUE)
 occ_points_df <- as.data.frame(occ_geo_points, geom = "XY")
 colnames(pred_df) <- c("long", "lat", "suitability")
