@@ -24,7 +24,7 @@ Response returned from Arctos.
 \if{latex}{\out{\hypertarget{method-Response-new}{}}}
 \subsection{Method \code{new()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Response$new(request, raw_response)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Response$new(request, response)}\if{html}{\out{</div>}}
 }
 
 }

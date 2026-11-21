@@ -69,7 +69,7 @@ InfoRequestBuilder and CatalogRequestBuilder.
 \if{latex}{\out{\hypertarget{method-Request-from_raw_response}{}}}
 \subsection{Method \code{from_raw_response()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{Request$from_raw_response(raw_response)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{Request$from_raw_response(response)}\if{html}{\out{</div>}}
 }
 
 }

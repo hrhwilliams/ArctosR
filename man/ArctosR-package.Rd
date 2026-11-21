@@ -39,19 +39,20 @@ can be found at \url{https://arctosdb.org/about/}, and in Cicero et al. (2024)
 Useful links:
 \itemize{
   \item \url{https://github.com/hrhwilliams/arctosr}
+  \item \url{https://hrhwilliams.github.io/ArctosR/}
   \item Report bugs at \url{https://github.com/hrhwilliams/arctosr/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Harlan R. Williams \email{harlanrhwilliams@gmail.com}
+\strong{Maintainer}: Harlan R. Williams \email{harlanrhwilliams@gmail.com} (\href{https://orcid.org/0009-0000-9958-121X}{ORCID})
 
 Authors:
 \itemize{
-  \item Marlon E. Cobos \email{manubio13@gmail.com}
-  \item Jocelyn P. Colella \email{colella@ku.edu}
-  \item Michelle S. Koo \email{mkoo@berkeley.edu}
-  \item Vijay Barve \email{vijay.barve@gmail.com}
+  \item Jocelyn P. Colella \email{colella@ku.edu} (\href{https://orcid.org/0000-0003-2463-1029}{ORCID})
+  \item Vijay Barve \email{vijay.barve@gmail.com} (\href{https://orcid.org/0000-0002-4852-2567}{ORCID})
+  \item Michelle S. Koo \email{mkoo@berkeley.edu} (\href{https://orcid.org/0000-0003-0410-722X}{ORCID})
+  \item Marlon E. Cobos \email{manubio13@gmail.com} (\href{https://orcid.org/0000-0002-2611-1767}{ORCID})
 }
 
 }
