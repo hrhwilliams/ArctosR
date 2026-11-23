@@ -32,6 +32,8 @@ CRAN release: 2025-09-23
 
 ## ArctosR 0.1.4
 
+CRAN release: 2026-11-21
+
 - Add support for setting API key via .Renviron file
 - Add vignette demonstrating using ArctosR for downloading data to show
   the effects of Bergmann’s rule
