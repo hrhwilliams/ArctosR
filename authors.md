@@ -17,7 +17,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/hrhwilliams/arctosr/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/hrhwilliams/arctosr/blob/v0.1.4/DESCRIPTION)
 
 Williams H, Colella J, Barve V, Koo M, Cobos M (2026). *ArctosR: An
 Interface to the 'Arctos' Database*. R package version 0.1.4,
